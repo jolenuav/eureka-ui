@@ -1,0 +1,34 @@
+<!-- INIT SEARCH -->
+<form class="p-2 pb-2 w-100 position-fixed container-search header-shadow">
+  <div class="input-group mb-2">
+    <span class="input-group-text" id="basic-addon1">
+      <i class="bi bi-search"></i>
+    </span>
+    <input
+      name="search"
+      placeholder="Buscar comercio por nombre"
+      class="form-control input-search"
+      [formControl]="searchCommerce"
+    />
+  </div>
+</form>
+<!-- END SEARCH -->
+<!-- INIT RESULTS -->
+<div class="d-flex flex-wrap container-products">
+  <div *ngIf="commerces.length > 0; then cards; else notFound"></div>
+  <ng-template #cards>
+    <ng-container *ngFor="let commerce of commercesFiltred">
+      <div class="my-2 col-xl-6 col-12">
+        <eu-card-product
+          [imageSrc]="commerce.image"
+          [title]="commerce.name"
+          [description]="commerce.duration"
+          [rating]="commerce.rate"
+          (clickEvent)="handlerClickCard(commerce.id)"
+        ></eu-card-product>
+      </div>
+    </ng-container>
+  </ng-template>
+  <ng-template #notFound> No hay comercios asociados</ng-template>
+</div>
+<!-- END RESULTS -->

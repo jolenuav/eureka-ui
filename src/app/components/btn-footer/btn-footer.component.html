@@ -1,0 +1,21 @@
+<div
+  class="
+    container-footer-btn
+    w-100
+    p-2
+    d-flex
+    flex-column
+    justify-content-center
+    position-fixed
+  "
+>
+  <div class="col-xl-4 col-12 m-auto">
+    <button
+      class="btn btn-primary btn-rounded w-100"
+      (click)="clickEvent.emit()"
+      [disabled]="disabled"
+    >
+      {{ label }}
+    </button>
+  </div>
+</div>

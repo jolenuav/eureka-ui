@@ -1,0 +1,167 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col" class="text-muted">ORDEN</th>
+      <th scope="col" class="text-muted">FECHA</th>
+      <th scope="col" class="text-muted">ENVIAR A</th>
+      <th scope="col" class="text-muted">COMERCIO</th>
+      <th scope="col" class="text-muted">MONTO</th>
+      <th scope="col" class="text-muted">PAGAR CON</th>
+      <th scope="col" class="text-muted">ESTADO</th>
+      <th scope="col" class="text-muted"></th>
+      <th scope="col" class="text-muted"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders$ | async">
+      <td class="text-muted">
+        <strong>#{{ order.id }}</strong> by
+        <strong>{{ order.deliveryData.name }}</strong>
+        {{ order.deliveryData.email }} {{ order.deliveryData.phone }}
+      </td>
+      <td class="text-muted">
+        {{ order.date | date: 'dd/MM/yyyy, HH:mm:ss' }}
+      </td>
+      <td class="text-muted">
+        {{ order.deliveryData.address }}
+      </td>
+      <td class="text-muted">
+        {{ order.commerceName }}
+      </td>
+      <td class="text-muted">${{ order.totalAmount.toFixed(1) }}</td>
+      <td class="text-muted">
+        {{ order.payOrder.paymentType | paymentMethod }}
+        <strong>{{ order.payOrder.payment }}</strong>
+      </td>
+      <td class="text-muted">
+        <div
+          class="btn btn-sm"
+          [class.bgl-diff]="order.status === 'D'"
+          [class.text-info]="order.status === 'D'"
+          [class.bgl-warning]="
+            order.status === 'P' ||
+            order.status === 'IP' ||
+            order.status === 'IC'
+          "
+          [class.text-warning]="
+            order.status === 'P' ||
+            order.status === 'IP' ||
+            order.status === 'IC'
+          "
+          [class.bgl-danger]="order.status === 'R'"
+          [class.text-danger]="order.status === 'R'"
+          [class.bgl-muted]="order.status === 'C'"
+          [class.text-muted]="order.status === 'C'"
+          [class.bgl-success]="order.status === 'F'"
+          [class.text-primary]="order.status === 'F'"
+        >
+          {{ order.status | status }}
+        </div>
+      </td>
+      <td class="text-muted">
+        <i
+          class="text-link bi bi-list"
+          (click)="openModal(order)"
+          style="font-size: 1.5rem"
+        ></i>
+      </td>
+      <td class="text-muted">
+        <div ngbDropdown class="d-inline-block">
+          <button id="actions" type="button" class="btn" ngbDropdownToggle>
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="actions">
+            <button
+              ngbDropdownItem
+              class="btn text-muted"
+              [disabled]="disableStatusBtn(order.status, 'P')"
+              (click)="changeStatus(order, 'P', referenceModal)"
+            >
+              Aceptar
+            </button>
+            <button
+              ngbDropdownItem
+              class="btn text-muted"
+              [disabled]="disableStatusBtn(order.status, 'R')"
+              (click)="changeStatus(order, 'R')"
+            >
+              Rechazar
+            </button>
+            <button
+              ngbDropdownItem
+              class="btn text-muted"
+              [disabled]="disableStatusBtn(order.status, 'C')"
+              (click)="changeStatus(order, 'C')"
+            >
+              Cancelar
+            </button>
+            <button
+              ngbDropdownItem
+              class="btn text-muted"
+              [disabled]="disableStatusBtn(order.status, 'IP')"
+              (click)="changeStatus(order, 'IP')"
+            >
+              En preparación
+            </button>
+            <button
+              ngbDropdownItem
+              class="btn text-muted"
+              [disabled]="disableStatusBtn(order.status, 'IC')"
+              (click)="changeStatus(order, 'IC')"
+            >
+              En camino
+            </button>
+            <button
+              ngbDropdownItem
+              class="btn text-muted"
+              [disabled]="disableStatusBtn(order.status, 'F')"
+              (click)="changeStatus(order, 'F')"
+            >
+              Finalizada
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #referenceModal let-modal>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="reference">Nro. referencia</label>
+        <div class="input-group">
+          <input
+            id="reference"
+            class="form-control input-number"
+            name="reference"
+            type="number"
+            [(ngModel)]="reference"
+          />
+        </div>
+      </div>
+    </form>
+    <div class="d-flex flex-row">
+      <div class="col-6 p-0 pr-1">
+        <button
+          type="button"
+          class="btn btn-dark w-100"
+          (click)="modal.close()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-6 p-0 pl-1">
+        <button
+          type="button"
+          class="btn btn-primary w-100"
+          [disabled]="!reference"
+          (click)="modal.close()"
+        >
+          Ok
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

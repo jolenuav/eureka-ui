@@ -1,0 +1,13 @@
+@import '../../../../styles.scss';
+
+.container-search {
+  top: 0;
+  background-color: white;
+  z-index: 2;
+}
+
+.container-products {
+  overflow: auto;
+  margin-top: 5rem;
+  z-index: 1;
+}

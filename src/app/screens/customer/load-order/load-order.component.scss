@@ -1,0 +1,28 @@
+@import '../../../../styles.scss';
+
+.img-header {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  top: 0;
+  transition: 0.8s;
+  width: 100%;
+}
+
+.lbl-header {
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  display: block;
+}
+
+.counter-container {
+  border: 1px solid $color-primary;
+  border-radius: 50px;
+  height: 3rem;
+  width: 7rem;
+}
+
+.counter-icon {
+  font-size: 1.5rem;
+  color: $color-primary;
+}

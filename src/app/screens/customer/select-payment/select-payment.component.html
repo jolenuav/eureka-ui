@@ -1,0 +1,188 @@
+<div class="w-100 position-fixed header-shadow" style="z-index: 2">
+  <div
+    class="p-3 pt-5 img-header d-flex flex-column justify-content-end"
+    [ngStyle]="headerStyle"
+    style="transition: all 0.4s ease-in-out"
+  >
+    <i class="bi bi-x close-back" (click)="goBack()"></i>
+    <div class="p-3 action-rigth" (click)="skip()">Omitir</div>
+    <div
+      class="font-weight-bold position-absolute d-flex flex-row"
+      [ngStyle]="titleStyle"
+      style="transition: all 0.4s ease-in-out"
+    >
+      Forma de pago ${{ order.totalAmount.toFixed(1) }}
+      <small class="form-text font-weight-bold px-1">
+        - Envío min ${{ deliveryMin.toFixed(1) }}
+      </small>
+    </div>
+  </div>
+</div>
+
+<div
+  id="container"
+  class="eu_p-md-10"
+  style="padding-bottom: 10rem"
+  [ngStyle]="{ 'padding-top': topSize }"
+>
+  <h5 class="font-weight-bold m-0 mx-3 pt-3">Online</h5>
+  <span class="mx-3" style="font-size: 0.8rem"
+    >Puede pagar con transferencias o pago móvil</span
+  >
+  <div class="my-2 mx-3 card d-flex flex-column align-item-center p-3">
+    <div class="custom-control custom-checkbox py-1">
+      <input
+        id="transfer"
+        type="checkbox"
+        class="custom-control-input"
+        [(ngModel)]="transferCheck"
+        (ngModelChange)="
+          collapseTransfer.toggle();
+          payMobileCheck = false;
+          cashCheck = false;
+          payMobileIsCollapsed = true;
+          cashIsCollapsed = true;
+          changeCheckbox()
+        "
+      />
+      <label class="custom-control-label" for="transfer">Transferencia</label>
+    </div>
+    <div #collapseTransfer="ngbCollapse" [(ngbCollapse)]="transferIsCollapsed">
+      <div class="px-4">
+        <div class="row px-3 py-1">
+          <div class="col-xl-3 col-sm-12 py-1">
+            <select
+              class="form-control w-100"
+              [(ngModel)]="paymentMethodsId"
+              (ngModelChange)="paymentMethodChange()"
+            >
+              <option [value]="item.id" *ngFor="let item of transferData">
+                {{ item.accountName }}
+              </option>
+            </select>
+          </div>
+          <div *ngIf="payOrder.paymentMethod" class="col-xl-3 col-sm-12">
+            {{ payOrder.paymentMethod | accountNumber }}
+          </div>
+          <div *ngIf="payOrder.paymentMethod" class="col-xl-3 col-sm-12">
+            {{ payOrder.paymentMethod.ownerName }}
+          </div>
+          <div *ngIf="payOrder.paymentMethod" class="col-xl-3 col-sm-12">
+            {{ payOrder.paymentMethod | documentPaymentMethod }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="custom-control custom-checkbox py-1">
+      <input
+        id="payMovil"
+        type="checkbox"
+        class="custom-control-input"
+        [(ngModel)]="payMobileCheck"
+        (change)="
+          collapsePayMovil.toggle();
+          transferCheck = false;
+          cashCheck = false;
+          transferIsCollapsed = true;
+          cashIsCollapsed = true;
+          changeCheckbox()
+        "
+      />
+      <label class="custom-control-label" for="payMovil">Pago movil</label>
+    </div>
+    <div #collapsePayMovil="ngbCollapse" [(ngbCollapse)]="payMobileIsCollapsed">
+      <div class="px-4">
+        <div class="row px-3 py-1">
+          <div class="col-sm-12 col-xl-3 py-1">
+            <select
+              class="form-control w-100"
+              [(ngModel)]="paymentMethodsId"
+              (ngModelChange)="paymentMethodChange()"
+            >
+              <option [value]="item.id" *ngFor="let item of payMobileData">
+                {{ item.accountName }}
+              </option>
+            </select>
+          </div>
+          <div *ngIf="payOrder.paymentMethod" class="col-sm-12 col-xl-3">
+            {{ payOrder.paymentMethod | accountNumber }}
+          </div>
+          <div *ngIf="payOrder.paymentMethod" class="col-sm-12 col-xl-3">
+            {{ payOrder.paymentMethod.accountName }}
+          </div>
+          <div *ngIf="payOrder.paymentMethod" class="col-sm-12 col-xl-3">
+            {{ payOrder.paymentMethod | documentPaymentMethod }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h5 class="font-weight-bold m-0 mx-3 pt-3">En la entrega</h5>
+  <div class="my-2 mx-3 card p-3">
+    <div class="d-flex flex-row align-item-center justify-content-between">
+      <div class="custom-control custom-checkbox py-1">
+        <input
+          id="cash"
+          type="checkbox"
+          class="custom-control-input"
+          [(ngModel)]="cashCheck"
+          (ngModelChange)="
+            transferCheck = false;
+            payMobileCheck = false;
+            transferIsCollapsed = true;
+            payMobileIsCollapsed = true;
+            changeCheckbox()
+          "
+        />
+        <label class="custom-control-label" for="cash">Efectivo</label>
+      </div>
+      <div class="pr-xl-5">
+        <button
+          type="button"
+          class="
+            btn btn-light btn-rounded
+            d-flex
+            flex-column
+            align-item-center
+            justify-content-center
+          "
+          style="height: 2rem"
+          (click)="
+            collapseCash.toggle();
+            cashCheck = true;
+            transferCheck = false;
+            transferIsCollapsed = true;
+            payMobileCheck = false;
+            payMobileIsCollapsed = true;
+            changeCheckbox()
+          "
+        >
+          ¿Necesitas cambio?
+        </button>
+      </div>
+    </div>
+    <div #collapseCash="ngbCollapse" [(ngbCollapse)]="cashIsCollapsed">
+      <div class="d-flex flex-row">
+        <div class="px-4">
+          <div class="form-group">
+            <label>¿Con cuanto vas a pagar?</label>
+            <input
+              name="cashChange"
+              placeholder="Monto"
+              class="form-control input-number"
+              type="number"
+              [(ngModel)]="payOrder.payment"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<eu-btn-footer
+  [label]="'Continuar'"
+  [disabled]="disableNext()"
+  (clickEvent)="confirmPayment()"
+></eu-btn-footer>

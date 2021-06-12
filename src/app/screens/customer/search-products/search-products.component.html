@@ -1,0 +1,154 @@
+<!-- INIT HEADER IMAGE -->
+<div
+  class="w-100 position-fixed header-shadow"
+  *ngIf="commerce && products"
+  style="z-index: 2"
+>
+  <div
+    class="p-3 pt-5 img-header d-flex flex-column justify-content-end"
+    [ngStyle]="headerStyle"
+  >
+    <i class="bi bi-arrow-left-short arrow-back" (click)="goBack()"></i>
+    <div class="font-weight-bold d-flex flex-row align-items-center">
+      <h2 class="pr-2 m-0" [ngStyle]="{ color: txtColor }">
+        {{ commerce.name }}
+      </h2>
+      <div class="pr-2" [ngStyle]="{ color: txtColor }">
+        {{ commerce.rate }}
+      </div>
+      <i class="bi bi-star-fill" [ngStyle]="{ color: txtColor }"></i>
+    </div>
+    <div class="pb-2 d-flex flex-row align-items-center lbl-header">
+      <div class="pr-3" [ngStyle]="{ color: txtColor }">
+        {{ commerce.duration }} min
+      </div>
+      <i
+        class="bi bi-credit-card"
+        style="font-size: 1rem"
+        [ngStyle]="{ color: txtColor }"
+      ></i>
+      <div class="pl-2" [ngStyle]="{ color: txtColor }">
+        Acepta transferencia
+      </div>
+    </div>
+    <form>
+      <div class="input-group mb-2">
+        <span class="input-group-text" id="basic-addon1">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          name="search"
+          placeholder="Buscar comercio por nombre"
+          class="form-control input-search"
+        />
+      </div>
+    </form>
+    <div
+      *ngIf="products.length > 0 && showSections"
+      class="d-flex flex-nowrap"
+      style="overflow-x: auto"
+    >
+      <ng-container
+        *ngFor="
+          let productSect of productsBySectionFiltered | keyvalue;
+          let i = index
+        "
+      >
+        <div
+          class="px-2"
+          (click)="scrollTo('link' + i)"
+          [ngClass]="{ sectionActived: sectionActived === 'link' + i }"
+        >
+          {{ productSect.key }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<!-- END HEADER IMAGE -->
+<!-- INIT LIST PRODUCT -->
+<div
+  *ngIf="commerce && products"
+  id="listProducts"
+  (scroll)="onScroll()"
+  scrollSpy
+  [spiedTags]="['DIV']"
+  (sectionChange)="sectionActived = $event"
+  class="w-100 d-flex flex-column position-fixed"
+  style="
+    z-index: 1;
+    overflow: auto;
+    padding-top: 15rem;
+    padding-bottom: 10rem;
+    height: 100%;
+  "
+>
+  <div *ngIf="products.length > 0; then cards; else notFound"></div>
+  <ng-template #cards>
+    <ng-container
+      *ngFor="
+        let productSect of productsBySectionFiltered | keyvalue;
+        let i = index
+      "
+    >
+      <div [id]="'link' + i" class="pl-3">
+        <h3>{{ productSect.key }}</h3>
+      </div>
+      <div class="w-100 d-flex flex-wrap">
+        <ng-container *ngFor="let product of productSect.value">
+          <div class="my-2 col-xl-6 col-12">
+            <eu-card-product
+              [description]="product.description"
+              [imageSrc]="!product.image ? commerce.image : product.image"
+              [price]="product.price"
+              [title]="product.name"
+              (clickEvent)="handlerClickCard(product)"
+            ></eu-card-product>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-template>
+  <ng-template #notFound> No hay comercios asociados</ng-template>
+</div>
+<!-- END LIST PRODUCT -->
+
+<!-- INIT ADD ORDER -->
+<div
+  *ngIf="commerce && products && order && order.products.length > 0"
+  class="
+    container-footer-btn
+    w-100
+    p-2
+    d-flex
+    flex-column
+    align-item-center
+    justify-content-center
+    position-fixed
+  "
+  style="z-index: 2"
+>
+  <div class="col-xl-4 col-12 m-auto">
+    <button
+      class="
+        btn btn-primary btn-rounded
+        w-100
+        d-flex
+        flex-row
+        justify-content-between
+        alignt-item-center
+      "
+      (click)="showOrder()"
+    >
+      <span class="d-flex flex-row">
+        <i class="bi bi-handbag" style="font-size: 1.1rem"></i>
+        <div class="counter-circle">{{ order.products.length }}</div>
+      </span>
+      Ver mi pedido
+      <span style="font-weight: normal"
+        >${{ order.totalAmount.toFixed(1) }}</span
+      >
+    </button>
+  </div>
+</div>
+<!-- END ADD ORDER -->

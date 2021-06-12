@@ -1,0 +1,38 @@
+<div class="container h-100">
+  <div class="row justify-content-center align-items-center h-100">
+    <div class="col-md-6">
+      <div class="authincation-content">
+        <div class="row no-gutters">
+          <div class="col-xl-12">
+            <div class="auth-form">
+              <h4 class="text-center mb-4">Inicia sesión con tu cuenta</h4>
+              <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                <div class="form-group">
+                  <label class="mb-1"><strong>Correo</strong></label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    formControlName="username"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="mb-1"><strong>Contraseña</strong></label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    formControlName="password"
+                  />
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary btn-rounded w-100">
+                    Iniciar sessión
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

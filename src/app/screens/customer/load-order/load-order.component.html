@@ -1,0 +1,110 @@
+<!-- INIT HEADER IMAGE -->
+<div
+  class="w-100 position-fixed header-shadow"
+  *ngIf="commerce && product"
+  style="z-index: 2"
+>
+  <div
+    class="p-3 pt-5 img-header d-flex flex-column justify-content-end"
+    [ngStyle]="headerStyle"
+  >
+    <i class="bi bi-arrow-left-short arrow-back" (click)="goBack()"></i>
+    <div class="font-weight-bold d-flex flex-row align-items-center">
+      <h2 class="pr-2 m-0 text-light">{{ commerce.name }}</h2>
+      <div class="pr-2 text-light">{{ commerce.rate }}</div>
+      <i class="bi bi-star-fill text-light"></i>
+    </div>
+  </div>
+</div>
+<!-- END HEADER IMAGE -->
+<!-- INIT CONTAINER -->
+<div
+  *ngIf="commerce && product"
+  class="w-100 d-flex flex-column position-fixed"
+  style="
+    z-index: 1;
+    overflow: auto;
+    padding-top: 15rem;
+    padding-bottom: 10rem;
+    height: 100%;
+  "
+>
+  <div class="mx-3 mt-3 mb-1 card">
+    <div class="card-body">
+      <h4 class="font-weight-bold">
+        {{ product.name }}
+      </h4>
+      <div>
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+  <div class="mx-3 my-1 card">
+    <div class="card-body">
+      <h4 class="font-weight-bold">Unidades</h4>
+      <div class="d-flex justify-content-center">
+        <div
+          class="
+            d-flex
+            flex-row
+            justify-content-between
+            align-items-center
+            counter-container
+          "
+        >
+          <button
+            class="btn p-2 d-flex align-items-center font-weight-bold"
+            (click)="counterHandler(false)"
+          >
+            <i class="bi bi-dash counter-icon"></i>
+          </button>
+          <input
+            class="d-flex align-items-center p-0 text-center form-control"
+            readonly
+            [(ngModel)]="counter"
+          />
+          <button
+            class="btn p-2 d-flex align-items-center font-weight-bold"
+            (click)="counterHandler(true)"
+          >
+            <i class="bi bi-plus counter-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mx-3 my-1 card">
+    <div class="card-body">
+      <h4 class="font-weight-bold">¿Quiere aclarar algo?</h4>
+      <div class="form-floating">
+        <textarea
+          class="form-control"
+          rows="5"
+          [(ngModel)]="observation"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTAINER -->
+<!-- INIT ADD ORDER -->
+<div
+  *ngIf="commerce && product"
+  class="
+    container-footer-btn
+    w-100
+    p-2
+    d-flex
+    justify-content-center
+    position-fixed
+  "
+  style="z-index: 2"
+>
+  <div class="col-xl-4 col-12 m-auto">
+    <button class="btn btn-primary btn-rounded w-100" (click)="addOrder()">
+      Agregar a mi pedidio
+      <span *ngIf="amount > 0">({{ amount.toFixed(1) }})</span>
+    </button>
+  </div>
+</div>
+<!-- END ADD ORDER -->

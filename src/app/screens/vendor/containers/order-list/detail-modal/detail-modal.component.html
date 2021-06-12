@@ -1,0 +1,22 @@
+<div class="modal-body text-muted bg-light modal-rounded">
+  <h4 class="modal-title" id="modal-basic-title">
+    Detalle de orden #{{ order.id }}
+  </h4>
+  <div *ngIf="order.payOrder.paymentType !== 3" class="d-flex flex-column">
+    <h5 class="font-weight-bold">
+      {{ order.payOrder.paymentType | paymentMethod }}
+    </h5>
+    <div>{{ order.payOrder.paymentMethod.ownerName }}</div>
+    <div>{{ order.payOrder.paymentMethod | documentPaymentMethod }}</div>
+    <div>{{ order.payOrder.paymentMethod.accountName }}</div>
+    <div>{{ order.payOrder.paymentMethod.accountNumber }}</div>
+  </div>
+  <ng-container *ngFor="let item of order.products">
+    <eu-card-product
+      [description]="item.observation"
+      [imageSrc]="item.product.image ? item.product.image : null"
+      [qty]="item.qty"
+      [title]="item.product.name"
+    ></eu-card-product>
+  </ng-container>
+</div>

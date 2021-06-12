@@ -1,0 +1,112 @@
+<div
+  *ngIf="commerce && order.products.length > 0"
+  class="w-100 position-fixed header-shadow"
+  style="z-index: 2"
+>
+  <div
+    class="p-3 pt-5 img-header d-flex flex-column justify-content-end"
+    [ngStyle]="headerStyle"
+    style="transition: all 0.4s ease-in-out"
+  >
+    <i class="bi bi-arrow-left-short arrow-back" (click)="goBack()"></i>
+    <div
+      *ngIf="!editEnable"
+      class="p-3 action-rigth"
+      (click)="editEnable = true"
+    >
+      Editar
+    </div>
+    <div
+      *ngIf="editEnable"
+      class="p-3 action-rigth"
+      (click)="editEnable = false"
+    >
+      Cancelar
+    </div>
+    <div
+      class="font-weight-bold position-absolute"
+      [ngStyle]="titleStyle"
+      style="transition: all 0.4s ease-in-out"
+    >
+      Mi pedido
+    </div>
+    <div class="d-flex flex-row">
+      <img
+        class="rounded"
+        [src]="commerce.image"
+        style="width: 3rem; height: 3rem"
+      />
+      <div class="pl-3 d-flex flex-column">
+        <div class="font-weight-bold">{{ commerce.name }}</div>
+        <div>
+          <small>
+            {{ commerce.duration }} min - Envío min ${{
+              deliveryMin.toFixed(1)
+            }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  id="container"
+  class="eu_p-md-10"
+  style="padding-bottom: 10rem"
+  [ngStyle]="{ 'padding-top': topSize }"
+>
+  <ng-container *ngFor="let item of order.products; let i = index">
+    <div class="my-2 mx-3 card d-flex flex-row align-item-center p-3">
+      <div *ngIf="!editEnable" class="m-auto col-2">{{ item.qty }}x</div>
+      <div
+        *ngIf="editEnable"
+        class="m-auto col-2 custom-control custom-checkbox p-1 pl-md-4"
+      >
+        <input
+          [id]="i"
+          type="checkbox"
+          class="custom-control-input"
+          (change)="selectProduct(i, $event)"
+        />
+        <label class="custom-control-label" [for]="i"></label>
+      </div>
+
+      <div class="m-auto col-7">
+        <div class="d-flex flex-column">
+          <span class="font-weight-bold">{{ item.product.name }}</span>
+          <span *ngIf="item.product.description">
+            {{ item.product.description | truncate: 27 }}
+          </span>
+        </div>
+      </div>
+      <div class="m-auto col-3">
+        ${{ (item.qty * item.product.price).toFixed(1) }}
+      </div>
+    </div>
+  </ng-container>
+  <hr />
+  <div class="d-flex justify-content-between px-4 pb-3 mx-3">
+    <span class="col-9">Subtotal</span>
+    <span class="col-3">${{ order.totalAmount.toFixed(1) }}</span>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div class="col-xl-4 col-12 m-auto">
+      <button class="btn btn-gray btn-rounded w-100" (click)="goBack()">
+        Agregar más productos
+      </button>
+    </div>
+  </div>
+</div>
+
+<eu-btn-footer
+  *ngIf="!editEnable"
+  [label]="'Continuar'"
+  (clickEvent)="goPayment()"
+></eu-btn-footer>
+<eu-btn-footer
+  *ngIf="editEnable"
+  [disabled]="selectedsByDelete.length === 0"
+  [label]="'Borrar'"
+  (clickEvent)="delete()"
+></eu-btn-footer>

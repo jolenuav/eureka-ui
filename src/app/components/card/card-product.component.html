@@ -1,0 +1,38 @@
+<div class="card" (click)="clickEvent.emit()">
+  <div class="d-flex flex-row justify-content-between card-body">
+    <div
+      *ngIf="qty"
+      class="d-flex align-items-center justify-content-center col-1"
+    >
+      {{ qty }}x
+    </div>
+    <div class="d-flex align-items-center justify-content-center col-3">
+      <img
+        class="rounded-circle"
+        [src]="imageSrc ? imageSrc : genericImage"
+        style="width: 5rem; height: 5rem"
+      />
+    </div>
+    <div
+      class="d-flex flex-column align-items-start"
+      [class.col-8]="qty"
+      [class.col-9]="!qty"
+    >
+      <div class="font-weight-bold m-0" style="font-size: 1.5rem">
+        {{ title }}
+      </div>
+      <div *ngIf="description" class="text-muted" style="font-size: 0.8rem">
+        {{ description }}
+      </div>
+      <div *ngIf="rating" class="d-flex flex-row align-items-center">
+        <div class="pr-2">{{ rating }}</div>
+        <i class="bi bi-star-fill text-primary"></i>
+      </div>
+      <div *ngIf="price" class="d-flex flex-row align-items-center">
+        <div class="pr-2 text-primary font-weight-bold">
+          ${{ price.toFixed(1) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
