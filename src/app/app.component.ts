@@ -5,6 +5,7 @@ import {
   OnInit
 } from '@angular/core';
 import { version } from 'package.json';
+import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
 
 @Component({
@@ -16,13 +17,16 @@ export class AppComponent implements OnInit, AfterViewChecked {
   title = 'eureka-web';
   version = version;
   showLoader = this.storeService.showLoader.asObservable();
+  userLoggeg$ = this.authService.userLogged.asObservable();
 
   constructor(
+    private authService: AuthService,
     private cd: ChangeDetectorRef,
     private storeService: StoreService
   ) {}
 
   ngOnInit(): void {
+    this.userLoggeg$.subscribe(item => console.log('logged = ', item));
   }
 
   ngAfterViewChecked(): void {

@@ -12,7 +12,6 @@ export function pathRoute(routes: string[], params?: any): string {
     return route;
   }
   for (const [key, value] of Object.entries(params) as any[]) {
-    console.log(value);
     route = route.replace(`:${key}`, value);
   }
   return route;

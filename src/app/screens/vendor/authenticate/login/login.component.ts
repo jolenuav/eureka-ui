@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls.password.value
     );
 
+    this.authService._userLogged = signIn;
     if (signIn) {
       this.router.navigate([
         pathRoute([

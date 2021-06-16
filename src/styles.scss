@@ -1,6 +1,7 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-icons/font/bootstrap-icons.css';
+@import './assets/scss/variables.scss';
 
 @font-face {
   font-family: 'Open-Sans';
@@ -14,16 +15,6 @@
   src: url('./assets//fonts/Poppins/Poppins-Italic.ttf') format('truetype');
 }
 
-$color-light: $gray-100;
-$color-light2: $gray-200;
-$color-gray-light: $gray-300;
-$color-gray: $gray-400;
-$color-gray-dark: $gray-500;
-$color-black: $gray-600;
-$color-blue: $blue;
-$color-primary: #04b284;
-$color-primary-disabled: #a4c4bb;
-$color-secundary: #ffd04d;
 
 html {
   font-family: 'Open-Sans';
@@ -63,6 +54,11 @@ div {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.container-scroll-x {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .form-control {
@@ -317,4 +313,9 @@ input.input-number::-webkit-inner-spin-button {
   .modal-rounded {
     border-radius: 10px;
   }
+}
+
+.dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: $color-light;
+  color: $color-primary;
 }

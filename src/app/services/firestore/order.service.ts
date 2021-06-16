@@ -14,13 +14,11 @@ export class OrderService {
   constructor(private firestore: AngularFirestore) {}
 
   async save(order: Order): Promise<void> {
-    console.log({...order.getSimpleObject()});
     return await this.firestore
       .collection(this.collection)
       .doc(`${order.commerce}-${order.id}`)
       .set(order.getSimpleObject())
       .then((data) => {
-        console.log(data);
       });
   }
 
@@ -57,7 +55,6 @@ export class OrderService {
   }
 
   changeStatus(order: Order, status: string): void {
-    console.log(order);
     const id = `${order.commerce}-${order.id}`;
     const params: any = {};
     params.status = status;

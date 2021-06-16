@@ -1,5 +1,6 @@
 <eu-loader *ngIf="showLoader | async"></eu-loader>
+<eu-navbar *ngIf="userLoggeg$ | async"></eu-navbar>
 <router-outlet></router-outlet>
-<div class="app-version position-fixed" style="z-index: 1000;">
-  V-{{version}}
+<div class="app-version position-fixed" style="z-index: 1000">
+  V-{{ version }}
 </div>

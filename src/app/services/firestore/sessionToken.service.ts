@@ -21,7 +21,6 @@ export class SessionTokenService {
   }
 
   async deleteByUsername(sessionToken: SessionToken): Promise<void> {
-    console.log('probando');
     await this.firestore
       .collection(this.collection, (ref) =>
         ref.where('username', '==', sessionToken.username)

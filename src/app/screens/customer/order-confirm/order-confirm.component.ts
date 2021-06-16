@@ -56,7 +56,6 @@ export class OrderConfirmComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    console.log(this.order.payOrder);
     if (!this.order || this.order?.products.length === 0) {
       this.router.navigate([
         pathRoute([CONSTANTS.routes.customer.listProducts], {

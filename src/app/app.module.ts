@@ -11,6 +11,7 @@ import { BtnFooterComponent } from './components/btn-footer/btn-footer.component
 import { CardProductComponent } from './components/card/card-product.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
+import { LoginAuthGuard } from './guards/partner/login-auth.guard';
 import { PartnerViewAuthGuard } from './guards/partner/partner-view-auth.guard';
 import { CommerceSelectedResolver } from './resolvers/commerce-selected.resolver';
 import { LoadOrderResolver } from './resolvers/load-order.resolver';
@@ -30,6 +31,7 @@ import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
 import { PipeModule } from './utils/pipe.module';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -52,6 +54,7 @@ export function initApp(provider: AppInitializerService): any {
     OrderListComponent,
     DetailModalComponent,
     LoginComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +84,7 @@ export function initApp(provider: AppInitializerService): any {
     SelectPaymentResolver,
     // GUARDS
     PartnerViewAuthGuard,
+    LoginAuthGuard,
   ],
   bootstrap: [AppComponent],
 })

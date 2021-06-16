@@ -4,9 +4,12 @@ import { generateID } from '../utils/commons.function';
 import { SessionTokenService } from './firestore/sessionToken.service';
 import { UserService } from './firestore/user.service';
 import * as moment from 'moment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
+  userLogged = new BehaviorSubject<boolean>(this._tokenValid());
+
   constructor(
     private userService: UserService,
     private sessionTokenService: SessionTokenService
@@ -32,5 +35,23 @@ export class AuthService {
   calculateExpireDate(): Date {
     const currentMoment = moment().add(1, 'hour');
     return currentMoment.toDate();
+  }
+
+  _tokenValid(): boolean {
+    const obj = JSON.parse(sessionStorage.getItem('sessionToken'));
+    if (!obj) {
+      return false;
+    }
+    const sessionToken = SessionToken.parse(obj);
+    const tokenDate = moment(sessionToken.expireToken);
+    const currentDate = moment();
+    if (tokenDate.diff(currentDate, 'minutes') > 0) {
+      return true;
+    }
+    return false;
+  }
+
+  set _userLogged(isLogged: boolean) {
+    this.userLogged.next(isLogged);
   }
 }
