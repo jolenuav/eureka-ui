@@ -7,6 +7,7 @@ import User from '../models/db/user';
 })
 export class VendorStoreService {
   _user = new BehaviorSubject<User>(null);
+  _loginStatus = new BehaviorSubject<string>('online');
 
   constructor() {}
 
@@ -18,5 +19,15 @@ export class VendorStoreService {
   }
   set user(user: User) {
     this._user.next(user);
+  }
+
+  get loginStatus$(): Observable<string> {
+    return this._loginStatus.asObservable();
+  }
+  get loginStatus(): string {
+    return this._loginStatus.value;
+  }
+  set loginStatus(status: string) {
+    this._loginStatus.next(status);
   }
 }

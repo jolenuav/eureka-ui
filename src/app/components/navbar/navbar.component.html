@@ -52,11 +52,12 @@
         >
           <div class="nav-profile-img">
             <img [src]="user.image" alt="image" />
-            <span class="availability-status online"></span>
+            <span class="availability-status" [ngClass]="loginStatus$ | async"></span>
           </div>
           <div class="nav-profile-text">
             <p class="mb-1">{{ user.name }}</p>
           </div>
+          <i class="bi bi-chevron-down pl-2 text-primary"></i>
         </a>
 
         <div

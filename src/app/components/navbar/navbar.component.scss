@@ -145,10 +145,10 @@ a:-webkit-any-link {
                 &.online {
                   background: #1bcfb4;
                 }
-                &.offline {
+                &.busy {
                   background: #fe7c96;
                 }
-                &.busy {
+                &.offline {
                   background: #fed713;
                 }
               }

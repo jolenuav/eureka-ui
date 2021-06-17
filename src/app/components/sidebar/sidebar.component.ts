@@ -8,8 +8,25 @@ import { VendorStoreService } from 'src/app/services/vendor-store.service';
 })
 export class SidebarComponent implements OnInit {
   user = this.vendorStore.user;
+  loginStatus$ = this.vendorStore.loginStatus$;
 
   constructor(private vendorStore: VendorStoreService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const body = document.querySelector('body');
+
+    // add class 'hover-open' to sidebar navitem while hover in sidebar-icon-only menu
+    document.querySelectorAll('.sidebar .nav-item').forEach((el) => {
+      el.addEventListener('mouseover', () => {
+        if (body.classList.contains('sidebar-icon-only')) {
+          el.classList.add('hover-open');
+        }
+      });
+      el.addEventListener('mouseout', () => {
+        if (body.classList.contains('sidebar-icon-only')) {
+          el.classList.remove('hover-open');
+        }
+      });
+    });
+  }
 }

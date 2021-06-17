@@ -43,7 +43,7 @@ export class LoadOrderComponent implements OnInit {
     this.customerStore.productToOrder = null;
     this.router.navigate([
       pathRoute([CONSTANTS.routes.customer.listProducts], {
-        commerceId: this.commerce.id,
+        commerceUrl: this.commerce.url,
       }),
     ]);
   }

@@ -34,6 +34,7 @@ import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
 import { PipeModule } from './utils/pipe.module';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { IconTitleComponent } from './components/icon-title/icon-title.component';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -58,6 +59,7 @@ export function initApp(provider: AppInitializerService): any {
     LoginComponent,
     NavbarComponent,
     SidebarComponent,
+    IconTitleComponent,
   ],
   imports: [
     BrowserModule,

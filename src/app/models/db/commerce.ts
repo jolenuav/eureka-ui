@@ -10,6 +10,7 @@ export default class Commerce {
   _name?: string;
   _rate?: number;
   _sections?: string[];
+  _url?: string;
 
   static parse(obj: any): Commerce {
     const commerce = new Commerce();
@@ -22,6 +23,7 @@ export default class Commerce {
     commerce.name = obj.name;
     commerce.rate = obj.rate;
     commerce.sections = obj.sections;
+    commerce.url = obj.url;
     return commerce;
   }
 
@@ -36,6 +38,7 @@ export default class Commerce {
     commerce.name = this.name;
     commerce.rate = this.rate;
     commerce.sections = this.sections;
+    commerce.url = this.url;
     return commerce;
   }
 
@@ -102,5 +105,12 @@ export default class Commerce {
   }
   set sections(sections: string[]) {
     this._sections = sections;
+  }
+
+  get url(): string {
+    return this._url;
+  }
+  set url(url: string) {
+    this._url = url;
   }
 }

@@ -60,9 +60,12 @@ export class SearchCommerceComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((elements) => elements.unsubscribe());
   }
 
-  handlerClickCard(id: string): void {
+  handlerClickCard(commerce: Commerce): void {
+    this.customerStore.commerceSelected = commerce;
     this.route.navigate([
-      pathRoute([CONSTANTS.routes.customer.listProducts], { commerceId: id }),
+      pathRoute([CONSTANTS.routes.customer.listProducts], {
+        commerceUrl: commerce.url,
+      }),
     ]);
   }
 }

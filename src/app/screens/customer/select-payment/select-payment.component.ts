@@ -58,7 +58,7 @@ export class SelectPaymentComponent implements OnInit {
     if (!this.order || this.order?.products.length === 0) {
       this.router.navigate([
         pathRoute([CONSTANTS.routes.customer.listProducts], {
-          commerceId: this.commerce.id,
+          commerceUrl: this.commerce.url,
         }),
       ]);
       return;
@@ -108,7 +108,7 @@ export class SelectPaymentComponent implements OnInit {
           CONSTANTS.routes.customer.listProducts,
           CONSTANTS.routes.customer.order,
         ],
-        { commerceId: this.commerce.id }
+        { commerceUrl: this.commerce.url, }
       ),
     ]);
   }
@@ -121,7 +121,7 @@ export class SelectPaymentComponent implements OnInit {
           CONSTANTS.routes.customer.listProducts,
           CONSTANTS.routes.customer.orderConfirm,
         ],
-        { commerceId: this.commerce.id }
+        { commerceUrl: this.commerce.url, }
       ),
     ]);
   }

@@ -14,10 +14,10 @@ import { DetailModalComponent } from './detail-modal/detail-modal.component';
   styleUrls: ['./order-list.component.scss'],
 })
 export class OrderListComponent implements OnInit {
+  reference: number;
   ordersSubject = new BehaviorSubject<Order[]>([]);
   orders$ = this.ordersSubject.asObservable();
   subscription: Subscription;
-  reference: number;
 
   constructor(
     private modalService: NgbModal,

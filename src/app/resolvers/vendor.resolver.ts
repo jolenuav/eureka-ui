@@ -4,8 +4,6 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import PaymentMethod from '../models/db/payment-method';
-import Product from '../models/db/product';
 import SessionToken from '../models/db/session-token';
 import User from '../models/db/user';
 import { UserService } from '../services/firestore/user.service';
@@ -30,8 +28,9 @@ export abstract class VendorResolver implements Resolve<any> {
       JSON.parse(sessionStorage.getItem('sessionToken'))
     );
     if (!this.vendorStore.user) {
-      console.log(sessionToken);
-      this.vendorStore.user = await this.userService.findById(sessionToken.userId);
+      this.vendorStore.user = await this.userService.findById(
+        sessionToken.userId
+      );
     }
     return this.vendorStore.user;
   }

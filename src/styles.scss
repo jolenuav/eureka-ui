@@ -1,6 +1,7 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-icons/font/bootstrap-icons.css';
+@import '~@mdi/font/scss/materialdesignicons.scss';
 @import './assets/scss/variables.scss';
 
 @font-face {
@@ -31,6 +32,13 @@ body {
 div {
   color: $color-black;
 }
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $color-black;
+}
 
 /* width */
 @media (min-width: 1024px) {
@@ -58,6 +66,11 @@ div {
 .container-scroll-x {
   width: 100%;
   overflow-x: auto;
+}
+
+.container-scroll-y {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .form-control {
@@ -160,6 +173,10 @@ div {
 
 .text-primary {
   color: $color-primary !important;
+}
+
+.text-primary-light {
+  color: $color-primary-disabled !important;
 }
 
 .text-link {
@@ -272,10 +289,10 @@ input.input-number::-webkit-inner-spin-button {
 }
 
 .dropdown-toggle::after {
-  display: none;
+  display: none !important;
 }
 .dropdown-menu {
-  border: none;
+  border: none !important;
 }
 
 .bgl-diff {
@@ -325,4 +342,8 @@ input.input-number::-webkit-inner-spin-button {
 
 .table-rounded {
   border-radius: 10px;
+}
+
+.text-success {
+  color: #1bcfb4 !important;
 }

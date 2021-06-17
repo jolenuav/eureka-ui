@@ -59,7 +59,7 @@ export class OrderConfirmComponent implements OnInit {
     if (!this.order || this.order?.products.length === 0) {
       this.router.navigate([
         pathRoute([CONSTANTS.routes.customer.listProducts], {
-          commerceId: this.commerce.id,
+          commerceUrl: this.commerce.url
         }),
       ]);
       return;
@@ -73,7 +73,7 @@ export class OrderConfirmComponent implements OnInit {
           CONSTANTS.routes.customer.listProducts,
           CONSTANTS.routes.customer.paymentMethod,
         ],
-        { commerceId: this.commerce.id }
+        { commerceUrl: this.commerce.url }
       ),
     ]);
   }

@@ -8,10 +8,13 @@ export class SelectPaymentResolver extends CustomerResolver {
     state: RouterStateSnapshot
   ): Promise<any> {
     this.store.startLoader();
-    const commerceId = route.params.commerceId;
+    const commerceUrl = route.params.commerceUrl;
+    const commerce = await this.getCommerSelected(commerceUrl); // Heredado
     const resp = {
-      commerce: await this.getCommerSelected(commerceId), // Heredado
-      paymentMethods: await this.getPaymentMethodByCommerceSelected(commerceId), // Heredado
+      commerce,
+      paymentMethods: await this.getPaymentMethodByCommerceSelected(
+        commerce.id
+      ), // Heredado
     };
     this.store.endLoader();
     return resp;

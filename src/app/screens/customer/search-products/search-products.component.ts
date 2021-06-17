@@ -52,7 +52,7 @@ export class SearchProductsComponent implements OnInit {
           CONSTANTS.routes.customer.loadOrder,
         ],
         {
-          commerceId: this.commerce.id,
+          commerceUrl: this.commerce.url,
           productId: product.id,
         }
       ),
@@ -107,7 +107,7 @@ export class SearchProductsComponent implements OnInit {
           CONSTANTS.routes.customer.listProducts,
           CONSTANTS.routes.customer.order,
         ],
-        { commerceId: this.commerce.id }
+        { commerceUrl: this.commerce.url, }
       ),
     ]);
   }

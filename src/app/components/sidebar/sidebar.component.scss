@@ -35,13 +35,12 @@
         align-items: center;
         white-space: nowrap;
         padding: 1.125rem 0 1.125rem 0;
-        color: #3e4b5b;
+        color: $color-black;
         -webkit-transition-duration: 0.45s;
         transition-duration: 0.45s;
         transition-property: color;
         -webkit-transition-property: color;
         .menu-title {
-          color: inherit;
           display: inline-block;
           font-size: 0.875rem;
           line-height: 1;
@@ -90,10 +89,10 @@
             &.online {
               background: #1bcfb4;
             }
-            &.offline {
+            &.busy {
               background: #fe7c96;
             }
-            &.busy {
+            &.offline {
               background: #fed713;
             }
           }
@@ -102,9 +101,12 @@
           margin-left: 1rem;
         }
         .nav-profile-badge {
-          font-size: 1rem;
+          font-size: 1.125rem;
           margin-left: auto;
         }
+      }
+      &:hover {
+        background: $color-light;
       }
     }
   }
@@ -159,6 +161,8 @@
           &.hover-open {
             .nav-link {
               .menu-title {
+                display: flex;
+                align-items: center;
                 background: $color-light;
                 padding: 0.5rem 1.4rem;
                 left: 70px;

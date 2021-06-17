@@ -6,7 +6,7 @@ export const CONSTANTS = {
   routes: {
     commerces: 'commerces',
     customer: {
-      listProducts: 'products/:commerceId',
+      listProducts: ':commerceUrl',
       order: 'order',
       loadOrder: 'order/load/:productId',
       paymentMethod: 'order/payment',

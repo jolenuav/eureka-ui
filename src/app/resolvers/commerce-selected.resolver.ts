@@ -8,8 +8,8 @@ export class CommerceSelectedResolver extends CustomerResolver {
     state: RouterStateSnapshot
   ): Promise<any> {
     this.store.startLoader();
-    const commerceId = route.params.commerceId;
-    const resp = await this.getCommerSelected(commerceId); // Heredado
+    const commerceUrl = route.params.commerceUrl;
+    const resp = await this.getCommerSelected(commerceUrl); // Heredado
     this.store.endLoader();
     return resp;
   }

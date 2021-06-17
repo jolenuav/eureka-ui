@@ -8,10 +8,10 @@ export class LoadOrderResolver extends CustomerResolver {
     state: RouterStateSnapshot
   ): Promise<any> {
     this.store.startLoader();
-    const commerceId = route.params.commerceId;
+    const commerceUrl = route.params.commerceUrl;
     const productId = route.params.productId;
     const resp = {
-      commerce: await this.getCommerSelected(commerceId), // Heredado
+      commerce: await this.getCommerSelected(commerceUrl), // Heredado
       product: await this.getProductToOrder(productId), // Heredado
     };
     this.store.endLoader();

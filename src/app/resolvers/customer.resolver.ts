@@ -28,10 +28,10 @@ export abstract class CustomerResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): any;
 
-  async getCommerSelected(commerceId: string): Promise<Commerce> {
+  async getCommerSelected(commerceUrl: string): Promise<Commerce> {
     let commerce = this.customerStore.commerceSelected;
     if (!commerce) {
-      commerce = await this.commerceService.findById(commerceId);
+      commerce = await this.commerceService.findByUrl(commerceUrl);
       this.customerStore.commerceSelected = commerce;
     }
     return commerce;

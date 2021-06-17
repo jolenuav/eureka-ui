@@ -13,8 +13,7 @@ export class CommerceService {
 
   async findAll(): Promise<Commerce[]> {
     return this.firestore
-      .collection(this.collection, (ref) =>
-      ref.where('enabled', '==', true))
+      .collection(this.collection, (ref) => ref.where('enabled', '==', true))
       .get()
       .pipe(
         map((data) => {
@@ -40,6 +39,23 @@ export class CommerceService {
           const commerce = Commerce.parse(data.data());
           commerce.id = id;
           return commerce;
+        })
+      )
+      .toPromise();
+  }
+
+  async findByUrl(url: string): Promise<Commerce> {
+    return this.firestore
+      .collection(this.collection, (ref) => ref.where('url', '==', url))
+      .get()
+      .pipe(
+        map((data) => {
+          if (data.docs.length > 0) {
+            const commerce = Commerce.parse(data.docs[0].data());
+            commerce.id = data.docs[0].id;
+            return commerce;
+          }
+          return null;
         })
       )
       .toPromise();

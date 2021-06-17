@@ -35,14 +35,12 @@ export class UserService {
   }
 
   async findById(id: string): Promise<User> {
-    console.log('buscar: ', id);
     return this.firestore
       .collection(this.collection)
       .doc(id)
       .get()
       .pipe(
         map((data) => {
-          console.log(data.data());
           const user = User.parse(data.data());
           user.id = id;
           return user;

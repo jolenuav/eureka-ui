@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/authenticate.service';
@@ -14,8 +14,9 @@ import { CONSTANTS } from 'src/app/utils/constants';
   providers: [NgbDropdownConfig],
 })
 export class NavbarComponent implements OnInit {
-  public iconOnlyToggled = false;
-  public sidebarToggled = false;
+  iconOnlyToggled = false;
+  loginStatus$ = this.vendorStore.loginStatus$;
+  sidebarToggled = false;
   user = this.vendorStore.user;
 
   constructor(
@@ -29,7 +30,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.vendorStore.user);
   }
 
   toggleOffcanvas(): void {

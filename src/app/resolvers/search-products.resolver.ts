@@ -9,10 +9,11 @@ export class SearchProductsResolver extends CustomerResolver {
     state: RouterStateSnapshot
   ): Promise<any> {
     this.store.startLoader();
-    const commerceId = route.params.commerceId;
-    const products: Product[] = await this.getProductByCommerceId(commerceId); // Heredado
+    const commerceUrl = route.params.commerceUrl;
+    const commerce = await this.getCommerSelected(commerceUrl); // Heredado
+    const products: Product[] = await this.getProductByCommerceId(commerce.id); // Heredado
     const resp = {
-      commerce: await this.getCommerSelected(commerceId), // Heredado
+      commerce,
       products,
       productsBySection: await this.getProductsBySections(products),
     };

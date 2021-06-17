@@ -86,7 +86,7 @@ export class OrderComponent implements OnInit {
   goBack(): void {
     this.router.navigate([
       pathRoute([CONSTANTS.routes.customer.listProducts], {
-        commerceId: this.commerce.id,
+        commerceUrl: this.commerce.url,
       }),
     ]);
   }
@@ -122,7 +122,7 @@ export class OrderComponent implements OnInit {
           CONSTANTS.routes.customer.listProducts,
           CONSTANTS.routes.customer.paymentMethod,
         ],
-        { commerceId: this.commerce.id }
+        { commerceUrl: this.commerce.url }
       ),
     ]);
   }
