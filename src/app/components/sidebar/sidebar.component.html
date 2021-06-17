@@ -1,0 +1,42 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item nav-profile">
+      <a href="javascript:;" class="nav-link">
+        <div class="nav-profile-image">
+          <img [src]="user.image" alt="profile" />
+          <span class="login-status online"></span>
+          <!--change to offline or busy as needed-->
+        </div>
+        <div class="nav-profile-text d-flex flex-column">
+          <span class="font-weight-bold mb-2">{{ user.name }}</span>
+          <span class="text-muted text-small">{{ user.username }}</span>
+        </div>
+        <i class="bi bi-bookmark-star-fill text-success nav-profile-badge"></i>
+      </a>
+    </li>
+
+    <li class="nav-item" [ngClass]="{ active: orders.isActive }">
+      <a
+        class="nav-link"
+        routerLink="/partner/orders"
+        routerLinkActive
+        #orders="routerLinkActive"
+      >
+        <span class="menu-title">Ordenes</span>
+        <i class="bi bi-list-ul menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item" [ngClass]="{ active: test.isActive }">
+      <a
+        class="nav-link"
+        routerLink="/partner/test"
+        routerLinkActive
+        #test="routerLinkActive"
+      >
+        <span class="menu-title">Prueba</span>
+        <i class="bi bi-box menu-icon"></i>
+      </a>
+    </li>
+  </ul>
+</nav>

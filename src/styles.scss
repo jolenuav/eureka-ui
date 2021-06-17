@@ -15,7 +15,6 @@
   src: url('./assets//fonts/Poppins/Poppins-Italic.ttf') format('truetype');
 }
 
-
 html {
   font-family: 'Open-Sans';
   color: $color-black;
@@ -318,4 +317,12 @@ input.input-number::-webkit-inner-spin-button {
 .dropdown .dropdown-menu .dropdown-item:hover {
   background-color: $color-light;
   color: $color-primary;
+}
+
+.text-small {
+  font-size: 12px;
+}
+
+.table-rounded {
+  border-radius: 10px;
 }

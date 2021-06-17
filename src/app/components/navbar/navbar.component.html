@@ -21,13 +21,12 @@
   >
     <a class="navbar-brand brand-logo" href="#">
       <img
-        class="d-xl-none d-block"
-        src="https://www.bootstrapdash.com/demo/purple-admin-free/assets/images/logo-mini.svg"
-      />
-
-      <img
-        class="d-none d-xl-block"
         src="https://www.bootstrapdash.com/demo/purple-admin-free/assets/images/logo.svg"
+      />
+    </a>
+    <a class="navbar-brand brand-logo-mini" href="#">
+      <img
+        src="https://www.bootstrapdash.com/demo/purple-admin-free/assets/images/logo-mini.svg"
       />
     </a>
   </div>
@@ -52,14 +51,11 @@
           ngbDropdownToggle
         >
           <div class="nav-profile-img">
-            <img
-              src="https://www.bootstrapdash.com/demo/purple-admin-free/assets/images/faces/face1.jpg"
-              alt="image"
-            />
+            <img [src]="user.image" alt="image" />
             <span class="availability-status online"></span>
           </div>
           <div class="nav-profile-text">
-            <p class="mb-1">Eureka admin</p>
+            <p class="mb-1">{{ user.name }}</p>
           </div>
         </a>
 
@@ -69,7 +65,7 @@
           aria-labelledby="profileDropdown"
         >
           <div class="dropdown-divider m-0"></div>
-          <a class="dropdown-item" href="javascript:;">
+          <a class="dropdown-item" (click)="signOut()">
             <i class="bi bi-power mr-2 text-primary"></i>
             Cerrar sesión
           </a>

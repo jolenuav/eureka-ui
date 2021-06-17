@@ -15,8 +15,8 @@ export const CONSTANTS = {
     partner: {
       main: 'partner',
       orderList: 'orders',
-      login: 'login'
-    }
+      login: 'login',
+    },
   },
   documentTypes: {
     identityCard: {
@@ -34,37 +34,38 @@ export const CONSTANTS = {
     diff: {
       id: 'D',
       prefix: 'DIFF',
-      description: 'Borrador'
+      description: 'Borrador',
     },
     refused: {
       id: 'R',
       prefix: 'REFUSED',
-      description: 'Rechazada'
+      description: 'Rechazada',
     },
     canceled: {
       id: 'C',
       prefix: 'CANCELED',
-      description: 'Cancelada'
+      description: 'Cancelada',
     },
     pendding: {
       id: 'P',
       prefix: 'PENDING',
-      description: 'Pendiente'
+      description: 'Pendiente',
     },
     inProgress: {
       id: 'IP',
       prefix: 'IN PROGRESS',
-      description: 'En proceso'
+      description: 'En proceso',
     },
     inComming: {
       id: 'IC',
       prefix: 'IN COMMING',
-      description: 'En camino'
+      description: 'En camino',
     },
     finished: {
       id: 'F',
       prefix: 'FINISHED',
-      description: 'Finalizado'
+      description: 'Finalizado',
     },
   },
+  menu: [],
 };

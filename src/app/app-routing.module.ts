@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginAuthGuard } from './guards/partner/login-auth.guard';
 import { PartnerViewAuthGuard } from './guards/partner/partner-view-auth.guard';
+import { AuthResolver } from './resolvers/auth.resolver';
 import { CommerceSelectedResolver } from './resolvers/commerce-selected.resolver';
 import { LoadOrderResolver } from './resolvers/load-order.resolver';
 import { SearchProductsResolver } from './resolvers/search-products.resolver';
@@ -66,12 +67,13 @@ const routes: Routes = [
       {
         path: CONSTANTS.routes.partner.login,
         component: LoginComponent,
-        canActivate: [LoginAuthGuard]
+        canActivate: [LoginAuthGuard],
       },
       {
         path: CONSTANTS.routes.partner.orderList,
         component: OrderListComponent,
-        canActivate: [PartnerViewAuthGuard]
+        canActivate: [PartnerViewAuthGuard],
+        resolve: { auth: AuthResolver },
       },
     ],
   },

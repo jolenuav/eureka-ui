@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import User from 'src/app/models/db/user';
 import { utf8_to_b64 } from 'src/app/utils/commons.function';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class UserService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  async signIn(username: string, password: string): Promise<boolean> {
+  async signIn(username: string, password: string): Promise<User> {
     return this.firestore
       .collection(this.collection, (ref) =>
         ref
@@ -22,13 +23,29 @@ export class UserService {
       .get()
       .pipe(
         map((data) => {
-          if (data.docs.length === 0) {
-            return false;
+          if (data.docs.length > 0) {
+            const user = User.parse(data.docs[0].data());
+            user.id = data.docs[0].id;
+            return user;
           }
-          if (data.docs[0].id) {
-            return true;
-          }
-          return false;
+          return null;
+        })
+      )
+      .toPromise();
+  }
+
+  async findById(id: string): Promise<User> {
+    console.log('buscar: ', id);
+    return this.firestore
+      .collection(this.collection)
+      .doc(id)
+      .get()
+      .pipe(
+        map((data) => {
+          console.log(data.data());
+          const user = User.parse(data.data());
+          user.id = id;
+          return user;
         })
       )
       .toPromise();

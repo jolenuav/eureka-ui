@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/services/authenticate.service';
+import { StoreService } from 'src/app/services/store.service';
+import { VendorStoreService } from 'src/app/services/vendor-store.service';
+import { pathRoute } from 'src/app/utils/commons.function';
+import { CONSTANTS } from 'src/app/utils/constants';
 
 @Component({
   selector: 'eu-navbar',
@@ -10,12 +16,21 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 export class NavbarComponent implements OnInit {
   public iconOnlyToggled = false;
   public sidebarToggled = false;
+  user = this.vendorStore.user;
 
-  constructor(config: NgbDropdownConfig) {
-    config.placement = 'bottom-right';
+  constructor(
+    private authService: AuthService,
+    private config: NgbDropdownConfig,
+    private router: Router,
+    private store: StoreService,
+    private vendorStore: VendorStoreService
+  ) {
+    this.config.placement = 'bottom-right';
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.vendorStore.user);
+  }
 
   toggleOffcanvas(): void {
     document.querySelector('.sidebar-offcanvas').classList.toggle('active');
@@ -42,5 +57,17 @@ export class NavbarComponent implements OnInit {
         body.classList.remove('sidebar-hidden');
       }
     }
+  }
+
+  async signOut(): Promise<void> {
+    this.store.startLoader();
+    await this.authService.signOut();
+    this.router.navigate([
+      pathRoute([
+        CONSTANTS.routes.partner.main,
+        CONSTANTS.routes.partner.login,
+      ]),
+    ]);
+    this.store.endLoader();
   }
 }

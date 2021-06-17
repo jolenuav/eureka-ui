@@ -1,0 +1,247 @@
+@import '../../../styles.scss';
+
+.sidebar {
+  min-height: calc(100vh - 70px);
+  background: #ffffff;
+  font-family: 'ubuntu-regular', sans-serif;
+  padding: 0;
+  width: 260px;
+  z-index: 11;
+  transition: width 0.25s ease, background 0.25s ease;
+  -webkit-transition: width 0.25s ease, background 0.25s ease;
+  -moz-transition: width 0.25s ease, background 0.25s ease;
+  -ms-transition: width 0.25s ease, background 0.25s ease;
+  .nav {
+    overflow: hidden;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-bottom: 60px;
+    .nav-item {
+      padding: 0 2.25rem;
+      -webkit-transition-duration: 0.25s;
+      transition-duration: 0.25s;
+      transition-property: background;
+      -webkit-transition-property: background;
+      .nav-link {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        white-space: nowrap;
+        padding: 1.125rem 0 1.125rem 0;
+        color: #3e4b5b;
+        -webkit-transition-duration: 0.45s;
+        transition-duration: 0.45s;
+        transition-property: color;
+        -webkit-transition-property: color;
+        .menu-title {
+          color: inherit;
+          display: inline-block;
+          font-size: 0.875rem;
+          line-height: 1;
+          vertical-align: middle;
+        }
+        i.menu-icon {
+          font-size: 1.125rem;
+          line-height: 1;
+          margin-left: auto;
+          color: $color-primary-disabled;
+        }
+      }
+      &.active {
+        background: #ffffff;
+      }
+      &.active > .nav-link {
+        .menu-title {
+          color: $color-primary;
+        }
+        i {
+          color: $color-primary;
+        }
+      }
+      &.nav-profile .nav-link {
+        height: auto;
+        line-height: 1;
+        border-top: 0;
+        padding: 1.25rem 0;
+        .nav-profile-image {
+          position: relative;
+          width: 44px;
+          height: 44px;
+          img {
+            width: 44px;
+            height: 44px;
+            border-radius: 100%;
+          }
+          .login-status {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 100%;
+            border: 2px solid #ffffff;
+            bottom: 5px;
+            right: -5px;
+            &.online {
+              background: #1bcfb4;
+            }
+            &.offline {
+              background: #fe7c96;
+            }
+            &.busy {
+              background: #fed713;
+            }
+          }
+        }
+        .nav-profile-text {
+          margin-left: 1rem;
+        }
+        .nav-profile-badge {
+          font-size: 1rem;
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
+
+// Sidebar icon only layout start
+:host-context(.sidebar-icon-only) {
+  @media (min-width: 992px) {
+    .sidebar {
+      width: 70px;
+      .nav {
+        overflow: visible;
+        margin-left: 0;
+        margin-right: 0;
+        .nav-item {
+          padding: 0 1rem;
+          position: relative;
+          .nav-link {
+            display: block;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            text-align: center;
+            position: static;
+            .menu-title,
+            .badge,
+            .menu-sub-title {
+              display: none;
+            }
+            .menu-title {
+              @include border-radius(0 5px 5px 0px);
+              background: $color-light;
+            }
+            i {
+              &.menu-icon {
+                margin-right: 0;
+                margin-left: 0;
+                margin-bottom: 0;
+              }
+              &.menu-arrow {
+                display: none;
+              }
+            }
+            &[aria-expanded] {
+              .menu-title {
+                @include border-radius(0 5px 0 0px);
+              }
+            }
+          }
+          .collapse {
+            display: none;
+          }
+          &.hover-open {
+            .nav-link {
+              .menu-title {
+                background: $color-light;
+                padding: 0.5rem 1.4rem;
+                left: 70px;
+                position: absolute;
+                text-align: left;
+                top: 0;
+                bottom: 0;
+                width: 190px;
+                z-index: 1;
+                line-height: 1.8;
+                -webkit-box-shadow: 4px 0px 7px 0px rgba(182, 185, 189, 0.25);
+                box-shadow: 4px 0px 7px 0px rgba(182, 185, 189, 0.25);
+                &:after {
+                  display: none;
+                }
+              }
+            }
+            .collapse,
+            .collapsing {
+              display: block;
+              background: $color-light;
+              @include border-radius(0 0 5px 0);
+              position: absolute;
+              left: 70px;
+              width: 190px;
+              -webkit-box-shadow: 4px 4px 7px 0px rgba(182, 185, 189, 0.25);
+              box-shadow: 4px 4px 7px 0px rgba(182, 185, 189, 0.25);
+            }
+          }
+          &.nav-profile {
+            padding: 0 0.3rem;
+            display: none;
+            .nav-link {
+              .nav-profile-text {
+                display: none;
+              }
+              .nav-profile-badge {
+                display: none;
+              }
+            }
+          }
+        }
+        &:not(.sub-menu) {
+          .nav-item {
+            &.active {
+              border-radius: 0;
+            }
+            &:hover {
+              .nav-link {
+                border-radius: 0;
+              }
+            }
+          }
+        }
+        &.sub-menu {
+          padding: 0 0 0 1.5rem;
+          .nav-item {
+            .nav-link {
+              text-align: left;
+              padding-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// Sidebar icon only layout end
+
+/* style for off-canvas menu*/
+@media screen and (max-width: 991px) {
+  .sidebar-offcanvas {
+    position: fixed;
+    max-height: calc(100vh - 70px);
+    top: 70px;
+    bottom: 0;
+    overflow: auto;
+    right: -260px;
+    -webkit-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+    &.active {
+      right: 0;
+    }
+  }
+}

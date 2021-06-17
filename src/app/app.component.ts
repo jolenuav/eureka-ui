@@ -2,11 +2,11 @@ import {
   AfterViewChecked,
   ChangeDetectorRef,
   Component,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { version } from 'package.json';
-import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
+import { VendorStoreService } from './services/vendor-store.service';
 
 @Component({
   selector: 'eu-root',
@@ -14,19 +14,23 @@ import { StoreService } from './services/store.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewChecked {
-  title = 'eureka-web';
-  version = version;
+  fullPage = true;
   showLoader = this.storeService.showLoader.asObservable();
-  userLoggeg$ = this.authService.userLogged.asObservable();
+  title = 'eureka-web';
+  userLoggeg$ = this.vendorStore.user$;
+  version = version;
 
   constructor(
-    private authService: AuthService,
     private cd: ChangeDetectorRef,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private vendorStore: VendorStoreService
   ) {}
 
   ngOnInit(): void {
-    this.userLoggeg$.subscribe(item => console.log('logged = ', item));
+    this.userLoggeg$.subscribe((user) => {
+      user ? (this.fullPage = false) : (this.fullPage = true);
+      console.log(this.fullPage);
+    });
   }
 
   ngAfterViewChecked(): void {

@@ -50,7 +50,8 @@ a:-webkit-any-link {
       margin-right: 0;
       padding: 0.25rem 0;
       width: 100%;
-      .brand-logo-mini {
+      &.brand-logo-mini {
+        display: none;
         img {
           width: calc(70px - 50px);
           max-width: 100%;
@@ -141,9 +142,15 @@ a:-webkit-any-link {
                 border: 2px solid #ffffff;
                 bottom: 5px;
                 right: -5px;
-              }
-              .availability-status.online {
-                background: #1bcfb4;
+                &.online {
+                  background: #1bcfb4;
+                }
+                &.offline {
+                  background: #fe7c96;
+                }
+                &.busy {
+                  background: #fed713;
+                }
               }
             }
             .nav-profile-text {
@@ -183,6 +190,9 @@ a:-webkit-any-link {
 @media (max-width: 480px) {
   .navbar .navbar-brand-wrapper {
     width: 55px;
+    .brand-logo-mini {
+      padding-top: 0px;
+    }
   }
 }
 @media (max-width: 991px) {
@@ -224,6 +234,14 @@ a:-webkit-any-link {
     }
     .navbar-brand-wrapper {
       width: 75px;
+      .navbar-brand {
+        &.brand-logo {
+          display: none;
+        }
+        &.brand-logo-mini {
+          display: inline-block;
+        }
+      }
     }
   }
 }
@@ -281,4 +299,23 @@ a:-webkit-any-link {
   animation-duration: 0.25s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+
+:host-context(.sidebar-icon-only) {
+  @media (min-width: 992px) {
+    .navbar {
+      .navbar-brand-wrapper {
+        width: 70px;
+        .brand-logo {
+          display: none;
+        }
+        .brand-logo-mini {
+          display: block;
+        }
+      }
+      .navbar-menu-wrapper {
+        width: calc(100% - 70px);
+      }
+    }
+  }
 }

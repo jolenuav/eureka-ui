@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import SessionToken from '../models/db/session-token';
 import { generateID } from '../utils/commons.function';
 import { SessionTokenService } from './firestore/sessionToken.service';
 import { UserService } from './firestore/user.service';
-import * as moment from 'moment';
-import { BehaviorSubject } from 'rxjs';
+import { VendorStoreService } from './vendor-store.service';
 
 @Injectable()
 export class AuthService {
-  userLogged = new BehaviorSubject<boolean>(this._tokenValid());
-
   constructor(
     private userService: UserService,
-    private sessionTokenService: SessionTokenService
+    private sessionTokenService: SessionTokenService,
+    private vendorStore: VendorStoreService
   ) {}
 
   async signIn(username: string, password: string): Promise<boolean> {
@@ -21,6 +20,7 @@ export class AuthService {
       const sessionToken = new SessionToken();
       sessionToken.id = generateID();
       sessionToken.username = username;
+      sessionToken.userId = resp.id;
       sessionToken.expireToken = this.calculateExpireDate();
       sessionStorage.setItem(
         'sessionToken',
@@ -29,7 +29,17 @@ export class AuthService {
       await this.sessionTokenService.deleteByUsername(sessionToken);
       await this.sessionTokenService.save(sessionToken);
     }
-    return resp;
+    this.vendorStore.user = resp;
+    return resp ? true : false;
+  }
+
+  async signOut(): Promise<void> {
+    const sessionToken = SessionToken.parse(
+      JSON.parse(sessionStorage.getItem('sessionToken'))
+    );
+    await this.sessionTokenService.delete(sessionToken.id);
+    sessionStorage.clear();
+    this.vendorStore.user = null;
   }
 
   calculateExpireDate(): Date {
@@ -49,9 +59,5 @@ export class AuthService {
       return true;
     }
     return false;
-  }
-
-  set _userLogged(isLogged: boolean) {
-    this.userLogged.next(isLogged);
   }
 }
