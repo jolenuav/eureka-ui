@@ -1,11 +1,11 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/authenticate.service';
 import { StoreService } from 'src/app/services/store.service';
 import { VendorStoreService } from 'src/app/services/vendor-store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-navbar',
@@ -64,8 +64,8 @@ export class NavbarComponent implements OnInit {
     await this.authService.signOut();
     this.router.navigate([
       pathRoute([
-        CONSTANTS.routes.partner.main,
-        CONSTANTS.routes.partner.login,
+        ROUTES.partner.main,
+        ROUTES.partner.login,
       ]),
     ]);
     this.store.endLoader();

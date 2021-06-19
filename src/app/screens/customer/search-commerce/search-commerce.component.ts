@@ -8,7 +8,7 @@ import Order from 'src/app/models/db/order/order';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { StoreService } from 'src/app/services/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-search-commerce',
@@ -63,7 +63,7 @@ export class SearchCommerceComponent implements OnInit, OnDestroy {
   handlerClickCard(commerce: Commerce): void {
     this.customerStore.commerceSelected = commerce;
     this.route.navigate([
-      pathRoute([CONSTANTS.routes.customer.listProducts], {
+      pathRoute([ROUTES.customer.listProducts], {
         commerceUrl: commerce.url,
       }),
     ]);

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/authenticate.service';
 import { StoreService } from 'src/app/services/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-login',
@@ -35,8 +35,8 @@ export class LoginComponent implements OnInit {
     if (signIn) {
       this.router.navigate([
         pathRoute([
-          CONSTANTS.routes.partner.main,
-          CONSTANTS.routes.partner.orderList,
+          ROUTES.partner.main,
+          ROUTES.partner.orderList,
         ]),
       ]);
     }

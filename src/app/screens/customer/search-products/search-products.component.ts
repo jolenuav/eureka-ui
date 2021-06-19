@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import Order from 'src/app/models/db/order/order';
 import Commerce from 'src/app/models/db/commerce';
+import Order from 'src/app/models/db/order/order';
 import Product from 'src/app/models/db/product';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-search-products',
@@ -48,8 +48,8 @@ export class SearchProductsComponent implements OnInit {
     this.router.navigate([
       pathRoute(
         [
-          CONSTANTS.routes.customer.listProducts,
-          CONSTANTS.routes.customer.loadOrder,
+          ROUTES.customer.listProducts,
+          ROUTES.customer.loadOrder,
         ],
         {
           commerceUrl: this.commerce.url,
@@ -96,7 +96,7 @@ export class SearchProductsComponent implements OnInit {
     this.customerStore.order = new Order();
     this.customerStore.products = [];
     this.router.navigate([
-      pathRoute([CONSTANTS.routes.commerces], { commerceId: this.commerce.id }),
+      pathRoute([ROUTES.commerces], { commerceId: this.commerce.id }),
     ]);
   }
 
@@ -104,8 +104,8 @@ export class SearchProductsComponent implements OnInit {
     this.router.navigate([
       pathRoute(
         [
-          CONSTANTS.routes.customer.listProducts,
-          CONSTANTS.routes.customer.order,
+          ROUTES.customer.listProducts,
+          ROUTES.customer.order,
         ],
         { commerceUrl: this.commerce.url, }
       ),

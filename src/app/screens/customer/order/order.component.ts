@@ -7,6 +7,7 @@ import { ProductService } from 'src/app/services/firestore/product.service';
 import { StoreService } from 'src/app/services/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-order',
@@ -85,7 +86,7 @@ export class OrderComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate([
-      pathRoute([CONSTANTS.routes.customer.listProducts], {
+      pathRoute([ROUTES.customer.listProducts], {
         commerceUrl: this.commerce.url,
       }),
     ]);
@@ -119,8 +120,8 @@ export class OrderComponent implements OnInit {
     this.router.navigate([
       pathRoute(
         [
-          CONSTANTS.routes.customer.listProducts,
-          CONSTANTS.routes.customer.paymentMethod,
+          ROUTES.customer.listProducts,
+          ROUTES.customer.paymentMethod,
         ],
         { commerceUrl: this.commerce.url }
       ),

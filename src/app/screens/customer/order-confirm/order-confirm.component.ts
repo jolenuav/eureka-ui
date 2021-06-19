@@ -9,8 +9,8 @@ import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { OrderService } from 'src/app/services/firestore/order.service';
 import { StoreService } from 'src/app/services/store.service';
 import { generateOrderID, pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
 import { PATTERN } from 'src/app/utils/pattern';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-order-confirm',
@@ -57,7 +57,7 @@ export class OrderConfirmComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (!this.order || this.order?.products.length === 0) {
       this.router.navigate([
-        pathRoute([CONSTANTS.routes.customer.listProducts], {
+        pathRoute([ROUTES.customer.listProducts], {
           commerceUrl: this.commerce.url,
         }),
       ]);
@@ -69,8 +69,8 @@ export class OrderConfirmComponent implements OnInit {
     this.router.navigate([
       pathRoute(
         [
-          CONSTANTS.routes.customer.listProducts,
-          CONSTANTS.routes.customer.paymentMethod,
+          ROUTES.customer.listProducts,
+          ROUTES.customer.paymentMethod,
         ],
         { commerceUrl: this.commerce.url }
       ),
@@ -93,7 +93,7 @@ export class OrderConfirmComponent implements OnInit {
     this.customerStore.loadPaymentMathodToOrder(new PayOrder());
     this.customerStore.order = new Order();
     this.customerStore.commerceSelected = null;
-    this.router.navigate([pathRoute([CONSTANTS.routes.commerces])]);
+    this.router.navigate([pathRoute([ROUTES.commerces])]);
   }
 
   async saveOrder(): Promise<void> {

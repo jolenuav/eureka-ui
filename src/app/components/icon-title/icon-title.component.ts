@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderListComponent } from 'src/app/screens/vendor/containers/order-list/order-list.component';
 
 @Component({
   selector: 'eu-icon-title',
@@ -26,6 +25,10 @@ export class IconTitleComponent implements OnInit {
       case 'AdminCommercesComponent':
         pageTitle.title = 'Adm. Comercios';
         pageTitle.icon = 'mdi-store';
+        return pageTitle;
+      case 'ProductFormComponent':
+        pageTitle.title = 'Adm. Productos';
+        pageTitle.icon = 'mdi-package-variant-closed';
         return pageTitle;
       default:
         return '';

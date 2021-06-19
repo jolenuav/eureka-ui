@@ -8,23 +8,24 @@ import { LoadOrderResolver } from './resolvers/load-order.resolver';
 import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
 import { AdminCommercesComponent } from './screens/admin/admin-commerces/admin-commerces.component';
+import { LoginComponent } from './screens/autheticate/login/login.component';
 import { LoadOrderComponent } from './screens/customer/load-order/load-order.component';
 import { OrderConfirmComponent } from './screens/customer/order-confirm/order-confirm.component';
 import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
-import { LoginComponent } from './screens/vendor/authenticate/login/login.component';
-import { OrderListComponent } from './screens/vendor/containers/order-list/order-list.component';
-import { CONSTANTS } from './utils/constants';
+import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
+import { ProductFormComponent } from './screens/vendor/products/product-form/product-form.component';
+import { ROUTES } from './utils/routes';
 
 const routes: Routes = [
   {
-    path: CONSTANTS.routes.commerces,
+    path: ROUTES.commerces,
     component: SearchCommerceComponent,
   },
   {
-    path: CONSTANTS.routes.customer.listProducts,
+    path: ROUTES.customer.listProducts,
     children: [
       {
         path: '',
@@ -32,53 +33,58 @@ const routes: Routes = [
         resolve: { searchProduct: SearchProductsResolver },
       },
       {
-        path: CONSTANTS.routes.customer.order,
+        path: ROUTES.customer.order,
         component: OrderComponent,
         resolve: { commerce: CommerceSelectedResolver },
       },
       {
-        path: CONSTANTS.routes.customer.loadOrder,
+        path: ROUTES.customer.loadOrder,
         component: LoadOrderComponent,
         resolve: { loadOrder: LoadOrderResolver },
       },
       {
-        path: CONSTANTS.routes.customer.paymentMethod,
+        path: ROUTES.customer.paymentMethod,
         component: SelectPaymentComponent,
         resolve: { selectPayment: SelectPaymentResolver },
       },
       {
-        path: CONSTANTS.routes.customer.orderConfirm,
+        path: ROUTES.customer.orderConfirm,
         component: OrderConfirmComponent,
         resolve: { commerce: CommerceSelectedResolver },
       },
     ],
   },
   {
-    path: CONSTANTS.routes.partner.main,
+    path: ROUTES.partner.main,
     children: [
       {
         path: '',
         component: OrderListComponent,
       },
       {
-        path: CONSTANTS.routes.partner.login,
+        path: ROUTES.partner.login,
         component: LoginComponent,
         canActivate: [LoginAuthGuard],
       },
       {
-        path: CONSTANTS.routes.partner.orderList,
+        path: ROUTES.partner.orderList,
         component: OrderListComponent,
         canActivate: [PartnerViewAuthGuard],
       },
       {
-        path: CONSTANTS.routes.partner.adminCommerce,
+        path: ROUTES.partner.adminCommerce,
         component: AdminCommercesComponent,
+        canActivate: [AdminAccessAuthGuard],
+      },
+      {
+        path: ROUTES.partner.adminProduct,
+        component: ProductFormComponent,
         canActivate: [AdminAccessAuthGuard],
       },
     ],
   },
-  { path: '', redirectTo: CONSTANTS.routes.commerces, pathMatch: 'full' },
-  { path: '**', redirectTo: CONSTANTS.routes.commerces, pathMatch: 'full' },
+  { path: '', redirectTo: ROUTES.commerces, pathMatch: 'full' },
+  { path: '**', redirectTo: ROUTES.commerces, pathMatch: 'full' },
 ];
 
 @NgModule({

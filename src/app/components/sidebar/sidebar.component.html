@@ -40,5 +40,17 @@
         <i class="mdi mdi-store menu-icon"></i>
       </a>
     </li>
+
+    <li class="nav-item" [ngClass]="{ active: adminProduct.isActive }">
+      <a
+        class="nav-link"
+        routerLink="/partner/admin_product"
+        routerLinkActive
+        #adminProduct="routerLinkActive"
+      >
+        <span class="menu-title">Adm. prodctos</span>
+        <i class="mdi mdi-package-variant-closed menu-icon"></i>
+      </a>
+    </li>
   </ul>
 </nav>

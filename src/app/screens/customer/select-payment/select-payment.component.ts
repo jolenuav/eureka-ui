@@ -8,6 +8,7 @@ import { StoreService } from 'src/app/services/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { CONSTANTS } from 'src/app/utils/constants';
 import DeliveryData from 'src/app/models/db/order/delivery-data';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-select-payment',
@@ -57,7 +58,7 @@ export class SelectPaymentComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     if (!this.order || this.order?.products.length === 0) {
       this.router.navigate([
-        pathRoute([CONSTANTS.routes.customer.listProducts], {
+        pathRoute([ROUTES.customer.listProducts], {
           commerceUrl: this.commerce.url,
         }),
       ]);
@@ -105,8 +106,8 @@ export class SelectPaymentComponent implements OnInit {
     this.router.navigate([
       pathRoute(
         [
-          CONSTANTS.routes.customer.listProducts,
-          CONSTANTS.routes.customer.order,
+          ROUTES.customer.listProducts,
+          ROUTES.customer.order,
         ],
         { commerceUrl: this.commerce.url, }
       ),
@@ -118,8 +119,8 @@ export class SelectPaymentComponent implements OnInit {
     this.router.navigate([
       pathRoute(
         [
-          CONSTANTS.routes.customer.listProducts,
-          CONSTANTS.routes.customer.orderConfirm,
+          ROUTES.customer.listProducts,
+          ROUTES.customer.orderConfirm,
         ],
         { commerceUrl: this.commerce.url, }
       ),

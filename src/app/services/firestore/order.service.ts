@@ -35,7 +35,7 @@ export class OrderService {
       .toPromise();
   }
 
-  getAllSnapshot(): Observable<any> {
+  getAllSnapshot(): Observable<Order[]> {
     return this.firestore
       .collection(this.collection)
       .snapshotChanges()

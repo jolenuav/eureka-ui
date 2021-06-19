@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Router,
-  RouterStateSnapshot,
+  RouterStateSnapshot
 } from '@angular/router';
 import { AuthService } from 'src/app/services/authenticate.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 import { AuthGuard } from '../auth.guard';
 
 @Injectable()
@@ -21,8 +21,8 @@ export class LoginAuthGuard extends AuthGuard {
     if (this._authService.tokenValid()) {
       this._redirectToAccessDenied(
         pathRoute([
-          CONSTANTS.routes.partner.main,
-          CONSTANTS.routes.partner.orderList,
+          ROUTES.partner.main,
+          ROUTES.partner.orderList,
         ])
       );
       return false;

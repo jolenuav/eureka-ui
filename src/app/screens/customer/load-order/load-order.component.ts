@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import ItemOrder from 'src/app/models/db/order/item-order';
 import Commerce from 'src/app/models/db/commerce';
+import ItemOrder from 'src/app/models/db/order/item-order';
 import Product from 'src/app/models/db/product';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
   selector: 'eu-load-order',
@@ -42,7 +42,7 @@ export class LoadOrderComponent implements OnInit {
   goBack(): void {
     this.customerStore.productToOrder = null;
     this.router.navigate([
-      pathRoute([CONSTANTS.routes.customer.listProducts], {
+      pathRoute([ROUTES.customer.listProducts], {
         commerceUrl: this.commerce.url,
       }),
     ]);

@@ -7,7 +7,7 @@ import {
 import { AuthService } from 'src/app/services/authenticate.service';
 import { VendorStoreService } from 'src/app/services/vendor-store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 import { AuthGuard } from '../auth.guard';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class AdminAccessAuthGuard extends AuthGuard {
       return true;
     }
     this._redirectToAccessDenied(
-      pathRoute([CONSTANTS.routes.partner.main, CONSTANTS.routes.partner.login])
+      pathRoute([ROUTES.partner.main, ROUTES.partner.login])
     );
     return false;
   }

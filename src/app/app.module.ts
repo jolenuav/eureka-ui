@@ -2,8 +2,10 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -26,15 +28,16 @@ import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
 import { AdminCommercesComponent } from './screens/admin/admin-commerces/admin-commerces.component';
 import { CommerceFormComponent } from './screens/admin/commerce-form/commerce-form.component';
+import { LoginComponent } from './screens/autheticate/login/login.component';
 import { LoadOrderComponent } from './screens/customer/load-order/load-order.component';
 import { OrderConfirmComponent } from './screens/customer/order-confirm/order-confirm.component';
 import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
-import { LoginComponent } from './screens/vendor/authenticate/login/login.component';
-import { DetailModalComponent } from './screens/vendor/containers/order-list/detail-modal/detail-modal.component';
-import { OrderListComponent } from './screens/vendor/containers/order-list/order-list.component';
+import { DetailModalComponent } from './screens/vendor/order-list/detail-modal/detail-modal.component';
+import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
+import { ProductFormComponent } from './screens/vendor/products/product-form/product-form.component';
 import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
@@ -65,6 +68,7 @@ export function initApp(provider: AppInitializerService): any {
     IconTitleComponent,
     CommerceFormComponent,
     AdminCommercesComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,8 +82,10 @@ export function initApp(provider: AppInitializerService): any {
     PipeModule,
     BrowserAnimationsModule,
     // ANGULAR MATERILA
+    MatAutocompleteModule,
     MatChipsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [
     // SERVICES

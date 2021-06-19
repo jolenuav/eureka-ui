@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { AuthService } from 'src/app/services/authenticate.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
+import { ROUTES } from 'src/app/utils/routes';
 import { AuthGuard } from '../auth.guard';
 
 @Injectable()
@@ -21,8 +21,8 @@ export class PartnerViewAuthGuard extends AuthGuard {
     if (!this._authService.tokenValid()) {
       this._redirectToAccessDenied(
         pathRoute([
-          CONSTANTS.routes.partner.main,
-          CONSTANTS.routes.partner.login,
+          ROUTES.partner.main,
+          ROUTES.partner.login,
         ])
       );
       return false;

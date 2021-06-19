@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import Commerce from 'src/app/models/db/commerce';
 
@@ -29,6 +30,23 @@ export class CommerceService {
       .toPromise();
   }
 
+  findAllSnapshot(): Observable<Commerce[]> {
+    return this.firestore
+      .collection(this.collection, (ref) => ref.where('enabled', '==', true))
+      .snapshotChanges()
+      .pipe(
+        map((resp) => {
+          const commerces: Commerce[] = [];
+          resp.forEach((instance) => {
+            const commerce = Commerce.parse(instance.payload.doc.data());
+            commerce.id = instance.payload.doc.id;
+            commerces.push(commerce);
+          });
+          return commerces;
+        })
+      );
+  }
+
   async findById(id: string): Promise<Commerce> {
     return this.firestore
       .collection(this.collection)
@@ -36,7 +54,6 @@ export class CommerceService {
       .get()
       .pipe(
         map((data) => {
-          console.log(data.data(), data);
           if (data.data()) {
             const commerce = Commerce.parse(data.data());
             commerce.id = id;
