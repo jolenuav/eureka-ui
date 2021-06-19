@@ -17,9 +17,7 @@ export class OrderService {
     return await this.firestore
       .collection(this.collection)
       .doc(`${order.commerce}-${order.id}`)
-      .set(order.getSimpleObject())
-      .then((data) => {
-      });
+      .set(order.getSimpleObject());
   }
 
   async findById(id: string): Promise<Commerce> {

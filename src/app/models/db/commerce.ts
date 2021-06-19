@@ -1,16 +1,19 @@
 import Address from './address';
 
 export default class Commerce {
-  _id?: string;
-  _address?: Address;
-  _categories?: string[];
-  _duration?: string;
-  _enabled?: boolean;
-  _image?: string;
-  _name?: string;
-  _rate?: number;
-  _sections?: string[];
-  _url?: string;
+  _id: string;
+  _address: Address;
+  _categories: string[];
+  _duration: string;
+  _documentNo: string;
+  _enabled: boolean;
+  _image: string;
+  _name: string;
+  _mail: string;
+  _phone: number;
+  _rate: number;
+  _sections: string[];
+  _url: string;
 
   static parse(obj: any): Commerce {
     const commerce = new Commerce();
@@ -18,9 +21,12 @@ export default class Commerce {
     commerce.address = obj.address ? Address.parse(obj.address) : null;
     commerce.categories = obj.categories;
     commerce.duration = obj.duration;
+    commerce.documentNo = obj.documentNo;
     commerce.enabled = obj.enabled;
     commerce.image = obj.image;
     commerce.name = obj.name;
+    commerce.mail = obj.mail;
+    commerce.phone = obj.phone;
     commerce.rate = obj.rate;
     commerce.sections = obj.sections;
     commerce.url = obj.url;
@@ -30,16 +36,43 @@ export default class Commerce {
   clone(): Commerce {
     const commerce = new Commerce();
     commerce.id = this.id;
-    commerce.address = this.address;
+    commerce.address = this.address ? this.address.clone() : null;
     commerce.categories = this.categories;
     commerce.duration = this.duration;
+    commerce.documentNo = this.documentNo;
     commerce.enabled = this.enabled;
     commerce.image = this.image;
     commerce.name = this.name;
+    commerce.mail = this.mail;
+    commerce.phone = this.phone;
     commerce.rate = this.rate;
     commerce.sections = this.sections;
     commerce.url = this.url;
     return commerce;
+  }
+
+  getSimpleObject(): any {
+    const obj: any = {};
+    this.id ? (obj.id = this.id) : delete obj.id;
+    this.address
+      ? (obj.address = this.address.getSimpleObject())
+      : delete obj.address;
+    this.categories
+      ? (obj.categories = this.categories)
+      : delete obj.categories;
+    this.duration ? (obj.duration = this.duration) : delete obj.duration;
+    this.documentNo
+      ? (obj.documentNo = this.documentNo)
+      : delete obj.documentNo;
+    this.enabled ? (obj.enabled = this.enabled) : delete obj.enabled;
+    this.image ? (obj.image = this.image) : delete obj.image;
+    this.name ? (obj.name = this.name) : delete obj.name;
+    this.mail ? (obj.mail = this.mail) : delete obj.mail;
+    this.phone ? (obj.phone = this.phone) : delete obj.phone;
+    this.rate ? (obj.rate = this.rate) : delete obj.rate;
+    this.sections ? (obj.sections = this.sections) : delete obj.sections;
+    this.url ? (obj.url = this.url) : delete obj.url;
+    return obj;
   }
 
   constructor() {}
@@ -112,5 +145,26 @@ export default class Commerce {
   }
   set url(url: string) {
     this._url = url;
+  }
+
+  get documentNo(): string {
+    return this._documentNo;
+  }
+  set documentNo(documentNo: string) {
+    this._documentNo = documentNo;
+  }
+
+  get mail(): string {
+    return this._mail;
+  }
+  set mail(mail: string) {
+    this._mail = mail;
+  }
+
+  get phone(): number {
+    return this._phone;
+  }
+  set phone(phone: number) {
+    this._phone = phone;
   }
 }

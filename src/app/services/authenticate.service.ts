@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import SessionToken from '../models/db/session-token';
+import User from '../models/db/user';
 import { generateID } from '../utils/commons.function';
 import { SessionTokenService } from './firestore/sessionToken.service';
 import { UserService } from './firestore/user.service';
@@ -43,11 +44,11 @@ export class AuthService {
   }
 
   calculateExpireDate(): Date {
-    const currentMoment = moment().add(1, 'hour');
+    const currentMoment = moment().add(1, 'hours');
     return currentMoment.toDate();
   }
 
-  _tokenValid(): boolean {
+  tokenValid(): boolean {
     const obj = JSON.parse(sessionStorage.getItem('sessionToken'));
     if (!obj) {
       return false;
@@ -59,5 +60,19 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  async getUsserLogged(): Promise<User> {
+    const obj = JSON.parse(sessionStorage.getItem('sessionToken'));
+    if (!obj) {
+      return null;
+    }
+    const sessionToken = SessionToken.parse(obj);
+    if (!this.vendorStore.user) {
+      this.vendorStore.user = await this.userService.findById(
+        sessionToken.userId
+      );
+    }
+    return this.vendorStore.user;
   }
 }

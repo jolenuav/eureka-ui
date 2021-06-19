@@ -13,44 +13,87 @@
   -ms-transition: width 0.25s ease, background 0.25s ease;
   .nav {
     overflow: hidden;
-    -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
-    margin-bottom: 60px;
+    &:not(.sub-menu) {
+      padding-bottom: 60px;
+    }
     .nav-item {
       padding: 0 2.25rem;
-      -webkit-transition-duration: 0.25s;
       transition-duration: 0.25s;
       transition-property: background;
       -webkit-transition-property: background;
+      .collapse {
+        z-index: 999;
+      }
       .nav-link {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
         align-items: center;
         white-space: nowrap;
         padding: 1.125rem 0 1.125rem 0;
         color: $color-black;
-        -webkit-transition-duration: 0.45s;
         transition-duration: 0.45s;
         transition-property: color;
         -webkit-transition-property: color;
+        cursor: pointer;
+        i {
+          &.menu-icon {
+            color: $color-primary-disabled;
+            font-size: 1.125rem;
+            line-height: 1;
+            margin-left: auto;
+            .rtl & {
+              margin-left: 0;
+              margin-right: auto;
+            }
+            &:before {
+              vertical-align: middle;
+            }
+          }
+          &.menu-arrow {
+            font: normal normal normal 24px/1 'Material Design Icons';
+            line-height: 1;
+            font-size: 1.125rem;
+            margin-left: auto;
+            .rtl & {
+              margin-left: 0;
+              margin-right: auto;
+            }
+            color: $color-primary-disabled;
+            &:before {
+              content: '\f0141';
+              font-size: inherit;
+              color: inherit;
+            }
+            + .menu-icon {
+              margin-left: 0.25rem;
+              margin-bottom: 0.25rem;
+              .rtl & {
+                margin-left: 0;
+                margin-right: 0.25rem;
+              }
+            }
+          }
+        }
         .menu-title {
           display: inline-block;
           font-size: 0.875rem;
           line-height: 1;
           vertical-align: middle;
         }
-        i.menu-icon {
-          font-size: 1.125rem;
-          line-height: 1;
-          margin-left: auto;
-          color: $color-primary-disabled;
+        .badge {
+          margin-right: auto;
+          margin-left: 1rem;
+        }
+        &[aria-expanded='true'] {
+          .menu-arrow {
+            &:before {
+              content: '\F0140';
+            }
+          }
+        }
+        &:hover {
+          color: $color-light2;
         }
       }
       &.active {
@@ -107,6 +150,47 @@
       }
       &:hover {
         background: $color-light;
+      }
+    }
+    &.sub-menu {
+      margin-bottom: 20px;
+      margin-top: 0;
+      list-style: none;
+
+      .nav-item {
+        padding: 0;
+        .nav-link {
+          padding: 0.75rem 2rem 0.75rem 2rem;
+          position: relative;
+          font-size: 0.8125rem;
+          line-height: 1;
+          height: auto;
+          border-top: 0;
+          &:before {
+            content: '\F054';
+            font-family: 'Material Design Icons';
+            display: block;
+            position: absolute;
+            left: 0px;
+            .rtl & {
+              left: auto;
+              right: 0;
+            }
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+          }
+          &.active {
+            color: $color-primary;
+            background: transparent;
+          }
+          &:hover {
+            color: $color-light2;
+          }
+        }
+        &:hover {
+          background: transparent;
+        }
       }
     }
   }

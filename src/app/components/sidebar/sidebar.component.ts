@@ -7,6 +7,7 @@ import { VendorStoreService } from 'src/app/services/vendor-store.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
+  commerceCollapsed = false;
   user = this.vendorStore.user;
   loginStatus$ = this.vendorStore.loginStatus$;
 

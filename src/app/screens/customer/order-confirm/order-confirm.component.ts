@@ -10,7 +10,7 @@ import { OrderService } from 'src/app/services/firestore/order.service';
 import { StoreService } from 'src/app/services/store.service';
 import { generateOrderID, pathRoute } from 'src/app/utils/commons.function';
 import { CONSTANTS } from 'src/app/utils/constants';
-import * as moment from 'moment';
+import { PATTERN } from 'src/app/utils/pattern';
 
 @Component({
   selector: 'eu-order-confirm',
@@ -38,11 +38,10 @@ export class OrderConfirmComponent implements OnInit {
   )[0].priceMin;
   total = this.deliveryMin + this.customerStore.order.totalAmount;
   docTypes = this.store.appState.documentTypes;
-  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   formGroup = new FormGroup({
     address: new FormControl(null, [Validators.required]),
     name: new FormControl(null, [Validators.required]),
-    mail: new FormControl(null, [Validators.pattern(this.emailPattern)]),
+    mail: new FormControl(null, [Validators.pattern(PATTERN.mail)]),
     phone: new FormControl(null, [Validators.required]),
   });
   order = this.customerStore.order;
@@ -59,7 +58,7 @@ export class OrderConfirmComponent implements OnInit {
     if (!this.order || this.order?.products.length === 0) {
       this.router.navigate([
         pathRoute([CONSTANTS.routes.customer.listProducts], {
-          commerceUrl: this.commerce.url
+          commerceUrl: this.commerce.url,
         }),
       ]);
       return;

@@ -23,15 +23,4 @@ export abstract class VendorResolver implements Resolve<any> {
     state: RouterStateSnapshot
   ): any;
 
-  async getUsserLogged(): Promise<User> {
-    const sessionToken = SessionToken.parse(
-      JSON.parse(sessionStorage.getItem('sessionToken'))
-    );
-    if (!this.vendorStore.user) {
-      this.vendorStore.user = await this.userService.findById(
-        sessionToken.userId
-      );
-    }
-    return this.vendorStore.user;
-  }
 }

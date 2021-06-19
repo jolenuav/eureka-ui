@@ -23,6 +23,10 @@ export class IconTitleComponent implements OnInit {
         pageTitle.title = 'Ordenes';
         pageTitle.icon = 'mdi-format-list-bulleted-type';
         return pageTitle;
+      case 'AdminCommercesComponent':
+        pageTitle.title = 'Adm. Comercios';
+        pageTitle.icon = 'mdi-store';
+        return pageTitle;
       default:
         return '';
     }

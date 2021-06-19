@@ -4,22 +4,21 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import * as moment from 'moment';
-import SessionToken from 'src/app/models/db/session-token';
+import { AuthService } from 'src/app/services/authenticate.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { CONSTANTS } from 'src/app/utils/constants';
 import { AuthGuard } from '../auth.guard';
 
 @Injectable()
 export class LoginAuthGuard extends AuthGuard {
-  constructor(router: Router) {
-    super(router);
+  constructor(public _router: Router, public _authService: AuthService) {
+    super(_router, null, _authService);
   }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (this._tokenValid()) {
+    if (this._authService.tokenValid()) {
       this._redirectToAccessDenied(
         pathRoute([
           CONSTANTS.routes.partner.main,
@@ -30,5 +29,4 @@ export class LoginAuthGuard extends AuthGuard {
     }
     return true;
   }
-
 }

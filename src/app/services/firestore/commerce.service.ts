@@ -36,9 +36,13 @@ export class CommerceService {
       .get()
       .pipe(
         map((data) => {
-          const commerce = Commerce.parse(data.data());
-          commerce.id = id;
-          return commerce;
+          console.log(data.data(), data);
+          if (data.data()) {
+            const commerce = Commerce.parse(data.data());
+            commerce.id = id;
+            return commerce;
+          }
+          return null;
         })
       )
       .toPromise();
@@ -59,5 +63,12 @@ export class CommerceService {
         })
       )
       .toPromise();
+  }
+
+  async save(commerce: Commerce): Promise<void> {
+    const id = commerce.id;
+    const commerceDB = commerce.getSimpleObject();
+    delete commerceDB.id;
+    return this.firestore.collection(this.collection).doc(id).set(commerceDB);
   }
 }

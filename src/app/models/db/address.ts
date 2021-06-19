@@ -28,6 +28,19 @@ export default class Address {
     return address;
   }
 
+  getSimpleObject(): any {
+    const obj: any = {};
+    this.beetweenStreets
+      ? (obj.beetweenStreets = this.beetweenStreets)
+      : delete obj.beetweenStreets;
+    this.city ? (obj.city = this.city) : delete obj.city;
+    this.country ? (obj.country = this.country) : delete obj.country;
+    this.province ? (obj.province = this.province) : delete obj.province;
+    this.state ? (obj.state = this.state) : delete obj.state;
+    this.street ? (obj.street = this.street) : delete obj.street;
+    return obj;
+  }
+
   constructor() {}
 
   get beetweenStreets(): string {

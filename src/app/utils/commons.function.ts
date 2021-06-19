@@ -32,3 +32,12 @@ export function b64_to_utf8(str: string): string {
 export function generateID(): string {
   return uuid.v4();
 }
+
+export function generateCommereId(name: string, document: number): string {
+  const split = name.trim().split(' ');
+  let initials = '';
+  split.forEach((word) => {
+    initials += word.toUpperCase().slice(0, 1);
+  });
+  return initials + document;
+}

@@ -1,0 +1,154 @@
+<div class="container-scroll-y p-4">
+  <div class="pb-3"><eu-icon-title></eu-icon-title></div>
+  <div class="card d-flex flex-column border-0">
+    <form
+      class="row p-3"
+      [formGroup]="formGroup"
+      (ngSubmit)="
+        formGroup.invalid ? formGroup.markAllAsTouched() : onSaveOrUpdate()
+      "
+    >
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control"
+          formControlName="name"
+          placeholder="Nombre"
+          (blur)="formGroup.controls.name.markAsTouched()"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control"
+          formControlName="documentNo"
+          placeholder="Nro. Documento"
+          type="text"
+          (blur)="formGroup.controls.documentNo.markAsTouched()"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control"
+          formControlName="mail"
+          placeholder="Correo"
+          type="email"
+          (blur)="formGroup.controls.mail.markAsTouched()"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control input-number"
+          formControlName="phone"
+          placeholder="Teléfono"
+          type="number"
+          (blur)="formGroup.controls.phone.markAsTouched()"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control"
+          formControlName="url"
+          placeholder="Url"
+          type="text"
+          (blur)="formGroup.controls.url.markAsTouched()"
+        />
+      </div>
+      <div
+        class="
+          form-group
+          custom-control custom-checkbox
+          col-sm-12 col-xl-3
+          d-flex
+          align-items-center
+        "
+      >
+        <input
+          id="enabled"
+          formControlName="enabled"
+          type="checkbox"
+          class="custom-control-input"
+        />
+        <label class="custom-control-label" for="enabled">Habilitado</label>
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control"
+          formControlName="duration"
+          placeholder="Duración"
+          type="text"
+          (blur)="formGroup.controls.duration.markAsTouched()"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control"
+          formControlName="rate"
+          placeholder="Valoración"
+          type="text"
+          (blur)="formGroup.controls.rate.markAsTouched()"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-6">
+        <mat-form-field class="w-100">
+          <mat-label>Categorías/Palabras clave</mat-label>
+          <mat-chip-list #chipWords>
+            <mat-chip
+              *ngFor="let word of words"
+              selectable
+              [removable]="removable"
+              (removed)="removeWord(word)"
+            >
+              {{ word }}
+              <i
+                matChipRemove
+                *ngIf="removable"
+                class="mdi mdi-close-circle"
+              ></i>
+            </mat-chip>
+            <input
+              placeholder="Nueva palabra..."
+              [matChipInputFor]="chipWords"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addWord($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-sm-12 col-xl-6">
+        <mat-form-field class="w-100">
+          <mat-label>Secciones productos</mat-label>
+          <mat-chip-list #chipSections>
+            <mat-chip
+              *ngFor="let section of sections"
+              selectable
+              [removable]="removable"
+              (removed)="removeSection(section)"
+            >
+              {{ section }}
+              <i
+                matChipRemove
+                *ngIf="removable"
+                class="mdi mdi-close-circle"
+              ></i>
+            </mat-chip>
+            <input
+              placeholder="Nueva sección..."
+              [matChipInputFor]="chipSections"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addSection($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+      <div class="d-flex flex-row w-100 justifu-content-center px-3">
+        <button
+          type="submit"
+          class="btn btn-primary btn-rounded m-auto col-sm-12 col-xl-4"
+        >
+          Agregar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
