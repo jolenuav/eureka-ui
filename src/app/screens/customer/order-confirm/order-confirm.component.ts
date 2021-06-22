@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Commerce from 'src/app/models/db/commerce';
@@ -67,13 +67,9 @@ export class OrderConfirmComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate([
-      pathRoute(
-        [
-          ROUTES.customer.listProducts,
-          ROUTES.customer.paymentMethod,
-        ],
-        { commerceUrl: this.commerce.url }
-      ),
+      pathRoute([ROUTES.customer.listProducts, ROUTES.customer.paymentMethod], {
+        commerceUrl: this.commerce.url,
+      }),
     ]);
   }
 
@@ -140,5 +136,38 @@ export class OrderConfirmComponent implements OnInit {
     text += `${paymentMethod}`;
     text = text.replace(',', '%2C').replace(' ', '%20');
     return text;
+  }
+
+  @HostListener('document:scroll', ['$event'])
+  onScroll(): void {
+    if (document.documentElement.scrollTop > 1) {
+      this.titleStyle = {
+        opacity: 1,
+        top: '0.8rem',
+        left: '3.5rem',
+        'font-size': '14px',
+      };
+      this.topSize = '3rem';
+      this.headerStyle = {
+        opacity: 1,
+        height: this.topSize,
+        'max-height': this.topSize,
+        'background-color': 'white',
+      };
+    } else {
+      this.titleStyle = {
+        opacity: 1,
+        top: '3rem',
+        left: '1.5rem',
+        'font-size': '18px',
+      };
+      this.topSize = '6rem';
+      this.headerStyle = {
+        opacity: 1,
+        height: this.topSize,
+        'max-height': this.topSize,
+        'background-color': 'white',
+      };
+    }
   }
 }

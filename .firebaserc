@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "eureka-d6882"
+    "default": "eureka-d6882",
+    "eureka-test": "eureka-test-649dc"
   }
 }

@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   HostListener,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { version } from 'package.json';
 import { StoreService } from './services/store.service';
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
         counter = 0;
         this.mouseLastEvent = this.mouseEvent;
       } else {
-        counter > 300 ? counter = counter : counter++;
+        counter > 300 ? (counter = counter) : counter++;
       }
       if (counter > segByOffline) {
         this.vendorStore.loginStatus = 'offline';

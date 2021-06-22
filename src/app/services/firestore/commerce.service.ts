@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import Commerce from 'src/app/models/db/commerce';
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +86,11 @@ export class CommerceService {
   async save(commerce: Commerce): Promise<void> {
     const id = commerce.id;
     const commerceDB = commerce.getSimpleObject();
+    const locationData = new firebase.default.firestore.GeoPoint(
+      commerce.geolacation.latitude,
+      commerce.geolacation.longitude
+    );
+    commerceDB.geolacation = locationData;
     delete commerceDB.id;
     return this.firestore.collection(this.collection).doc(id).set(commerceDB);
   }

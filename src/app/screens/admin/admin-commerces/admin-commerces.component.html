@@ -141,6 +141,10 @@
           </mat-chip-list>
         </mat-form-field>
       </div>
+      <div class="form-group col-12">
+        <label>Ubicación</label>
+        <eu-map (positionEvent)="geoposition = $event"></eu-map>
+      </div>
       <div class="d-flex flex-row w-100 justifu-content-center px-3">
         <button
           type="submit"

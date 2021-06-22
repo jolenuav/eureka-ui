@@ -6,6 +6,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +17,7 @@ import { BtnFooterComponent } from './components/btn-footer/btn-footer.component
 import { CardProductComponent } from './components/card/card-product.component';
 import { IconTitleComponent } from './components/icon-title/icon-title.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { MapComponent } from './components/map/map.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
@@ -69,6 +71,7 @@ export function initApp(provider: AppInitializerService): any {
     CommerceFormComponent,
     AdminCommercesComponent,
     ProductFormComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,7 @@ export function initApp(provider: AppInitializerService): any {
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatStepperModule,
   ],
   providers: [
     // SERVICES

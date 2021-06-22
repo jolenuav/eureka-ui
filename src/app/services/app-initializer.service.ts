@@ -23,7 +23,6 @@ export class AppInitializerService {
     const tokenDate = moment(sessionToken.expireToken);
     const currentDate = moment();
     if (tokenDate.diff(currentDate, 'minutes') > 0) {
-      console.log('es valido');
       this.vendorStore.user = await this.authService.getUsserLogged();
     } else {
       sessionStorage.clear();

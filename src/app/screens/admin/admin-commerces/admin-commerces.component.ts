@@ -30,6 +30,7 @@ export class AdminCommercesComponent implements OnInit {
     ]),
     rate: new FormControl(null, [Validators.required]),
   });
+  geoposition;
   removable = true;
   words: string[] = [];
   sections: string[] = [];
@@ -52,9 +53,9 @@ export class AdminCommercesComponent implements OnInit {
   }
 
   removeWord(word: string): void {
-    const index = this.sections.indexOf(word);
+    const index = this.words.indexOf(word);
     if (index >= 0) {
-      this.sections.splice(index, 1);
+      this.words.splice(index, 1);
     }
   }
 
@@ -84,8 +85,10 @@ export class AdminCommercesComponent implements OnInit {
       this.store.endLoader();
       return;
     }
+    console.log(this.geoposition);
     const commerce = new Commerce();
     commerce.id = id;
+    commerce.geolacation = this.geoposition;
     commerce.name = this.formGroup.controls.name.value;
     commerce.documentNo = this.formGroup.controls.documentNo.value;
     commerce.duration = this.formGroup.controls.duration.value;

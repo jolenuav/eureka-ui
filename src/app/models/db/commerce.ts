@@ -1,8 +1,8 @@
-import Address from './address';
+import GeoPoint from './geopointer';
 
 export default class Commerce {
   _id: string;
-  _address: Address;
+  _geolacation: GeoPoint;
   _categories: string[];
   _duration: string;
   _documentNo: string;
@@ -18,7 +18,9 @@ export default class Commerce {
   static parse(obj: any): Commerce {
     const commerce = new Commerce();
     commerce.id = obj.id;
-    commerce.address = obj.address ? Address.parse(obj.address) : null;
+    commerce.geolacation = obj.geolacation
+      ? GeoPoint.parse(obj.geolacation)
+      : null;
     commerce.categories = obj.categories;
     commerce.duration = obj.duration;
     commerce.documentNo = obj.documentNo;
@@ -36,7 +38,7 @@ export default class Commerce {
   clone(): Commerce {
     const commerce = new Commerce();
     commerce.id = this.id;
-    commerce.address = this.address ? this.address.clone() : null;
+    commerce.geolacation = this.geolacation ? this.geolacation.clone() : null;
     commerce.categories = this.categories;
     commerce.duration = this.duration;
     commerce.documentNo = this.documentNo;
@@ -54,9 +56,9 @@ export default class Commerce {
   getSimpleObject(): any {
     const obj: any = {};
     this.id ? (obj.id = this.id) : delete obj.id;
-    this.address
-      ? (obj.address = this.address.getSimpleObject())
-      : delete obj.address;
+    this.geolacation
+      ? (obj.geolacation = this.geolacation.getSimpleObject())
+      : delete obj.geolacation;
     this.categories
       ? (obj.categories = this.categories)
       : delete obj.categories;
@@ -84,11 +86,11 @@ export default class Commerce {
     this._id = id;
   }
 
-  get address(): Address {
-    return this._address;
+  get geolacation(): GeoPoint {
+    return this._geolacation;
   }
-  set address(address: Address) {
-    this._address = address;
+  set geolacation(geolacation: GeoPoint) {
+    this._geolacation = geolacation;
   }
 
   get categories(): string[] {
