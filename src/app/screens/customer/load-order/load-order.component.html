@@ -8,11 +8,11 @@
     class="p-3 pt-5 img-header d-flex flex-column justify-content-end"
     [ngStyle]="headerStyle"
   >
-    <i class="bi bi-arrow-left-short arrow-back" (click)="goBack()"></i>
+    <i class="mdi mdi-arrow-left arrow-back" (click)="goBack()"></i>
     <div class="font-weight-bold d-flex flex-row align-items-center">
       <h2 class="pr-2 m-0 text-light">{{ commerce.name }}</h2>
       <div class="pr-2 text-light">{{ commerce.rate }}</div>
-      <i class="bi bi-star-fill text-light"></i>
+      <i class="mdi mdi-star text-light"></i>
     </div>
   </div>
 </div>
@@ -56,7 +56,7 @@
             class="btn p-2 d-flex align-items-center font-weight-bold"
             (click)="counterHandler(false)"
           >
-            <i class="bi bi-dash counter-icon"></i>
+            <i class="mdi mdi-minus counter-icon"></i>
           </button>
           <input
             class="d-flex align-items-center p-0 text-center form-control"
@@ -67,7 +67,7 @@
             class="btn p-2 d-flex align-items-center font-weight-bold"
             (click)="counterHandler(true)"
           >
-            <i class="bi bi-plus counter-icon"></i>
+            <i class="mdi mdi-plus counter-icon"></i>
           </button>
         </div>
       </div>

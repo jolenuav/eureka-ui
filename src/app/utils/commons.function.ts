@@ -41,3 +41,7 @@ export function generateCommereId(name: string, document: number): string {
   });
   return initials + document;
 }
+
+export function quitQuoteText(text: string): string {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}

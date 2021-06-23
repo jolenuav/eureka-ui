@@ -2,6 +2,7 @@ export default class Product {
   _id?: string;
   _commerce?: string;
   _description?: string;
+  _image: string;
   _name?: string;
   _price?: number;
   _section?: string;
@@ -11,6 +12,7 @@ export default class Product {
     product.id = obj.id;
     product.commerce = obj.commerce;
     product.description = obj.description;
+    product.image = obj.image;
     product.name = obj.name;
     product.price = obj.price;
     product.section = obj.section;
@@ -22,6 +24,7 @@ export default class Product {
     product.id = this.id;
     product.commerce = this.commerce;
     product.description = this.description;
+    product.image = this.image;
     product.name = this.name;
     product.price = this.price;
     product.section = this.section;
@@ -30,12 +33,15 @@ export default class Product {
 
   getSimpleObject(): any {
     const obj: any = {};
-    this.id ? obj.id = this.id : delete obj.id;
-    this.commerce ? obj.commerce = this.commerce : delete obj.commerce;
-    this.description ? obj.description = this.description : delete obj.description;
-    this.name ? obj.name = this.name : delete obj.name;
-    this.price ? obj.price = this.price : delete obj.price;
-    this.section ? obj.section = this.section : delete obj.section;
+    this.id ? (obj.id = this.id) : delete obj.id;
+    this.commerce ? (obj.commerce = this.commerce) : delete obj.commerce;
+    this.description
+      ? (obj.description = this.description)
+      : delete obj.description;
+    this.image ? (obj.image = this.image) : delete obj.image;
+    this.name ? (obj.name = this.name) : delete obj.name;
+    this.price ? (obj.price = this.price) : delete obj.price;
+    this.section ? (obj.section = this.section) : delete obj.section;
     return obj;
   }
 
@@ -58,6 +64,12 @@ export default class Product {
   }
   set description(description: string) {
     this._description = description;
+  }
+  get image(): string {
+    return this._image;
+  }
+  set image(image: string) {
+    this._image = image;
   }
   get name(): string {
     return this._name;

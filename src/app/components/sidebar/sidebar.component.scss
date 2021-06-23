@@ -1,4 +1,4 @@
-@import '../../../styles.scss';
+@import '../../../assets/scss/variables.scss';
 
 .sidebar {
   min-height: calc(100vh - 70px);
@@ -220,7 +220,7 @@
               display: none;
             }
             .menu-title {
-              @include border-radius(0 5px 5px 0px);
+              border-radius: 0 5px 5px 0px;
               background: $color-light;
             }
             i {
@@ -235,7 +235,7 @@
             }
             &[aria-expanded] {
               .menu-title {
-                @include border-radius(0 5px 0 0px);
+                border-radius: 0 5px 0 0px;
               }
             }
           }
@@ -268,7 +268,7 @@
             .collapsing {
               display: block;
               background: $color-light;
-              @include border-radius(0 0 5px 0);
+              border-radius: 0 0 5px 0;
               position: absolute;
               left: 70px;
               width: 190px;

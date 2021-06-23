@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import Commerce from 'src/app/models/db/commerce';
 import Order from 'src/app/models/db/order/order';
 import Product from 'src/app/models/db/product';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
-import { pathRoute } from 'src/app/utils/commons.function';
+import { pathRoute, quitQuoteText } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
@@ -12,7 +14,7 @@ import { ROUTES } from 'src/app/utils/routes';
   templateUrl: './search-products.component.html',
   styleUrls: ['./search-products.component.scss'],
 })
-export class SearchProductsComponent implements OnInit {
+export class SearchProductsComponent implements OnInit, OnDestroy {
   commerce: Commerce = this.activedRoute.snapshot.data.searchProduct.commerce;
   headerStyle;
   order: Order = this.customerStore.order;
@@ -24,12 +26,19 @@ export class SearchProductsComponent implements OnInit {
   sectionActived: string;
   showSections = false;
   txtColor = '#e9ecef';
+  searchProduct = new FormControl(null);
+  subscription: Subscription;
 
   constructor(
     private activedRoute: ActivatedRoute,
+    private cd: ChangeDetectorRef,
     private customerStore: CustomerStoreService,
     private router: Router
   ) {}
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   async ngOnInit(): Promise<void> {
     this.headerStyle = {
@@ -41,21 +50,48 @@ export class SearchProductsComponent implements OnInit {
     };
     this.order.commerce = this.commerce.id;
     this.order.commerceName = this.commerce.name;
+
+    this.searchProduct.valueChanges.subscribe((search: string) => {
+      if (!search || search.trim() === '') {
+        this.productsBySectionFiltered = this.productsBySection;
+        search = '';
+        this.cd.detectChanges();
+        return;
+      }
+      this.productsBySectionFiltered = this.filterProducts(search);
+      this.cd.detectChanges();
+    });
+  }
+
+  filterProducts(search: string): Map<string, Product[]> {
+    const products = new Map(
+      [...this.productsBySection.entries()]
+        .filter((entry) =>
+          entry[1].some((prod) =>
+            quitQuoteText(prod.name)
+              .toUpperCase()
+              .includes(quitQuoteText(search).toUpperCase())
+          )
+        )
+        .map((obj) => [
+          obj[0],
+          obj[1].filter((prod) =>
+            quitQuoteText(prod.name)
+              .toUpperCase()
+              .includes(quitQuoteText(search).toUpperCase())
+          ),
+        ])
+    );
+    return products;
   }
 
   handlerClickCard(product: Product): void {
     this.customerStore.productToOrder = product;
     this.router.navigate([
-      pathRoute(
-        [
-          ROUTES.customer.listProducts,
-          ROUTES.customer.loadOrder,
-        ],
-        {
-          commerceUrl: this.commerce.url,
-          productId: product.id,
-        }
-      ),
+      pathRoute([ROUTES.customer.listProducts, ROUTES.customer.loadOrder], {
+        commerceUrl: this.commerce.url,
+        productId: product.id,
+      }),
     ]);
   }
 
@@ -102,13 +138,9 @@ export class SearchProductsComponent implements OnInit {
 
   showOrder(): void {
     this.router.navigate([
-      pathRoute(
-        [
-          ROUTES.customer.listProducts,
-          ROUTES.customer.order,
-        ],
-        { commerceUrl: this.commerce.url, }
-      ),
+      pathRoute([ROUTES.customer.listProducts, ROUTES.customer.order], {
+        commerceUrl: this.commerce.url,
+      }),
     ]);
   }
 }
