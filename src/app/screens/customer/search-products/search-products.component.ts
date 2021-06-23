@@ -51,7 +51,7 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
     this.order.commerce = this.commerce.id;
     this.order.commerceName = this.commerce.name;
 
-    this.searchProduct.valueChanges.subscribe((search: string) => {
+    this.subscription = this.searchProduct.valueChanges.subscribe((search: string) => {
       if (!search || search.trim() === '') {
         this.productsBySectionFiltered = this.productsBySection;
         search = '';
