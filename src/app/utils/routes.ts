@@ -11,6 +11,7 @@ export const ROUTES = {
     main: 'partner',
     orderList: 'orders',
     login: 'login',
+    listCommerce: 'list_commerces',
     adminCommerce: 'admin_commerce',
     adminProduct: 'admin_product',
   },

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import GeoPointer from 'src/app/models/db/geopointer';
 import { environment } from 'src/environments/environment';
@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  @Input() positionLoaded;
   @Output() positionEvent = new EventEmitter();
   mainMarker: mapboxgl.Marker;
   map: mapboxgl.Map;
@@ -20,6 +21,7 @@ export class MapComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.position = this.positionLoaded ? this.positionLoaded : this.position;
     (mapboxgl as any).accessToken = environment.mapBoxKey;
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -27,25 +29,22 @@ export class MapComponent implements OnInit {
       center: [this.position.longitude, this.position.latitude],
       zoom: 9,
     });
-    console.log('se creo map');
     this.mainMarker = this.createMarker(
       this.position.longitude,
       this.position.latitude
     );
     // this.createGeolocateControl();
-    await this.getCurrentPosition();
+    this.getCurrentPosition();
   }
 
   async getCurrentPosition(): Promise<void> {
-    if (!navigator.geolocation) {
+    if (!navigator.geolocation || this.positionLoaded) {
       console.error('location is not supported');
     } else {
       navigator.geolocation.getCurrentPosition(async (currentPosition) => {
-        console.log(currentPosition);
         this.position.latitude = currentPosition.coords.latitude;
         this.position.longitude = currentPosition.coords.longitude;
         this.positionEvent.emit(this.position);
-        console.log(this.position);
         const latLng = new mapboxgl.LngLat(
           this.position.longitude,
           this.position.latitude

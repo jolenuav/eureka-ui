@@ -8,6 +8,7 @@
         formGroup.invalid ? formGroup.markAllAsTouched() : onSaveOrUpdate()
       "
     >
+      <label class="form-group col-12">Información básica</label>
       <div class="form-group col-sm-12 col-xl-3">
         <input
           class="form-control"
@@ -141,9 +142,144 @@
           </mat-chip-list>
         </mat-form-field>
       </div>
+      <label class="form-group col-12">Métodos de pago</label>
+      <div class="form-group col-sm-12 col-xl-3">
+        <select #paymentMethodType class="form-control w-100">
+          <option value="null" disabled selected>
+            Seleccione un método de pago
+          </option>
+          <option value="1">Transferencia</option>
+          <option value="2">Pago móvil</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          #accountName
+          class="form-control"
+          placeholder="Nombre del banco"
+          type="text"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-6">
+        <input
+          #accountNumber
+          class="form-control input-number"
+          placeholder="Nro. cuenta"
+          type="number"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          #ownerName
+          class="form-control"
+          placeholder="Titular"
+          type="text"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <select #docType class="form-control w-100">
+          <option [value]="null" disabled selected>
+            Seleccione tipo de document
+          </option>
+          <option [value]="docType.id" *ngFor="let docType of documentTypes">
+            {{ docType.description }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          #ownerDocument
+          class="form-control input-number"
+          placeholder="Nro documento"
+          type="number"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <button
+          class="
+            btn btn-primary btn-rounded
+            m-auto
+            col-sm-12 col-xl-2
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+          style="height: 2.4rem"
+          type="button"
+          [disabled]="
+            paymentMethods.length === 999 ||
+            !paymentMethodType.value ||
+            !accountName.value ||
+            !accountNumber.value ||
+            !ownerName.value ||
+            !docType.value ||
+            !ownerDocument.value
+          "
+          (click)="
+            addPayment(
+              paymentMethodType.value,
+              accountName.value,
+              accountNumber.value,
+              ownerName.value,
+              docType.value,
+              ownerDocument.value
+            )
+          "
+        >
+          <i class="mdi mdi-plus"></i>
+        </button>
+      </div>
       <div class="form-group col-12">
-        <label>Ubicación</label>
-        <eu-map (positionEvent)="geoposition = $event"></eu-map>
+        <table
+          *ngIf="paymentMethods.length > 0"
+          class="table table-rounded bg-light"
+        >
+          <thead>
+            <tr>
+              <th scope="col" class="text-muted">TIPO</th>
+              <th scope="col" class="text-muted">BANCO</th>
+              <th scope="col" class="text-muted">CUENTA</th>
+              <th scope="col" class="text-muted">TITULAR</th>
+              <th scope="col" class="text-muted">T. DOC.</th>
+              <th scope="col" class="text-muted">DOCUMENTO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let paymentMethod of paymentMethods">
+              <td>
+                {{ paymentMethod.type | paymentMethod }}
+              </td>
+              <td>
+                {{ paymentMethod.accountName }}
+              </td>
+              <td>
+                {{ paymentMethod | accountNumber }}
+              </td>
+              <td>
+                {{ paymentMethod.ownerName }}
+              </td>
+              <td>
+                {{ paymentMethod.ownerDocType }}
+              </td>
+              <td>
+                {{ paymentMethod.ownerDocument }}
+              </td>
+              <td>
+                <button
+                  mat-icon-button
+                  class="text-primary"
+                  (click)="deletePaymentMethod(paymentMethod)"
+                >
+                  <i class="mdi mdi-delete"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <label class="form-group col-12">Ubicación</label>
+      <div class="form-group col-12">
+        <eu-map #map [positionLoaded]="geoposition" (positionEvent)="geoposition = $event"></eu-map>
       </div>
       <div class="d-flex flex-row w-100 justifu-content-center px-3">
         <button

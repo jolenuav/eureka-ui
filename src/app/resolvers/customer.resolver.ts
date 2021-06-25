@@ -37,6 +37,10 @@ export abstract class CustomerResolver implements Resolve<any> {
     return commerce;
   }
 
+  async getCommerById(commerceId: string): Promise<Commerce> {
+    return await this.commerceService.findById(commerceId);
+  }
+
   async getProductByCommerceId(commerceId: string): Promise<Product[]> {
     let products: Product[] = this.customerStore.products;
     if (products.length === 0) {

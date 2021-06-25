@@ -29,4 +29,23 @@ export class PaymentMethodsService {
       )
       .toPromise();
   }
+
+  async save(paymentMethod: PaymentMethod): Promise<void> {
+    const id = paymentMethod.id;
+    const paymentMethodDB = paymentMethod.getSimpleObject();
+    delete paymentMethodDB.id;
+    return this.firestore
+      .collection(this.collection)
+      .doc(id)
+      .set(paymentMethodDB);
+  }
+
+  async deleteByCommerce(commerceId: string): Promise<void> {
+    return this.firestore
+      .collection(this.collection, (ref) =>
+        ref.where('commerce', '==', commerceId)
+      )
+      .doc()
+      .delete();
+  }
 }

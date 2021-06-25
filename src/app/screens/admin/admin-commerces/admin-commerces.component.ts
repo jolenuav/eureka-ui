@@ -1,9 +1,14 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { ActivatedRoute } from '@angular/router';
+import * as mapboxgl from 'mapbox-gl';
+import { MapComponent } from 'src/app/components/map/map.component';
 import Commerce from 'src/app/models/db/commerce';
+import PaymentMethod from 'src/app/models/db/payment-method';
 import { CommerceService } from 'src/app/services/firestore/commerce.service';
+import { PaymentMethodsService } from 'src/app/services/firestore/paymenth-methods.service';
 import { StoreService } from 'src/app/services/store.service';
 import { generateCommereId } from 'src/app/utils/commons.function';
 import { PATTERN } from 'src/app/utils/pattern';
@@ -14,6 +19,8 @@ import { PATTERN } from 'src/app/utils/pattern';
   styleUrls: ['./admin-commerces.component.scss'],
 })
 export class AdminCommercesComponent implements OnInit {
+  @ViewChild('map') mapComponent: MapComponent;
+  documentTypes = this.store.appState.documentTypes;
   formGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
     documentNo: new FormControl(null, [Validators.required]),
@@ -30,19 +37,39 @@ export class AdminCommercesComponent implements OnInit {
     ]),
     rate: new FormControl(null, [Validators.required]),
   });
+  commerce: Commerce = this.activeRouter.snapshot.data.selectPayment.commerce;
   geoposition;
   removable = true;
-  words: string[] = [];
   sections: string[] = [];
+  words: string[] = [];
+  paymentMethods: PaymentMethod[] =
+    this.activeRouter.snapshot.data.selectPayment.paymentMethods;
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   constructor(
+    private activeRouter: ActivatedRoute,
     private commerceService: CommerceService,
+    private paymentMethodservice: PaymentMethodsService,
     private store: StoreService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.commerce) {
+      return;
+    }
+    this.formGroup.controls.name.setValue(this.commerce.name);
+    this.formGroup.controls.documentNo.setValue(this.commerce.documentNo);
+    this.formGroup.controls.url.setValue(this.commerce.url);
+    this.formGroup.controls.mail.setValue(this.commerce.mail);
+    this.formGroup.controls.phone.setValue(this.commerce.phone);
+    this.formGroup.controls.enabled.setValue(this.commerce.enabled);
+    this.formGroup.controls.duration.setValue(this.commerce.duration);
+    this.formGroup.controls.rate.setValue(this.commerce.rate);
+    this.sections = this.commerce.sections;
+    this.words = this.commerce.categories;
+    this.geoposition = this.commerce.geolacation;
+  }
 
   addWord(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -74,18 +101,46 @@ export class AdminCommercesComponent implements OnInit {
     }
   }
 
+  addPayment(
+    paymentMethodType: string,
+    accountName: string,
+    accountNumber: string,
+    ownerName: string,
+    docType: string,
+    ownerDocument: string
+  ): void {
+    const paymentMethod = new PaymentMethod();
+    const id = (this.paymentMethods.length + 1).toString().padStart(3, '0');
+    paymentMethod.id = id;
+    paymentMethod.ownerDocType = docType;
+    paymentMethod.ownerDocument = Number(ownerDocument);
+    paymentMethod.ownerName = ownerName;
+    paymentMethod.accountName = accountName;
+    paymentMethod.accountNumber = Number(accountNumber);
+    paymentMethod.type = Number(paymentMethodType);
+    this.paymentMethods.push(paymentMethod);
+  }
+
+  deletePaymentMethod(paymentMethod: PaymentMethod): void {
+    const index = this.paymentMethods.indexOf(paymentMethod);
+    if (index >= 0) {
+      this.paymentMethods.splice(index, 1);
+    }
+  }
+
   async onSaveOrUpdate(): Promise<void> {
     this.store.startLoader();
     const id = generateCommereId(
       this.formGroup.controls.name.value,
       this.formGroup.controls.documentNo.value
     );
-    const resp = await this.commerceService.findById(id);
+    const resp = !this.commerce
+      ? await this.commerceService.findById(id)
+      : null;
     if (resp) {
       this.store.endLoader();
       return;
     }
-    console.log(this.geoposition);
     const commerce = new Commerce();
     commerce.id = id;
     commerce.geolacation = this.geoposition;
@@ -99,7 +154,21 @@ export class AdminCommercesComponent implements OnInit {
     commerce.url = this.formGroup.controls.url.value;
     commerce.categories = this.words;
     commerce.sections = this.sections;
-    await this.commerceService.save(commerce);
+    if (this.commerce) {
+      await this.commerceService.update(commerce);
+      await this.paymentMethodservice.deleteByCommerce(id);
+      for await (const paymentMethod of this.paymentMethods) {
+        const index = this.paymentMethods.indexOf(paymentMethod) + 1;
+        paymentMethod.id = `${id}-${index.toString().padStart(3, '0')}`;
+        await this.paymentMethodservice.save(paymentMethod);
+      }
+    } else {
+      await this.commerceService.save(commerce);
+      for await (const paymentMethod of this.paymentMethods) {
+        paymentMethod.id = `${commerce.id}-${paymentMethod.id}`;
+        await this.paymentMethodservice.save(paymentMethod);
+      }
+    }
     this.store.endLoader();
   }
 }

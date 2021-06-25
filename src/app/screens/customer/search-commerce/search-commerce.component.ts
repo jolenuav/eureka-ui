@@ -30,7 +30,6 @@ export class SearchCommerceComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.commerces);
     this.customerStore.commerceSelected = null;
     this.customerStore.order = new Order();
     this.customerStore.products = [];

@@ -34,7 +34,9 @@ export class LoadOrderComponent implements OnInit {
       height: '15rem',
       color: '#f1f1f3',
       'max-height': '15rem',
-      'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${this.commerce.image}")`,
+      'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${
+        this.product.image ? this.product.image : this.commerce.image
+      }")`,
     };
     this.amount = this.product.price * this.counter;
   }

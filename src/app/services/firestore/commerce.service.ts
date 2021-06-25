@@ -94,4 +94,19 @@ export class CommerceService {
     delete commerceDB.id;
     return this.firestore.collection(this.collection).doc(id).set(commerceDB);
   }
+
+  async update(commerce: Commerce): Promise<void> {
+    const id = commerce.id;
+    const commerceDB = commerce.getSimpleObject();
+    const locationData = new firebase.default.firestore.GeoPoint(
+      commerce.geolacation.latitude,
+      commerce.geolacation.longitude
+    );
+    commerceDB.geolacation = locationData;
+    delete commerceDB.id;
+    return this.firestore
+      .collection(this.collection)
+      .doc(id)
+      .update(commerceDB);
+  }
 }

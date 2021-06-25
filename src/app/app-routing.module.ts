@@ -8,6 +8,7 @@ import { LoadOrderResolver } from './resolvers/load-order.resolver';
 import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
 import { AdminCommercesComponent } from './screens/admin/admin-commerces/admin-commerces.component';
+import { ListCommercesComponent } from './screens/admin/list-commerces/list-commerces.component';
 import { LoginComponent } from './screens/autheticate/login/login.component';
 import { LoadOrderComponent } from './screens/customer/load-order/load-order.component';
 import { OrderConfirmComponent } from './screens/customer/order-confirm/order-confirm.component';
@@ -72,9 +73,15 @@ const routes: Routes = [
         canActivate: [PartnerViewAuthGuard],
       },
       {
+        path: ROUTES.partner.listCommerce,
+        component: ListCommercesComponent,
+        canActivate: [AdminAccessAuthGuard],
+      },
+      {
         path: ROUTES.partner.adminCommerce,
         component: AdminCommercesComponent,
         canActivate: [AdminAccessAuthGuard],
+        resolve: { selectPayment: SelectPaymentResolver },
       },
       {
         path: ROUTES.partner.adminProduct,

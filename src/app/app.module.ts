@@ -6,6 +6,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,6 +45,7 @@ import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
 import { PipeModule } from './utils/pipe.module';
+import { ListCommercesComponent } from './screens/admin/list-commerces/list-commerces.component';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -72,6 +74,7 @@ export function initApp(provider: AppInitializerService): any {
     AdminCommercesComponent,
     ProductFormComponent,
     MapComponent,
+    ListCommercesComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,7 @@ export function initApp(provider: AppInitializerService): any {
     BrowserAnimationsModule,
     // ANGULAR MATERILA
     MatAutocompleteModule,
+    MatButtonModule,
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,

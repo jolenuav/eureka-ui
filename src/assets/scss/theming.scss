@@ -155,6 +155,7 @@
   position: absolute;
   top: 0;
   font-size: 2rem;
+  color: $color-black;
 }
 
 .header-shadow {
@@ -300,6 +301,26 @@ input.input-number::-webkit-inner-spin-button {
 
 .text-small {
   font-size: 12px;
+}
+.table th,
+.table td {
+  vertical-align: middle;
+  font-size: 0.875rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.table {
+  color: $color-black;
+  thead {
+    th {
+      border-top: 0;
+      border-bottom-width: 1px;
+      font-weight: bold;
+      vertical-align: bottom;
+      border-bottom: 2px solid #ebedf2;
+    }
+  }
 }
 
 .table-rounded {
