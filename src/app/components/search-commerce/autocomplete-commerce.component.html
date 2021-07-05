@@ -1,0 +1,21 @@
+<mat-form-field class="w-100">
+  <mat-label>Búscar comercio</mat-label>
+  <input
+    matInput
+    type="text"
+    [formControl]="commerceControl"
+    [matAutocomplete]="commerceAuto"
+  />
+  <mat-autocomplete
+    autoActiveFirstOption
+    #commerceAuto="matAutocomplete"
+    [displayWith]="displayCommerceName"
+  >
+    <mat-option
+      *ngFor="let commerce of filteredCommeces$ | async"
+      [value]="commerce"
+    >
+      {{ commerce.id }} {{ commerce.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

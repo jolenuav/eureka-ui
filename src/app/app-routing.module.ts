@@ -4,6 +4,7 @@ import { AdminAccessAuthGuard } from './guards/partner/admin-acess-auth.guard';
 import { LoginAuthGuard } from './guards/partner/login-auth.guard';
 import { PartnerViewAuthGuard } from './guards/partner/partner-view-auth.guard';
 import { CommerceSelectedResolver } from './resolvers/commerce-selected.resolver';
+import { FormProductsResolver } from './resolvers/form-products.resolver';
 import { LoadOrderResolver } from './resolvers/load-order.resolver';
 import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
@@ -17,6 +18,7 @@ import { SearchCommerceComponent } from './screens/customer/search-commerce/sear
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
+import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
 import { ProductFormComponent } from './screens/vendor/products/product-form/product-form.component';
 import { ROUTES } from './utils/routes';
 
@@ -84,9 +86,15 @@ const routes: Routes = [
         resolve: { selectPayment: SelectPaymentResolver },
       },
       {
+        path: ROUTES.partner.listProduct,
+        component: ListProductsComponent,
+        canActivate: [PartnerViewAuthGuard],
+      },
+      {
         path: ROUTES.partner.adminProduct,
         component: ProductFormComponent,
-        canActivate: [AdminAccessAuthGuard],
+        canActivate: [PartnerViewAuthGuard],
+        resolve: { adminProduct: FormProductsResolver },
       },
     ],
   },

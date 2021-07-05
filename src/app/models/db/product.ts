@@ -1,11 +1,12 @@
 export default class Product {
-  _id?: string;
-  _commerce?: string;
-  _description?: string;
+  _id: string;
+  _commerce: string;
+  _description: string;
   _image: string;
-  _name?: string;
-  _price?: number;
-  _section?: string;
+  _name: string;
+  _price: number;
+  _section: string;
+  _stock: number;
 
   static parse(obj: any): Product {
     const product = new Product();
@@ -16,6 +17,7 @@ export default class Product {
     product.name = obj.name;
     product.price = obj.price;
     product.section = obj.section;
+    product.stock = obj.stock;
     return product;
   }
 
@@ -28,6 +30,7 @@ export default class Product {
     product.name = this.name;
     product.price = this.price;
     product.section = this.section;
+    product.stock = this.stock;
     return product;
   }
 
@@ -42,6 +45,7 @@ export default class Product {
     this.name ? (obj.name = this.name) : delete obj.name;
     this.price ? (obj.price = this.price) : delete obj.price;
     this.section ? (obj.section = this.section) : delete obj.section;
+    this.stock ? (obj.stock = this.stock) : delete obj.stock;
     return obj;
   }
 
@@ -88,5 +92,11 @@ export default class Product {
   }
   set section(section: string) {
     this._section = section;
+  }
+  get stock(): number {
+    return this._stock;
+  }
+  set stock(stock: number) {
+    this._stock = stock;
   }
 }

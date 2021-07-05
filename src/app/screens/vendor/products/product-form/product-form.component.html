@@ -8,29 +8,13 @@
         formGroup.invalid ? formGroup.markAllAsTouched() : onSaveOrUpdate()
       "
     >
-      <div class="col-12 p-0">
+      <div *ngIf="showInputCommerce" class="col-12 p-0">
         <div class="form-group col-sm-12 col-xl-4">
-          <mat-form-field class="w-100">
-            <mat-label>Búscar comercio</mat-label>
-            <input
-              formControlName="commerce"
-              matInput
-              type="text"
-              [matAutocomplete]="commerceAuto"
-            />
-            <mat-autocomplete
-              autoActiveFirstOption
-              #commerceAuto="matAutocomplete"
-              [displayWith]="displayCommerceName"
-            >
-              <mat-option
-                *ngFor="let commerce of filteredCommeces$ | async"
-                [value]="commerce"
-              >
-                {{ commerce.id }} {{ commerce.name }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
+          <eu-autocomplete-commerce
+            [setCommerce]="commerce"
+            (changeEvent)="commerce = $event"
+          >
+          </eu-autocomplete-commerce>
         </div>
       </div>
       <div class="form-group col-sm-12 col-xl-4">
@@ -61,11 +45,7 @@
           </option>
           <option
             [value]="section"
-            *ngFor="
-              let section of formGroup.controls.commerce?.value
-                ? formGroup.controls.commerce?.value.sections
-                : []
-            "
+            *ngFor="let section of commerce ? commerce.sections : []"
           >
             {{ section }}
           </option>

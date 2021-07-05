@@ -1,0 +1,37 @@
+<div class="container-scroll-x container-scroll-y p-4 text-small">
+  <div class="pb-3"><eu-icon-title></eu-icon-title></div>
+  <div *ngIf="showInputCommerce" class="col-12 p-0">
+    <div class="form-group col-sm-12 col-xl-4 p-0">
+      <eu-autocomplete-commerce (changeEvent)="changeCommerce($event)">
+      </eu-autocomplete-commerce>
+    </div>
+  </div>
+  <table class="table table-rounded bg-light">
+    <thead>
+      <tr>
+        <th class="text-muted">PRODUCTO</th>
+        <th class="text-muted">SECCION</th>
+        <th class="text-muted">STOCK</th>
+        <th class="text-muted"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products$ | async">
+        <td>
+          {{ product.name }}
+        </td>
+        <td>
+          {{ product.section }}
+        </td>
+        <td>
+          {{ product.stock }}
+        </td>
+        <td>
+          <button mat-icon-button (click)="editProduct(product.id)">
+            <i class="mdi mdi-pencil"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

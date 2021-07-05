@@ -17,6 +17,7 @@ export class AppInitializerService {
     await this.store.initialApp();
     const obj = JSON.parse(sessionStorage.getItem('sessionToken'));
     if (!obj) {
+      this.vendorStore.user = null;
       return;
     }
     const sessionToken = SessionToken.parse(obj);

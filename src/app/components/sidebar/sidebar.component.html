@@ -68,16 +68,43 @@
       </div>
     </li>
 
-    <li class="nav-item" [ngClass]="{ active: adminProduct.isActive }">
+    <li
+      class="nav-item"
+      [ngClass]="{ active: adminProducts.isActive || listProducts.isActive }"
+    >
       <a
         class="nav-link"
-        routerLink="/partner/admin_product"
-        routerLinkActive
-        #adminProduct="routerLinkActive"
+        (click)="productCollapsed = !productCollapsed"
+        [attr.aria-expanded]="productCollapsed"
       >
-        <span class="menu-title">Adm. prodctos</span>
+        <span class="menu-title">Adm. productos</span>
+        <i class="menu-arrow"></i>
         <i class="mdi mdi-package-variant-closed menu-icon"></i>
       </a>
+      <div class="collapse" id="ui-basic" [ngbCollapse]="!productCollapsed">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/partner/list_products"
+              routerLinkActive="active"
+              #listProducts="routerLinkActive"
+            >
+              <span class="menu-title">Productos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/partner/admin_product"
+              routerLinkActive="active"
+              #adminProducts="routerLinkActive"
+            >
+              <span class="menu-title">Nuevo Producto</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </li>
   </ul>
 </nav>

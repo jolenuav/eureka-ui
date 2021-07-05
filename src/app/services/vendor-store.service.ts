@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import Commerce from '../models/db/commerce';
 import User from '../models/db/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VendorStoreService {
-  _user = new BehaviorSubject<User>(null);
+  _commerce = new BehaviorSubject<Commerce>(null);
   _loginStatus = new BehaviorSubject<string>('online');
+  _user = new BehaviorSubject<User>(null);
 
   constructor() {}
 
@@ -19,6 +21,16 @@ export class VendorStoreService {
   }
   set user(user: User) {
     this._user.next(user);
+  }
+
+  get commerce$(): Observable<Commerce> {
+    return this._commerce.asObservable();
+  }
+  get commerce(): Commerce {
+    return this._commerce.value;
+  }
+  set commerce(commerce: Commerce) {
+    this._commerce.next(commerce);
   }
 
   get loginStatus$(): Observable<string> {

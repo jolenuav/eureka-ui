@@ -3,10 +3,10 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +20,7 @@ import { IconTitleComponent } from './components/icon-title/icon-title.component
 import { LoaderComponent } from './components/loader/loader.component';
 import { MapComponent } from './components/map/map.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AutocompleteCommerceComponent } from './components/search-commerce/autocomplete-commerce.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
 import { AdminAccessAuthGuard } from './guards/partner/admin-acess-auth.guard';
@@ -31,6 +32,7 @@ import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
 import { AdminCommercesComponent } from './screens/admin/admin-commerces/admin-commerces.component';
 import { CommerceFormComponent } from './screens/admin/commerce-form/commerce-form.component';
+import { ListCommercesComponent } from './screens/admin/list-commerces/list-commerces.component';
 import { LoginComponent } from './screens/autheticate/login/login.component';
 import { LoadOrderComponent } from './screens/customer/load-order/load-order.component';
 import { OrderConfirmComponent } from './screens/customer/order-confirm/order-confirm.component';
@@ -38,6 +40,7 @@ import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
+import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
 import { DetailModalComponent } from './screens/vendor/order-list/detail-modal/detail-modal.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
 import { ProductFormComponent } from './screens/vendor/products/product-form/product-form.component';
@@ -45,7 +48,7 @@ import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
 import { PipeModule } from './utils/pipe.module';
-import { ListCommercesComponent } from './screens/admin/list-commerces/list-commerces.component';
+import { FormProductsResolver } from './resolvers/form-products.resolver';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -75,6 +78,8 @@ export function initApp(provider: AppInitializerService): any {
     ProductFormComponent,
     MapComponent,
     ListCommercesComponent,
+    ListProductsComponent,
+    AutocompleteCommerceComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +113,7 @@ export function initApp(provider: AppInitializerService): any {
     AuthService,
     // RESOLVERS
     CommerceSelectedResolver,
+    FormProductsResolver,
     LoadOrderResolver,
     SearchProductsResolver,
     SelectPaymentResolver,

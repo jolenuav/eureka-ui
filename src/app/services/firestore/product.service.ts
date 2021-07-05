@@ -74,4 +74,11 @@ export class ProductService {
     delete productDB.id;
     return this.firestore.collection(this.collection).doc(id).set(productDB);
   }
+
+  async update(product: Product): Promise<void> {
+    const id = product.id;
+    const productDB = product.getSimpleObject();
+    delete productDB.id;
+    return this.firestore.collection(this.collection).doc(id).update(productDB);
+  }
 }
