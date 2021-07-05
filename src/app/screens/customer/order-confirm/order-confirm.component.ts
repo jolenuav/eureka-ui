@@ -122,7 +122,7 @@ export class OrderConfirmComponent implements OnInit {
     this.order.products.forEach((item) => {
       products += `- ${item.qty} ${
         item.product.name
-      } ($${item.product.price.toFixed(1)})%0A`;
+      } ($${item.product.price.toFixed(2)})%0A`;
       if (item.observation !== '') {
         products += `%09%09_${item.observation}_%0A`;
       }
@@ -130,7 +130,7 @@ export class OrderConfirmComponent implements OnInit {
     let text = `*${orderID}*%0AHola *Eureka!*, `;
     text += `Soy ${this.formGroup.controls.name.value} `;
     text += `y quiero hacer el siguiente pedido:%0A${products}`;
-    text += `Total orden *$${this.order.totalAmount.toFixed(1)}*%0A%0A`;
+    text += `Total orden *$${this.order.totalAmount.toFixed(2)}*%0A%0A`;
     text += `*La direccion es:*%0A_${this.formGroup.controls.address.value}_%0A%0A`;
     text += `*Forma de pago:* _${paymentType.description}_%0A`;
     text += `${paymentMethod}`;

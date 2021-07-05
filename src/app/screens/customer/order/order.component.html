@@ -41,7 +41,7 @@
         <div>
           <small>
             {{ commerce.duration }} min - Envío min ${{
-              deliveryMin.toFixed(1)
+              deliveryMin.toFixed(2)
             }}
           </small>
         </div>
@@ -81,14 +81,14 @@
         </div>
       </div>
       <div class="m-auto col-3">
-        ${{ (item.qty * item.product.price).toFixed(1) }}
+        ${{ (item.qty * item.product.price).toFixed(2) }}
       </div>
     </div>
   </ng-container>
   <hr />
   <div class="d-flex justify-content-between px-4 pb-3 mx-3">
     <span class="col-9">Subtotal</span>
-    <span class="col-3">${{ order.totalAmount.toFixed(1) }}</span>
+    <span class="col-3">${{ order.totalAmount.toFixed(2) }}</span>
   </div>
   <div class="d-flex justify-content-center">
     <div class="col-xl-4 col-12 m-auto">

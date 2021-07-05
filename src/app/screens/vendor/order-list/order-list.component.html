@@ -30,7 +30,7 @@
         <td class="text-muted">
           {{ order.commerceName }}
         </td>
-        <td class="text-muted">${{ order.totalAmount.toFixed(1) }}</td>
+        <td class="text-muted">${{ order.totalAmount.toFixed(2) }}</td>
         <td class="text-muted">
           {{ order.payOrder.paymentType | paymentMethod }}
           <strong>{{ order.payOrder.payment }}</strong>
