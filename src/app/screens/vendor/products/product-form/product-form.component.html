@@ -17,7 +17,7 @@
           </eu-autocomplete-commerce>
         </div>
       </div>
-      <div class="form-group col-sm-12 col-xl-4">
+      <div class="form-group col-sm-12 col-xl-3">
         <input
           class="form-control"
           formControlName="name"
@@ -25,16 +25,7 @@
           (blur)="formGroup.controls.name.markAsTouched()"
         />
       </div>
-      <div class="form-group col-sm-12 col-xl-4">
-        <input
-          class="form-control input-number"
-          formControlName="price"
-          placeholder="Precio"
-          type="number"
-          (blur)="formGroup.controls.price.markAsTouched()"
-        />
-      </div>
-      <div class="form-group col-sm-12 col-xl-4">
+      <div class="form-group col-sm-12 col-xl-3">
         <select
           class="form-control w-100"
           formControlName="section"
@@ -50,6 +41,58 @@
             {{ section }}
           </option>
         </select>
+      </div>
+      <div class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control input-number"
+          formControlName="price"
+          placeholder="Precio"
+          type="number"
+          (blur)="formGroup.controls.price.markAsTouched()"
+        />
+      </div>
+      <div
+        class="
+          form-group
+          custom-control custom-checkbox
+          col-sm-12 col-xl-3
+          d-flex
+          align-items-center
+        "
+      >
+        <input
+          id="enabled"
+          formControlName="enabled"
+          type="checkbox"
+          class="custom-control-input"
+        />
+        <label class="custom-control-label" for="enabled">Habiliatdo</label>
+      </div>
+      <div
+        class="
+          form-group
+          custom-control custom-checkbox
+          col-sm-12 col-xl-3
+          d-flex
+          align-items-center
+        "
+      >
+        <input
+          id="inStock"
+          formControlName="inStock"
+          type="checkbox"
+          class="custom-control-input"
+        />
+        <label class="custom-control-label" for="inStock">En stock</label>
+      </div>
+      <div *ngIf="!product" class="form-group col-sm-12 col-xl-3">
+        <input
+          class="form-control input-number"
+          formControlName="stock"
+          placeholder="Stock"
+          type="number"
+          (blur)="formGroup.controls.stock.markAsTouched()"
+        />
       </div>
       <div class="form-group col-12">
         <textarea

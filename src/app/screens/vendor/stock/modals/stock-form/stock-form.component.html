@@ -1,0 +1,55 @@
+<div class="modal-body text-muted bg-light modal-rounded">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{ title }}
+  </h4>
+  <form
+    class="row justify-content-center align-items-center"
+    [formGroup]="formGroup"
+    (ngSubmit)="
+      formGroup.invalid ? formGroup.markAllAsTouched() : onSaveOrUpdate()
+    "
+  >
+    <div class="form-group col-sm-12 col-xl-3">
+      <select
+        class="form-control w-100"
+        formControlName="type"
+        (blur)="formGroup.controls.type.markAsTouched()"
+      >
+        <option value="1">Agregar</option>
+        <option value="2">Retirar</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-12 col-xl-3">
+      <input
+        class="form-control input-number"
+        formControlName="quantity"
+        placeholder="Cantidad"
+        type="number"
+        (blur)="formGroup.controls.quantity.markAsTouched()"
+      />
+    </div>
+  </form>
+  <div class="d-flex flex-row">
+    <div class="col-6 p-0 pr-1">
+      <button
+        type="button"
+        class="btn btn-dark w-100"
+        (click)="activeModal.dismiss()"
+      >
+        Cancelar
+      </button>
+    </div>
+    <div class="col-6 p-0 pl-1">
+      <button
+        type="button"
+        class="btn btn-primary w-100"
+        [disabled]="formGroup.invalid"
+        (click)="
+          formGroup.invalid ? formGroup.markAllAsTouched() : onSaveOrUpdate()
+        "
+      >
+        Ok
+      </button>
+    </div>
+  </div>
+</div>

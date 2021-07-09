@@ -23,17 +23,25 @@ export class IconTitleComponent implements OnInit {
         pageTitle.title = 'Ordenes';
         pageTitle.icon = 'mdi-format-list-bulleted-type';
         return pageTitle;
+      case ROUTES.partner.listCommerce:
+        pageTitle.title = 'Lista de comercios';
+        pageTitle.icon = 'mdi-format-list-bulleted';
+        return pageTitle;
       case ROUTES.partner.adminCommerce:
         pageTitle.title = 'Adm. Comercios';
         pageTitle.icon = 'mdi-store';
+        return pageTitle;
+      case ROUTES.partner.listProduct:
+        pageTitle.title = 'Lista de productos';
+        pageTitle.icon = 'mdi-format-list-bulleted';
         return pageTitle;
       case ROUTES.partner.adminProduct:
         pageTitle.title = 'Adm. Productos';
         pageTitle.icon = 'mdi-package-variant-closed';
         return pageTitle;
-      case ROUTES.partner.listCommerce:
-        pageTitle.title = 'Lista de omercios';
-        pageTitle.icon = 'mdi-format-list-bulleted';
+      case ROUTES.partner.stock:
+        pageTitle.title = 'Stock';
+        pageTitle.icon = 'mdi-text-box-search';
         return pageTitle;
       default:
         return '';

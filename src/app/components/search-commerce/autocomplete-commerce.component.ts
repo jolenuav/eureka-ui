@@ -24,6 +24,7 @@ export class AutocompleteCommerceComponent implements OnInit {
     this.subscription = this.commerceService
       .findAllSnapshot()
       .subscribe((commerces) => {
+        console.log(commerces);
         this.commercesSubject.next(commerces);
         this.filteredCommecesSubject.next(commerces);
       });
@@ -33,6 +34,7 @@ export class AutocompleteCommerceComponent implements OnInit {
   }
 
   filterCommerce(value): void {
+    console.log('filter', value);
     this.commerceSelected = null;
     if (!value || (typeof value === 'string' && value.trim() === '')) {
       this.filteredCommecesSubject.next(this.commercesSubject.value);
@@ -46,9 +48,9 @@ export class AutocompleteCommerceComponent implements OnInit {
       );
       this.filteredCommecesSubject.next(resp);
     } else {
-      this.commerceSelected = this.commercesSubject.value.find(
-        (commerce) => (commerce.id = value.id)
-      );
+      this.commerceSelected = this.commercesSubject.value
+        .find((commerce) => commerce.id === value.id)
+        .clone();
       this.changeEvent.emit(this.commerceSelected);
     }
   }

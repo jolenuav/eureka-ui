@@ -288,8 +288,10 @@ input.input-number::-webkit-inner-spin-button {
 }
 
 .modal-content {
+  border: none;
   border-radius: 10px;
   .modal-rounded {
+    border: none;
     border-radius: 10px;
   }
 }

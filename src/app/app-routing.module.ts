@@ -20,6 +20,7 @@ import { SelectPaymentComponent } from './screens/customer/select-payment/select
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
 import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
 import { ProductFormComponent } from './screens/vendor/products/product-form/product-form.component';
+import { StockComponent } from './screens/vendor/stock/stock.component';
 import { ROUTES } from './utils/routes';
 
 const routes: Routes = [
@@ -95,6 +96,11 @@ const routes: Routes = [
         component: ProductFormComponent,
         canActivate: [PartnerViewAuthGuard],
         resolve: { adminProduct: FormProductsResolver },
+      },
+      {
+        path: ROUTES.partner.stock,
+        component: StockComponent,
+        canActivate: [PartnerViewAuthGuard],
       },
     ],
   },

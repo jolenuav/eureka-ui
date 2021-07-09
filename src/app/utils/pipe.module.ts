@@ -16,7 +16,7 @@ export class PipeAccountNumber implements PipeTransform {
       return `(0${accountNumberStr.substring(
         0,
         3
-      )}) ${accountNumberStr.substring(4)}`;
+      )}) ${accountNumberStr.substring(3)}`;
     }
   }
 }

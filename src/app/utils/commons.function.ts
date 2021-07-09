@@ -33,7 +33,7 @@ export function generateID(): string {
   return uuid.v4();
 }
 
-export function generateCommereId(name: string, document: number): string {
+export function generateCommerceId(name: string, document: number): string {
   const split = name.trim().split(' ');
   let initials = '';
   split.forEach((word) => {

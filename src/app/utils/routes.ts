@@ -15,5 +15,6 @@ export const ROUTES = {
     adminCommerce: 'admin_commerce',
     listProduct: 'list_products',
     adminProduct: 'admin_product',
+    stock: 'stock',
   },
 };

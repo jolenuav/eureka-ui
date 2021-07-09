@@ -66,7 +66,7 @@ export default class Commerce {
     this.documentNo
       ? (obj.documentNo = this.documentNo)
       : delete obj.documentNo;
-    this.enabled ? (obj.enabled = this.enabled) : delete obj.enabled;
+    obj.enabled = this.enabled;
     this.image ? (obj.image = this.image) : delete obj.image;
     this.name ? (obj.name = this.name) : delete obj.name;
     this.mail ? (obj.mail = this.mail) : delete obj.mail;

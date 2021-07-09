@@ -12,6 +12,8 @@ export class FormProductsResolver extends VendorResolver {
     if (route.queryParams.product) {
       resp.product = await this.getProductById(route.queryParams.product); // Heredado
       resp.commerce = await this.getCommerSelected(resp.product.commerce); // Heredado
+    } else {
+      this.vendorStore.commerce = null;
     }
     this.store.endLoader();
     return resp;

@@ -1,0 +1,62 @@
+<div class="container-scroll-x container-scroll-y p-4 text-small">
+  <div class="pb-3"><eu-icon-title></eu-icon-title></div>
+  <div *ngIf="showInputCommerce" class="col-12 p-0">
+    <div class="form-group col-sm-12 col-xl-4 p-0">
+      <eu-autocomplete-commerce (changeEvent)="changeCommerce($event)">
+      </eu-autocomplete-commerce>
+    </div>
+  </div>
+  <table class="table table-rounded bg-light">
+    <thead>
+      <tr>
+        <th class="text-muted">PRODCUTO</th>
+        <th class="text-muted">SECCION</th>
+        <th class="text-muted">STOCK</th>
+        <th class="text-muted"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stock of stocks$ | async">
+        <td>
+          {{ stock.productName }}
+        </td>
+        <td>
+          {{ stock.productSection }}
+        </td>
+        <td>
+          {{ stock.total }}
+        </td>
+        <td>
+          <div ngbDropdown class="d-inline-block">
+            <button mat-icon-button ngbDropdownToggle>
+              <i class="mdi mdi-dots-horizontal"></i>
+            </button>
+            <div ngbDropdownMenu>
+              <button
+                class="btn"
+                ngbDropdownItem
+                (click)="openMoviments(stock.movements)"
+              >
+                Ver movimientos
+              </button>
+              <button
+                class="btn"
+                ngbDropdownItem
+                (click)="openStockForm(1, stock)"
+              >
+                Agregar
+              </button>
+              <button
+                class="btn"
+                ngbDropdownItem
+                (click)="openStockForm(2, stock)"
+              >
+                Retirar
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

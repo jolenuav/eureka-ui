@@ -27,6 +27,7 @@ import { AdminAccessAuthGuard } from './guards/partner/admin-acess-auth.guard';
 import { LoginAuthGuard } from './guards/partner/login-auth.guard';
 import { PartnerViewAuthGuard } from './guards/partner/partner-view-auth.guard';
 import { CommerceSelectedResolver } from './resolvers/commerce-selected.resolver';
+import { FormProductsResolver } from './resolvers/form-products.resolver';
 import { LoadOrderResolver } from './resolvers/load-order.resolver';
 import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
@@ -40,15 +41,17 @@ import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
-import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
 import { DetailModalComponent } from './screens/vendor/order-list/detail-modal/detail-modal.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
+import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
 import { ProductFormComponent } from './screens/vendor/products/product-form/product-form.component';
+import { StockFormComponent } from './screens/vendor/stock/modals/stock-form/stock-form.component';
+import { StockMovementsComponent } from './screens/vendor/stock/modals/stock-moviments/stock-movements.component';
+import { StockComponent } from './screens/vendor/stock/stock.component';
 import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store.service';
 import { PipeModule } from './utils/pipe.module';
-import { FormProductsResolver } from './resolvers/form-products.resolver';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -80,6 +83,9 @@ export function initApp(provider: AppInitializerService): any {
     ListCommercesComponent,
     ListProductsComponent,
     AutocompleteCommerceComponent,
+    StockComponent,
+    StockMovementsComponent,
+    StockFormComponent,
   ],
   imports: [
     BrowserModule,

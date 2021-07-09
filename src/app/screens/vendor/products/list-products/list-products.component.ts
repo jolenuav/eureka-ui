@@ -41,7 +41,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribeProductService.unsubscribe();
+    this.subscribeProductService?.unsubscribe();
   }
 
   getSnapshotProducts(): void {

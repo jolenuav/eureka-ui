@@ -10,7 +10,7 @@ import PaymentMethod from 'src/app/models/db/payment-method';
 import { CommerceService } from 'src/app/services/firestore/commerce.service';
 import { PaymentMethodsService } from 'src/app/services/firestore/paymenth-methods.service';
 import { StoreService } from 'src/app/services/store.service';
-import { generateCommereId } from 'src/app/utils/commons.function';
+import { generateCommerceId } from 'src/app/utils/commons.function';
 import { PATTERN } from 'src/app/utils/pattern';
 
 @Component({
@@ -59,8 +59,11 @@ export class AdminCommercesComponent implements OnInit {
       return;
     }
     this.formGroup.controls.name.setValue(this.commerce.name);
+    this.formGroup.controls.name.disable();
     this.formGroup.controls.documentNo.setValue(this.commerce.documentNo);
+    this.formGroup.controls.documentNo.disable();
     this.formGroup.controls.url.setValue(this.commerce.url);
+    this.formGroup.controls.url.disable();
     this.formGroup.controls.mail.setValue(this.commerce.mail);
     this.formGroup.controls.phone.setValue(this.commerce.phone);
     this.formGroup.controls.enabled.setValue(this.commerce.enabled);
@@ -130,10 +133,12 @@ export class AdminCommercesComponent implements OnInit {
 
   async onSaveOrUpdate(): Promise<void> {
     this.store.startLoader();
-    const id = generateCommereId(
-      this.formGroup.controls.name.value,
-      this.formGroup.controls.documentNo.value
-    );
+    const id = this.commerce
+      ? this.commerce.id
+      : generateCommerceId(
+          this.formGroup.controls.name.value,
+          this.formGroup.controls.documentNo.value
+        );
     const resp = !this.commerce
       ? await this.commerceService.findById(id)
       : null;
@@ -156,16 +161,20 @@ export class AdminCommercesComponent implements OnInit {
     commerce.sections = this.sections;
     if (this.commerce) {
       await this.commerceService.update(commerce);
-      await this.paymentMethodservice.deleteByCommerce(id);
+      await this.paymentMethodservice.deleteByCommerce(this.commerce.id);
       for await (const paymentMethod of this.paymentMethods) {
         const index = this.paymentMethods.indexOf(paymentMethod) + 1;
-        paymentMethod.id = `${id}-${index.toString().padStart(3, '0')}`;
+        paymentMethod.id = `${this.commerce.id}-${index
+          .toString()
+          .padStart(3, '0')}`;
+        paymentMethod.commerce = commerce.id;
         await this.paymentMethodservice.save(paymentMethod);
       }
     } else {
       await this.commerceService.save(commerce);
       for await (const paymentMethod of this.paymentMethods) {
         paymentMethod.id = `${commerce.id}-${paymentMethod.id}`;
+        paymentMethod.commerce = commerce.id;
         await this.paymentMethodservice.save(paymentMethod);
       }
     }

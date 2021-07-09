@@ -1,0 +1,25 @@
+<div class="modal-body text-muted bg-light modal-rounded">
+  <h4 class="modal-title" id="modal-basic-title">Movimientos</h4>
+  <ng-container *ngFor="let item of movements">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-7 col-xl-3">
+        {{ item.date | date: 'dd/MM/yyyy, HH:mm:ss' }}
+      </div>
+      <div class="col-2 col-xl-1">
+        <i
+          class="mdi"
+          [class.mdi-text-box-plus]="item.type === 1"
+          [class.text-success]="item.type === 1"
+          [class.mdi-text-box-minus]="item.type === 2"
+          [class.text-danger]="item.type === 2"
+          [class.mdi-checkbox-blank-outline]="item.type === 3"
+          [class.text-warning]="item.type === 3"
+        ></i>
+      </div>
+      <div class="col-3 col-xl-2">{{ item.quantity }}</div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <div class="col-sm-12 col-xl-6"><hr class="m-2" /></div>
+    </div>
+  </ng-container>
+</div>
