@@ -49,7 +49,6 @@ export class StockFormComponent implements OnInit, OnDestroy {
   }
 
   changeTitle(type: number): void {
-    console.log('change', type);
     this.title = type === 1 ? 'Agregar productos' : 'Retirar productos';
   }
 

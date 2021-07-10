@@ -21,7 +21,8 @@ import { CONSTANTS } from 'src/app/utils/constants';
   styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit {
-  commerce: Commerce = this.vendorStore.commerce;
+  commerceLoged: Commerce = this.vendorStore.commerce;
+  commerce: Commerce;
   formGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
     price: new FormControl(null, [Validators.required]),
@@ -53,6 +54,8 @@ export class ProductFormComponent implements OnInit {
     ) {
       this.showInputCommerce = true;
     }
+
+    this.commerce = this.commerceLoged ? this.commerceLoged.clone() : null;
     if (this.product) {
       this.formGroup.controls.name.setValue(this.product.name);
       this.formGroup.controls.price.setValue(this.product.price);

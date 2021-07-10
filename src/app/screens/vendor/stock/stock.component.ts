@@ -45,19 +45,16 @@ export class StockComponent implements OnInit, OnDestroy {
   }
 
   getSnapshotStocks(): void {
-    console.log(this.commerce);
     if (this.commerce) {
       this.subscribeStockService = this.stockService
         .findByCommerceIdSnapshot(this.commerce.id)
         .subscribe((stocks) => {
-          console.log(stocks);
           this.stocksSubject.next(stocks);
         });
     }
   }
 
   changeCommerce(commerce: Commerce): void {
-    console.log(commerce);
     this.commerce = commerce.clone();
     this.getSnapshotStocks();
   }
