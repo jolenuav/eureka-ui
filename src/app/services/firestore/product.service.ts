@@ -31,6 +31,26 @@ export class ProductService {
       .toPromise();
   }
 
+  async findByCommerceIdAndEnabled(commerceId: string): Promise<Product[]> {
+    return await this.firestore
+      .collection(this.collection, (ref) =>
+        ref.where('commerce', '==', commerceId).where('enabled', '==', true)
+      )
+      .get()
+      .pipe(
+        map((e) => {
+          const products: Product[] = [];
+          e.docs.forEach((doc) => {
+            const prod = Product.parse(doc.data());
+            prod.id = doc.id;
+            products.push(prod);
+          });
+          return products;
+        })
+      )
+      .toPromise();
+  }
+
   findByCommerceIdSnapshot(commerceId: string): Observable<Product[]> {
     return this.firestore
       .collection(this.collection, (ref) =>

@@ -45,7 +45,7 @@ export class LoadOrderComponent implements OnInit {
     this.amount = this.product.price * this.counter;
 
     this.stock = await this.stockService.findByProductId(this.product.id);
-    if (this.stock.total > 0 && this.stock.total < this.maxOrder) {
+    if (this.stock && this.stock.total > 0 && this.stock.total < this.maxOrder) {
       this.maxOrder = this.stock.total;
     }
   }

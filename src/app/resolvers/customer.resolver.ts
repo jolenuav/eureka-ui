@@ -46,7 +46,7 @@ export abstract class CustomerResolver implements Resolve<any> {
   async getProductByCommerceId(commerceId: string): Promise<Product[]> {
     let products: Product[] = this.customerStore.products;
     if (products.length === 0) {
-      products = await this.productService.findByCommerceId(commerceId);
+      products = await this.productService.findByCommerceIdAndEnabled(commerceId);
       const productsEnabled = await this.cleanProducts(products);
       this.customerStore.products = productsEnabled;
     }

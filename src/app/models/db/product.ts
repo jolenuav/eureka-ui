@@ -45,7 +45,7 @@ export default class Product {
       ? (obj.description = this.description)
       : delete obj.description;
     this.image ? (obj.image = this.image) : delete obj.image;
-    obj.enabled = this.enabled;
+    obj.enabled = this.enabled ? this.enabled : false;
     this.name ? (obj.name = this.name) : delete obj.name;
     this.price ? (obj.price = this.price) : delete obj.price;
     this.section ? (obj.section = this.section) : delete obj.section;
