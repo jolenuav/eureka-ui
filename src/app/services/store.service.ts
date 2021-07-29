@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import { AppState } from '../models/app/app-state';
 import GenericModel from '../models/app/generic-model';
 import PaymentMethod from '../models/db/payment-method';
-import Product from '../models/db/product';
 import { CONSTANTS } from '../utils/constants';
 import { CommerceService } from './firestore/commerce.service';
 import { DeliveryFeeService } from './firestore/delivery-fee.service';
@@ -60,7 +59,9 @@ export class StoreService {
 
   async loadDocumentTypes(): Promise<void> {
     const documentTypes: GenericModel[] = [];
-    documentTypes.push(GenericModel.parse(CONSTANTS.documentTypes.identityCard));
+    documentTypes.push(
+      GenericModel.parse(CONSTANTS.documentTypes.identityCard)
+    );
     documentTypes.push(GenericModel.parse(CONSTANTS.documentTypes.passport));
     this._appState.next({
       ...this.appState,

@@ -11,6 +11,7 @@ import { CustomerStoreService } from '../services/customer-store.service';
 import { CommerceService } from '../services/firestore/commerce.service';
 import { PaymentMethodsService } from '../services/firestore/paymenth-methods.service';
 import { ProductService } from '../services/firestore/product.service';
+import { StockService } from '../services/firestore/stock.service';
 import { StoreService } from '../services/store.service';
 
 @Injectable()
@@ -20,6 +21,7 @@ export abstract class CustomerResolver implements Resolve<any> {
     public customerStore: CustomerStoreService,
     public paymentMethodService: PaymentMethodsService,
     public productService: ProductService,
+    public stockService: StockService,
     public store: StoreService
   ) {}
 
@@ -45,7 +47,23 @@ export abstract class CustomerResolver implements Resolve<any> {
     let products: Product[] = this.customerStore.products;
     if (products.length === 0) {
       products = await this.productService.findByCommerceId(commerceId);
-      this.customerStore.products = products;
+      const productsEnabled = await this.cleanProducts(products);
+      this.customerStore.products = productsEnabled;
+    }
+    return products;
+  }
+
+  async cleanProducts(productsState): Promise<Product[]> {
+    const products: Product[] = [];
+    for await (const product of productsState) {
+      if (product.stock) {
+        const stock = await this.stockService.findByProductId(product.id);
+        if (stock && stock.total > 0) {
+          products.push(product.clone());
+        }
+      } else {
+        products.push(product.clone());
+      }
     }
     return products;
   }

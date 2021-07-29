@@ -33,21 +33,20 @@ export class StockService {
       .toPromise();
   }
 
-  async findByProductId(productId: string): Promise<Stock[]> {
+  async findByProductId(productId: string): Promise<Stock> {
     return await this.firestore
       .collection(this.collection, (ref) =>
-        ref.where('product', '==', productId)
+        ref.where('product', '==', productId).limit(1)
       )
       .get()
       .pipe(
         map((e) => {
-          const stocks: Stock[] = [];
-          e.docs.forEach((doc) => {
-            const stock: Stock = Stock.parse(doc.data());
-            stock.id = doc.id;
-            stocks.push(stock);
-          });
-          return stocks;
+          if (e.docs.length > 0) {
+            const stock: Stock = Stock.parse(e.docs[0].data());
+            stock.id = e.docs[0].id;
+            return stock;
+          }
+          return null;
         })
       )
       .toPromise();

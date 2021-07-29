@@ -12,10 +12,11 @@ export class SearchProductsResolver extends CustomerResolver {
     const commerceUrl = route.params.commerceUrl;
     const commerce = await this.getCommerSelected(commerceUrl); // Heredado
     const products: Product[] = await this.getProductByCommerceId(commerce.id); // Heredado
+    const productsEnabled = await this.cleanProducts(products);
     const resp = {
       commerce,
-      products,
-      productsBySection: await this.getProductsBySections(products),
+      products: productsEnabled,
+      productsBySection: await this.getProductsBySections(productsEnabled),
     };
     this.store.endLoader();
     return resp;

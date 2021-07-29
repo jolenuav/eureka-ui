@@ -1,13 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import PayOrder from 'src/app/models/db/order/pay-order';
 import Commerce from 'src/app/models/db/commerce';
+import DeliveryData from 'src/app/models/db/order/delivery-data';
+import PayOrder from 'src/app/models/db/order/pay-order';
 import PaymentMethod from 'src/app/models/db/payment-method';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { StoreService } from 'src/app/services/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
-import DeliveryData from 'src/app/models/db/order/delivery-data';
 import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
@@ -18,8 +17,8 @@ import { ROUTES } from 'src/app/utils/routes';
 export class SelectPaymentComponent implements OnInit {
   headerStyle = {
     opacity: 1,
-    height: '6rem',
-    'max-height': '6rem',
+    height: '7rem',
+    'max-height': '7rem',
     'background-color': 'white',
   };
   titleStyle = {
@@ -31,9 +30,9 @@ export class SelectPaymentComponent implements OnInit {
   cashCheck = true;
   cashIsCollapsed = true;
   commerce: Commerce = this.activedRoute.snapshot.data.selectPayment.commerce;
-  deliveryMin = this.store.appState.deliveryFees.sort((a, b) =>
-    a.priceMin > b.priceMin ? 1 : b.priceMin > a.priceMin ? -1 : 0
-  )[0].priceMin;
+  delivery = this.store.appState.deliveryFees.sort((a, b) =>
+    a.price > b.price ? 1 : b.price > a.price ? -1 : 0
+  )[0].price;
   order = this.customerStore.order;
   payMobileData: PaymentMethod[] = [];
   paymentMethodSelected: PaymentMethod;
@@ -43,7 +42,7 @@ export class SelectPaymentComponent implements OnInit {
   payMobileCheck = false;
   payMobileIsCollapsed = true;
   payOrder = this.customerStore.order.payOrder;
-  topSize = '6rem';
+  topSize = '7rem';
   transferCheck = false;
   transferIsCollapsed = true;
   transferData: PaymentMethod[] = [];
@@ -77,7 +76,7 @@ export class SelectPaymentComponent implements OnInit {
         left: '3.5rem',
         'font-size': '14px',
       };
-      this.topSize = '3rem';
+      this.topSize = '5rem';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,
@@ -91,7 +90,7 @@ export class SelectPaymentComponent implements OnInit {
         left: '1.5rem',
         'font-size': '18px',
       };
-      this.topSize = '6rem';
+      this.topSize = '7rem';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,
@@ -104,26 +103,18 @@ export class SelectPaymentComponent implements OnInit {
   goBack(): void {
     this.customerStore.loadPaymentMathodToOrder(new PayOrder());
     this.router.navigate([
-      pathRoute(
-        [
-          ROUTES.customer.listProducts,
-          ROUTES.customer.order,
-        ],
-        { commerceUrl: this.commerce.url, }
-      ),
+      pathRoute([ROUTES.customer.listProducts, ROUTES.customer.order], {
+        commerceUrl: this.commerce.url,
+      }),
     ]);
   }
 
   goNext(): void {
     this.customerStore.order.deliveryData = new DeliveryData();
     this.router.navigate([
-      pathRoute(
-        [
-          ROUTES.customer.listProducts,
-          ROUTES.customer.orderConfirm,
-        ],
-        { commerceUrl: this.commerce.url, }
-      ),
+      pathRoute([ROUTES.customer.listProducts, ROUTES.customer.orderConfirm], {
+        commerceUrl: this.commerce.url,
+      }),
     ]);
   }
 

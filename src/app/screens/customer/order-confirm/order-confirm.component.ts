@@ -1,12 +1,16 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import Commerce from 'src/app/models/db/commerce';
 import Order from 'src/app/models/db/order/order';
 import PayOrder from 'src/app/models/db/order/pay-order';
 import PaymentMethod from 'src/app/models/db/payment-method';
+import StockMovement from 'src/app/models/db/stock/stock-movement';
+import { MovementStock } from 'src/app/models/enums/movement-stock.enum';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { OrderService } from 'src/app/services/firestore/order.service';
+import { StockService } from 'src/app/services/firestore/stock.service';
 import { StoreService } from 'src/app/services/store.service';
 import { generateOrderID, pathRoute } from 'src/app/utils/commons.function';
 import { PATTERN } from 'src/app/utils/pattern';
@@ -17,7 +21,7 @@ import { ROUTES } from 'src/app/utils/routes';
   templateUrl: './order-confirm.component.html',
   styleUrls: ['./order-confirm.component.scss'],
 })
-export class OrderConfirmComponent implements OnInit {
+export class OrderConfirmComponent implements OnInit, OnDestroy {
   headerStyle = {
     opacity: 1,
     height: '6rem',
@@ -34,24 +38,28 @@ export class OrderConfirmComponent implements OnInit {
 
   commerce: Commerce = this.activedRoute.snapshot.data.commerce;
   deliveryMin = this.store.appState.deliveryFees.sort((a, b) =>
-    a.priceMin > b.priceMin ? 1 : b.priceMin > a.priceMin ? -1 : 0
-  )[0].priceMin;
-  total = this.deliveryMin + this.customerStore.order.totalAmount;
+    a.price > b.price ? 1 : b.price > a.price ? -1 : 0
+  )[0].price;
+  deliveryOption = 'Retirar en local';
+  total = this.customerStore.order.totalAmount;
   docTypes = this.store.appState.documentTypes;
   formGroup = new FormGroup({
     address: new FormControl(null, [Validators.required]),
+    deliveryPrice: new FormControl('A'),
     name: new FormControl(null, [Validators.required]),
     mail: new FormControl(null, [Validators.pattern(PATTERN.mail)]),
     phone: new FormControl(null, [Validators.required]),
   });
   order = this.customerStore.order;
   orderID = generateOrderID();
+  subscriptions: Subscription[] = [];
   constructor(
     private activedRoute: ActivatedRoute,
     private customerStore: CustomerStoreService,
     private orderService: OrderService,
     private router: Router,
-    private store: StoreService
+    private store: StoreService,
+    private stockService: StockService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -63,6 +71,25 @@ export class OrderConfirmComponent implements OnInit {
       ]);
       return;
     }
+    this._subscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((element) => element.unsubscribe());
+  }
+
+  _subscriptions(): void {
+    this.subscriptions = [
+      this.formGroup.controls.deliveryPrice.valueChanges.subscribe((value) => {
+        if (value === 'A') {
+          this.total = this.order.totalAmount;
+          this.deliveryOption = 'Retirar en local';
+        } else {
+          this.total = this.deliveryMin + this.order.totalAmount;
+          this.deliveryOption = 'Entrega inmdediata';
+        }
+      }),
+    ];
   }
 
   goBack(): void {
@@ -93,6 +120,21 @@ export class OrderConfirmComponent implements OnInit {
   }
 
   async saveOrder(): Promise<void> {
+    for await (const item of this.order.products) {
+      if (item.product.stock) {
+        const stock = await this.stockService.findByProductId(item.product.id);
+        if (stock.total >= item.qty) {
+          const movement = new StockMovement();
+          movement.date = new Date();
+          movement.quantity = item.qty;
+          movement.type = MovementStock.REDUCE;
+          movement.user = 'Eureka!';
+          stock.total -= item.qty;
+          stock.movements.push(movement);
+          this.stockService.update(stock);
+        }
+      }
+    }
     await this.orderService.save(this.order);
   }
 
@@ -127,13 +169,15 @@ export class OrderConfirmComponent implements OnInit {
         products += `%09%09_${item.observation}_%0A`;
       }
     });
+
     let text = `*${orderID}*%0AHola *Eureka!*, `;
     text += `Soy ${this.formGroup.controls.name.value} `;
     text += `y quiero hacer el siguiente pedido:%0A${products}`;
     text += `Total orden *$${this.order.totalAmount.toFixed(2)}*%0A%0A`;
     text += `*La direccion es:*%0A_${this.formGroup.controls.address.value}_%0A%0A`;
     text += `*Forma de pago:* _${paymentType.description}_%0A`;
-    text += `${paymentMethod}`;
+    text += `${paymentMethod}%0A`;
+    text += `*Forma de envío:* _${this.deliveryOption}_%0A`;
     text = text.replace(',', '%2C').replace(' ', '%20');
     return text;
   }

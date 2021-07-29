@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,6 +6,8 @@ import Commerce from 'src/app/models/db/commerce';
 import Order from 'src/app/models/db/order/order';
 import Product from 'src/app/models/db/product';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
+import { StockService } from 'src/app/services/firestore/stock.service';
+import { StoreService } from 'src/app/services/store.service';
 import { pathRoute, quitQuoteText } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 
@@ -27,17 +29,18 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
   showSections = false;
   txtColor = '#e9ecef';
   searchProduct = new FormControl(null);
-  subscription: Subscription;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private activedRoute: ActivatedRoute,
-    private cd: ChangeDetectorRef,
     private customerStore: CustomerStoreService,
-    private router: Router
+    private router: Router,
+    private stockService: StockService,
+    private store: StoreService
   ) {}
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach((element) => element.unsubscribe());
   }
 
   async ngOnInit(): Promise<void> {
@@ -50,17 +53,20 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
     };
     this.order.commerce = this.commerce.id;
     this.order.commerceName = this.commerce.name;
+    this.initialSubscription();
+  }
 
-    this.subscription = this.searchProduct.valueChanges.subscribe((search: string) => {
-      if (!search || search.trim() === '') {
-        this.productsBySectionFiltered = this.productsBySection;
-        search = '';
-        this.cd.detectChanges();
-        return;
-      }
-      this.productsBySectionFiltered = this.filterProducts(search);
-      this.cd.detectChanges();
-    });
+  initialSubscription(): void {
+    this.subscriptions.push(
+      this.searchProduct.valueChanges.subscribe((search: string) => {
+        if (!search || search.trim() === '') {
+          this.productsBySectionFiltered = this.productsBySection;
+          search = '';
+          return;
+        }
+        this.productsBySectionFiltered = this.filterProducts(search);
+      })
+    );
   }
 
   filterProducts(search: string): Map<string, Product[]> {

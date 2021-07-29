@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Commerce from 'src/app/models/db/commerce';
 import ItemOrder from 'src/app/models/db/order/item-order';
 import Product from 'src/app/models/db/product';
+import Stock from 'src/app/models/db/stock/stock';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
+import { StockService } from 'src/app/services/firestore/stock.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 
@@ -21,11 +23,13 @@ export class LoadOrderComponent implements OnInit {
   minOrder = 1;
   observation = '';
   product: Product = this.activedRoute.snapshot.data.loadOrder.product;
+  stock: Stock;
 
   constructor(
     private activedRoute: ActivatedRoute,
     private customerStore: CustomerStoreService,
-    private router: Router
+    private router: Router,
+    private stockService: StockService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -39,6 +43,11 @@ export class LoadOrderComponent implements OnInit {
       }")`,
     };
     this.amount = this.product.price * this.counter;
+
+    this.stock = await this.stockService.findByProductId(this.product.id);
+    if (this.stock.total > 0 && this.stock.total < this.maxOrder) {
+      this.maxOrder = this.stock.total;
+    }
   }
 
   goBack(): void {

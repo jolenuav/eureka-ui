@@ -1,14 +1,12 @@
 export default class DeliveryFee {
   _id: string;
-  _priceMin: number;
-  _priceMax: number;
+  _price;
   _distance: number;
 
   static parse(obj: any): DeliveryFee {
     const deliveryFee = new DeliveryFee();
     deliveryFee.id = obj.id;
-    deliveryFee.priceMin = obj.priceMin;
-    deliveryFee.priceMax = obj.priceMax;
+    deliveryFee.price = obj.price;
     deliveryFee.distance = obj.distance;
     return deliveryFee;
   }
@@ -16,8 +14,7 @@ export default class DeliveryFee {
   clone(): DeliveryFee {
     const deliveryFee = new DeliveryFee();
     deliveryFee.id = this.id;
-    deliveryFee.priceMin = this.priceMin;
-    deliveryFee.priceMax = this.priceMax;
+    deliveryFee.price = this.price;
     deliveryFee.distance = this.distance;
     return deliveryFee;
   }
@@ -31,18 +28,11 @@ export default class DeliveryFee {
     this._id = id;
   }
 
-  get priceMin(): number {
-    return this._priceMin;
+  get price(): number {
+    return this._price;
   }
-  set priceMin(priceMin: number) {
-    this._priceMin = priceMin;
-  }
-
-  get priceMax(): number {
-    return this._priceMax;
-  }
-  set priceMax(priceMax: number) {
-    this._priceMax = priceMax;
+  set price(price: number) {
+    this._price = price;
   }
 
   get distance(): number {

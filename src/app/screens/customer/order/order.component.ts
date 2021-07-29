@@ -2,11 +2,8 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Commerce from 'src/app/models/db/commerce';
 import { CustomerStoreService } from 'src/app/services/customer-store.service';
-import { CommerceService } from 'src/app/services/firestore/commerce.service';
-import { ProductService } from 'src/app/services/firestore/product.service';
 import { StoreService } from 'src/app/services/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
-import { CONSTANTS } from 'src/app/utils/constants';
 import { ROUTES } from 'src/app/utils/routes';
 
 @Component({
@@ -31,8 +28,8 @@ export class OrderComponent implements OnInit {
   commerce: Commerce = this.activedRoute.snapshot.data.commerce;
   editEnable = false;
   deliveryMin = this.store.appState.deliveryFees.sort((a, b) =>
-    a.priceMin > b.priceMin ? 1 : b.priceMin > a.priceMin ? -1 : 0
-  )[0].priceMin;
+    a.price > b.price ? 1 : b.price > a.price ? -1 : 0
+  )[0].price;
   order = this.customerStore.order;
   selectedsByDelete: number[] = [];
   topSize = '10rem';
@@ -118,13 +115,9 @@ export class OrderComponent implements OnInit {
 
   goPayment(): void {
     this.router.navigate([
-      pathRoute(
-        [
-          ROUTES.customer.listProducts,
-          ROUTES.customer.paymentMethod,
-        ],
-        { commerceUrl: this.commerce.url }
-      ),
+      pathRoute([ROUTES.customer.listProducts, ROUTES.customer.paymentMethod], {
+        commerceUrl: this.commerce.url,
+      }),
     ]);
   }
 }

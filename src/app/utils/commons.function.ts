@@ -18,7 +18,7 @@ export function pathRoute(routes: string[], params?: any): string {
 }
 
 export function generateOrderID(): string {
-  return moment().format('HHmmssSSS');
+  return moment().format('DDMMYYHHmmssSSS');
 }
 
 export function utf8_to_b64(str: string): string {
