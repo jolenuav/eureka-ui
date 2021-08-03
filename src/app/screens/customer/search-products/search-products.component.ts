@@ -120,25 +120,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
   onScroll(): void {
     const average = document.getElementById('listProducts').scrollHeight * 0.05;
     if (document.getElementById('listProducts').scrollTop > average) {
-      this.showSections = true;
-      this.headerStyle = {
-        opacity: 1,
-        height: '12.5rem',
-        color: '#6c757d',
-        'max-height': '12.5rem',
-        'background-color': 'white',
-      };
-      this.txtColor = '#6c757d';
+      this.hideHeaderImage();
     } else {
-      this.showSections = false;
-      this.headerStyle = {
-        opacity: 1,
-        height: '15rem',
-        color: '#e9ecef',
-        'max-height': '15rem',
-        'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${this.commerce.image}")`,
-      };
-      this.txtColor = '#e9ecef';
+      this.showHeaderImage();
     }
   }
 
@@ -164,5 +148,36 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
         commerceUrl: this.commerce.url,
       }),
     ]);
+  }
+
+  focus(): void {
+    this.hideHeaderImage();
+  }
+
+  blur(): void {
+    this.showHeaderImage();
+  }
+
+  showHeaderImage(): void {
+    this.showSections = false;
+    this.headerStyle = {
+      opacity: 1,
+      height: '15rem',
+      color: '#e9ecef',
+      'max-height': '15rem',
+      'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${this.commerce.image}")`,
+    };
+    this.txtColor = '#e9ecef';
+  }
+  hideHeaderImage(): void {
+    this.showSections = true;
+    this.headerStyle = {
+      opacity: 1,
+      height: '12.5rem',
+      color: '#6c757d',
+      'max-height': '12.5rem',
+      'background-color': 'white',
+    };
+    this.txtColor = '#6c757d';
   }
 }

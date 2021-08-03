@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Commerce from 'src/app/models/db/commerce';
 import ItemOrder from 'src/app/models/db/order/item-order';
@@ -15,6 +15,7 @@ import { ROUTES } from 'src/app/utils/routes';
   styleUrls: ['./load-order.component.scss'],
 })
 export class LoadOrderComponent implements OnInit {
+  topSize = '15rem';
   amount = 0;
   commerce: Commerce = this.activedRoute.snapshot.data.loadOrder.commerce;
   counter = 1;
@@ -24,6 +25,9 @@ export class LoadOrderComponent implements OnInit {
   observation = '';
   product: Product = this.activedRoute.snapshot.data.loadOrder.product;
   stock: Stock;
+  titleHeader: any = {
+    color: '#e9ecef',
+  };
 
   constructor(
     private activedRoute: ActivatedRoute,
@@ -36,7 +40,6 @@ export class LoadOrderComponent implements OnInit {
     this.headerStyle = {
       opacity: 1,
       height: '15rem',
-      color: '#f1f1f3',
       'max-height': '15rem',
       'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${
         this.product.image ? this.product.image : this.commerce.image
@@ -45,7 +48,11 @@ export class LoadOrderComponent implements OnInit {
     this.amount = this.product.price * this.counter;
 
     this.stock = await this.stockService.findByProductId(this.product.id);
-    if (this.stock && this.stock.total > 0 && this.stock.total < this.maxOrder) {
+    if (
+      this.stock &&
+      this.stock.total > 0 &&
+      this.stock.total < this.maxOrder
+    ) {
       this.maxOrder = this.stock.total;
     }
   }
@@ -76,5 +83,46 @@ export class LoadOrderComponent implements OnInit {
     item.observation = this.observation;
     this.customerStore.loadProductOrder(item);
     this.goBack();
+  }
+
+  @HostListener('focusin')
+  setInputFocus(): void {
+    console.log('focus');
+    this.hideHeaderImage();
+  }
+
+  @HostListener('focusout')
+  setInputFocusOut(): void {
+    console.log('blur');
+    this.showHeaderImage();
+  }
+
+  showHeaderImage(): void {
+    this.headerStyle = {
+      opacity: 1,
+      height: '15rem',
+      color: '#e9ecef',
+      'max-height': '15rem',
+      'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${
+        this.product.image ? this.product.image : this.commerce.image
+      }")`,
+    };
+    this.titleHeader = {
+      color: '#e9ecef',
+    };
+  }
+
+  hideHeaderImage(): void {
+    this.headerStyle = {
+      opacity: 1,
+      height: '3rem',
+      color: '#6c757d',
+      'max-height': '3rem',
+      'background-color': 'white',
+    };
+    this.titleHeader = {
+      color: '#6c757d',
+      'padding-left': '3rem',
+    };
   }
 }

@@ -42,6 +42,8 @@
           class="form-control input-search"
           style="height: 38px"
           [formControl]="searchProduct"
+          (focus)="focus()"
+          (blur)="blur()"
         />
       </div>
     </form>
