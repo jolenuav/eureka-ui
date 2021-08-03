@@ -8,6 +8,7 @@ export default class Product {
   _price: number;
   _section: string;
   _stock: boolean;
+  _tags: string[];
 
   static parse(obj: any): Product {
     const product = new Product();
@@ -20,6 +21,7 @@ export default class Product {
     product.price = obj.price;
     product.section = obj.section;
     product.stock = obj.stock;
+    product.tags = obj.tags;
     return product;
   }
 
@@ -34,6 +36,7 @@ export default class Product {
     product.price = this.price;
     product.section = this.section;
     product.stock = this.stock;
+    product.tags = this.tags;
     return product;
   }
 
@@ -50,6 +53,7 @@ export default class Product {
     this.price ? (obj.price = this.price) : delete obj.price;
     this.section ? (obj.section = this.section) : delete obj.section;
     this.stock ? (obj.stock = this.stock) : delete obj.stock;
+    this.tags && this.tags !== [] ? (obj.tags = this.tags) : delete obj.tags;
     return obj;
   }
 
@@ -116,5 +120,12 @@ export default class Product {
   }
   set stock(stock: boolean) {
     this._stock = stock;
+  }
+
+  get tags(): string[] {
+    return this._tags;
+  }
+  set tags(tags: string[]) {
+    this._tags = tags;
   }
 }

@@ -68,6 +68,33 @@
         />
         <label class="custom-control-label" for="enabled">Habiliatdo</label>
       </div>
+      <div class="form-group col-sm-12 col-xl-6">
+        <mat-form-field class="w-100">
+          <mat-label>Etiquetas</mat-label>
+          <mat-chip-list #chipTags>
+            <mat-chip
+              *ngFor="let tag of tags"
+              selectable
+              [removable]="removable"
+              (removed)="removeTag(tag)"
+            >
+              {{ tag }}
+              <i
+                matChipRemove
+                *ngIf="removable"
+                class="mdi mdi-close-circle"
+              ></i>
+            </mat-chip>
+            <input
+              placeholder="Etiquetas..."
+              [matChipInputFor]="chipTags"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addTag($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
       <div
         class="
           form-group
@@ -98,7 +125,7 @@
         <textarea
           class="form-control"
           formControlName="description"
-          placeholder="Dirección..."
+          placeholder="Descripción..."
         ></textarea>
       </div>
       <div class="d-flex flex-row w-100 justifu-content-center px-3">

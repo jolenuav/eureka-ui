@@ -1,5 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import Commerce from 'src/app/models/db/commerce';
@@ -33,13 +35,16 @@ export class ProductFormComponent implements OnInit {
     stock: new FormControl({ value: null, disabled: true }),
   });
   product: Product = this.activateRoute.snapshot.data.adminProduct.product;
+  removable = true;
   showInputCommerce = false;
   subscription: Subscription;
+  tags: string[] = [];
   user = this.vendorStore.user;
+
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private changeDetectorRef: ChangeDetectorRef,
     private productService: ProductService,
     private stockService: StockService,
     private store: StoreService,
@@ -63,13 +68,14 @@ export class ProductFormComponent implements OnInit {
       this.formGroup.controls.description.setValue(this.product.description);
       this.formGroup.controls.enabled.setValue(this.product.enabled);
       this.formGroup.controls.inStock.setValue(this.product.stock);
+      this.tags = !this.product.tags ? [] : this.product.tags;
     }
   }
 
   _subscription(): void {
     this.subscription = this.formGroup.controls.inStock.valueChanges.subscribe(
       (value) => {
-        if (value) {
+        if (value && !this.product) {
           this.formGroup.controls.stock.enable();
           this.formGroup.controls.stock.setValidators(Validators.required);
         } else {
@@ -95,6 +101,7 @@ export class ProductFormComponent implements OnInit {
     product.section = this.formGroup.controls.section.value;
     product.description = this.formGroup.controls.description.value;
     product.enabled = this.formGroup.controls.enabled.value;
+    product.tags = this.tags;
     if (this.product) {
       await this.productService.update(product);
     } else {
@@ -123,5 +130,20 @@ export class ProductFormComponent implements OnInit {
     stockMovement.user = this.user.username;
     stock._movements = [stockMovement];
     await this.stockService.save(stock);
+  }
+
+  addTag(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.tags.push(value);
+    }
+    event.input.value = null;
+  }
+
+  removeTag(tag: string): void {
+    const index = this.tags.indexOf(tag);
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 }

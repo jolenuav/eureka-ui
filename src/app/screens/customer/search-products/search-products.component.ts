@@ -73,18 +73,34 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
     const products = new Map(
       [...this.productsBySection.entries()]
         .filter((entry) =>
-          entry[1].some((prod) =>
-            quitQuoteText(prod.name)
-              .toUpperCase()
-              .includes(quitQuoteText(search).toUpperCase())
+          entry[1].some(
+            (prod) =>
+              quitQuoteText(prod.name)
+                .toUpperCase()
+                .includes(quitQuoteText(search).toUpperCase()) ||
+              (prod.tags &&
+                prod.tags !== [] &&
+                prod.tags.some((tag) =>
+                  quitQuoteText(tag)
+                    .toUpperCase()
+                    .includes(quitQuoteText(search).toUpperCase())
+                ))
           )
         )
         .map((obj) => [
           obj[0],
-          obj[1].filter((prod) =>
-            quitQuoteText(prod.name)
-              .toUpperCase()
-              .includes(quitQuoteText(search).toUpperCase())
+          obj[1].filter(
+            (prod) =>
+              quitQuoteText(prod.name)
+                .toUpperCase()
+                .includes(quitQuoteText(search).toUpperCase()) ||
+              (prod.tags &&
+                prod.tags !== [] &&
+                prod.tags.some((tag) =>
+                  quitQuoteText(tag)
+                    .toUpperCase()
+                    .includes(quitQuoteText(search).toUpperCase())
+                ))
           ),
         ])
     );
