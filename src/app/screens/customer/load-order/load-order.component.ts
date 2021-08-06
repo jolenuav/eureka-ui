@@ -98,6 +98,7 @@ export class LoadOrderComponent implements OnInit {
   }
 
   showHeaderImage(): void {
+    this.topSize = '15rem';
     this.headerStyle = {
       opacity: 1,
       height: '15rem',
@@ -113,6 +114,7 @@ export class LoadOrderComponent implements OnInit {
   }
 
   hideHeaderImage(): void {
+    this.topSize = '3rem';
     this.headerStyle = {
       opacity: 1,
       height: '3rem',
