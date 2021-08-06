@@ -16,7 +16,10 @@
       <div class="pr-2" [ngStyle]="{ color: txtColor }">
         {{ commerce.rate }}
       </div>
-      <i class="mdi mdi-star text-secondary" [ngStyle]="{ color: txtColor }"></i>
+      <i
+        class="mdi mdi-star text-secondary"
+        [ngStyle]="{ color: txtColor }"
+      ></i>
     </div>
     <div class="pb-2 d-flex flex-row align-items-center lbl-header">
       <div class="pr-3" [ngStyle]="{ color: txtColor }">
@@ -49,23 +52,25 @@
     </form>
     <div
       *ngIf="products.length > 0 && showSections"
-      class="d-flex flex-nowrap"
-      style="overflow-x: auto"
+      style="overflow-x: auto; overflow-y: hidden"
     >
-      <ng-container
-        *ngFor="
-          let productSect of productsBySectionFiltered | keyvalue;
-          let i = index
-        "
-      >
-        <div
-          class="px-2"
-          (click)="scrollTo('link' + i)"
-          [ngClass]="{ sectionActived: sectionActived === 'link' + i }"
+      <div style="white-space: nowrap">
+        <ng-container
+          *ngFor="
+            let productSect of productsBySectionFiltered | keyvalue;
+            let i = index
+          "
         >
-          {{ productSect.key }}
-        </div>
-      </ng-container>
+          <div
+            class="px-2"
+            (click)="scrollTo('link' + i)"
+            [ngClass]="{ sectionActived: sectionActived === 'link' + i }"
+            style="display: inline-block"
+          >
+            {{ productSect.key }}
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>
