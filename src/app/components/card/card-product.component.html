@@ -6,32 +6,52 @@
     >
       {{ qty }}x
     </div>
-    <div class="d-flex align-items-center justify-content-center col-3">
+    <div
+      *ngIf="imageSrc"
+      class="d-flex align-items-center justify-content-center col-3"
+    >
       <img
         class="rounded-circle"
-        [src]="imageSrc ? imageSrc : genericImage"
-        style="width: 5rem; height: 5rem"
+        [src]="imageSrc"
+        style="width: 4rem; height: 4rem"
       />
     </div>
     <div
       class="d-flex flex-column align-items-start"
-      [class.col-8]="qty"
-      [class.col-9]="!qty"
+      [class.col-8]="qty && imageSrc"
+      [class.col-9]="!qty && imageSrc"
+      [class.col-11]="qty && !imageSrc"
+      [class.col-12]="!qty && !imageSrc"
     >
-      <div class="font-weight-bold m-0" style="font-size: 1.5rem">
-        {{ title }}
+      <div
+        class="w-100 d-flex flex-row justify-content-between align-items-center"
+      >
+        <div style="font-size: 1rem">{{ title }}</div>
+        <div *ngIf="price" class="font-weight-bold" style="font-size: 0.8rem">
+          ${{ price.toFixed(2) }}
+        </div>
       </div>
       <div *ngIf="description" class="text-muted" style="font-size: 0.8rem">
         {{ description }}
       </div>
       <div *ngIf="rating" class="d-flex flex-row align-items-center">
         <div class="pr-2">{{ rating }}</div>
-        <i class="mdi mdi-star text-primary"></i>
+        <i class="mdi mdi-star text-secondary"></i>
       </div>
-      <div *ngIf="price" class="d-flex flex-row align-items-center">
-        <div class="pr-2 text-primary font-weight-bold">
-          ${{ price.toFixed(2) }}
-        </div>
+      <div *ngIf="price" class="w-100 d-flex flex-row justify-content-end">
+        <button
+          mat-mini-fab
+          class="
+            bg-primary-light
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+          style="box-shadow: none !important; width: 1.5rem; height: 1.5rem"
+          (click)="clickEvent.emit()"
+        >
+          <i class="mdi mdi-plus text-primary"></i>
+        </button>
       </div>
     </div>
   </div>

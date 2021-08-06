@@ -16,7 +16,7 @@
       <div class="pr-2" [ngStyle]="{ color: txtColor }">
         {{ commerce.rate }}
       </div>
-      <i class="mdi mdi-star" [ngStyle]="{ color: txtColor }"></i>
+      <i class="mdi mdi-star text-secondary" [ngStyle]="{ color: txtColor }"></i>
     </div>
     <div class="pb-2 d-flex flex-row align-items-center lbl-header">
       <div class="pr-3" [ngStyle]="{ color: txtColor }">
@@ -103,7 +103,7 @@
           <div class="my-2 col-xl-6 col-12">
             <eu-card-product
               [description]="product.description"
-              [imageSrc]="!product.image ? commerce.image : product.image"
+              [imageSrc]="product.image"
               [price]="product.price"
               [title]="product.name"
               (clickEvent)="handlerClickCard(product)"

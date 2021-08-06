@@ -135,6 +135,10 @@
   color: $color-primary !important;
 }
 
+.text-secondary {
+  color: $color-secondary !important;
+}
+
 .text-primary-light {
   color: $color-primary-disabled !important;
 }
@@ -285,6 +289,14 @@ input.input-number::-webkit-inner-spin-button {
 
 .bg-light {
   background-color: $color-light2;
+}
+
+.bg-primary {
+  background-color: $color-primary;
+}
+
+.bg-primary-light {
+  background-color: $color-primary-light !important
 }
 
 .modal-content {

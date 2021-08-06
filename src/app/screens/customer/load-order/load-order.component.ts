@@ -87,13 +87,11 @@ export class LoadOrderComponent implements OnInit {
 
   @HostListener('focusin')
   setInputFocus(): void {
-    console.log('focus');
     this.hideHeaderImage();
   }
 
   @HostListener('focusout')
   setInputFocusOut(): void {
-    console.log('blur');
     this.showHeaderImage();
   }
 
