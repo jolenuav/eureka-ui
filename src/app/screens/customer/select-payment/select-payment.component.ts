@@ -17,14 +17,14 @@ import { ROUTES } from 'src/app/utils/routes';
 export class SelectPaymentComponent implements OnInit {
   headerStyle = {
     opacity: 1,
-    height: '7rem',
-    'max-height': '7rem',
+    height: '112px',
+    'max-height': '112px',
     'background-color': 'white',
   };
   titleStyle = {
     opacity: 1,
-    top: '3rem',
-    left: '1.5rem',
+    top: '48px',
+    left: '24px',
     'font-size': '18px',
   };
   cashCheck = true;
@@ -42,7 +42,7 @@ export class SelectPaymentComponent implements OnInit {
   payMobileCheck = false;
   payMobileIsCollapsed = true;
   payOrder = this.customerStore.order.payOrder;
-  topSize = '7rem';
+  topSize = '112px';
   transferCheck = false;
   transferIsCollapsed = true;
   transferData: PaymentMethod[] = [];
@@ -72,11 +72,11 @@ export class SelectPaymentComponent implements OnInit {
     if (document.documentElement.scrollTop > 1) {
       this.titleStyle = {
         opacity: 1,
-        top: '0.8rem',
-        left: '3.5rem',
+        top: '13px',
+        left: '56px',
         'font-size': '14px',
       };
-      this.topSize = '5rem';
+      this.topSize = '80px';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,
@@ -86,11 +86,11 @@ export class SelectPaymentComponent implements OnInit {
     } else {
       this.titleStyle = {
         opacity: 1,
-        top: '3rem',
-        left: '1.5rem',
+        top: '48px',
+        left: '24px',
         'font-size': '18px',
       };
-      this.topSize = '7rem';
+      this.topSize = '112px';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,

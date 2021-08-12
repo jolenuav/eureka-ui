@@ -13,7 +13,7 @@
       <img
         class="rounded-circle"
         [src]="imageSrc"
-        style="width: 4rem; height: 4rem"
+        style="width: 64px; height: 64px"
       />
     </div>
     <div
@@ -26,12 +26,12 @@
       <div
         class="w-100 d-flex flex-row justify-content-between align-items-center"
       >
-        <div style="font-size: 1rem">{{ title }}</div>
-        <div *ngIf="price" class="font-weight-bold" style="font-size: 0.8rem">
+        <div style="font-size: 16px">{{ title }}</div>
+        <div *ngIf="price" class="font-weight-bold" style="font-size: 12px">
           ${{ price.toFixed(2) }}
         </div>
       </div>
-      <div *ngIf="description" class="text-muted" style="font-size: 0.8rem">
+      <div *ngIf="description" class="text-muted" style="font-size: 12px">
         {{ description }}
       </div>
       <div *ngIf="rating" class="d-flex flex-row align-items-center">
@@ -39,19 +39,23 @@
         <i class="mdi mdi-star text-secondary"></i>
       </div>
       <div *ngIf="price" class="w-100 d-flex flex-row justify-content-end">
-        <button
-          mat-mini-fab
+        <div
           class="
             bg-primary-light
             d-flex
             align-items-center
             justify-content-center
           "
-          style="box-shadow: none !important; width: 1.5rem; height: 1.5rem"
+          style="
+            box-shadow: none !important;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+          "
           (click)="clickEvent.emit()"
         >
           <i class="mdi mdi-plus text-primary"></i>
-        </button>
+        </div>
       </div>
     </div>
   </div>

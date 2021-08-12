@@ -23,14 +23,14 @@
 <div
   id="container"
   class="eu_p-md-10"
-  style="padding-bottom: 10rem"
+  style="padding-bottom: 160px"
   [ngStyle]="{ 'padding-top': topSize }"
 >
   <h5 class="font-weight-bold m-0 mx-3 pt-3">Online</h5>
-  <span class="mx-3" style="font-size: 0.8rem"
+  <span class="mx-3" style="font-size: 13px"
     >Puede pagar con transferencias o pago móvil</span
   >
-  <div class="my-2 mx-3 card d-flex flex-column align-item-center p-3">
+  <div class="my-2 mx-3 card d-flex flex-column p-3">
     <div class="custom-control custom-checkbox py-1">
       <input
         id="transfer"
@@ -121,7 +121,7 @@
 
   <h5 class="font-weight-bold m-0 mx-3 pt-3">En la entrega</h5>
   <div class="my-2 mx-3 card p-3">
-    <div class="d-flex flex-row align-item-center justify-content-between">
+    <div class="d-flex flex-row align-items-center justify-content-between">
       <div class="custom-control custom-checkbox py-1">
         <input
           id="cash"
@@ -145,10 +145,10 @@
             btn btn-light btn-rounded
             d-flex
             flex-column
-            align-item-center
+            align-items-center
             justify-content-center
           "
-          style="height: 2rem"
+          style="height: 32px"
           (click)="
             collapseCash.toggle();
             cashCheck = true;

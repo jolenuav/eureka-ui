@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -46,9 +46,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.headerStyle = {
       opacity: 1,
-      height: '15rem',
+      height: '240px',
       color: '#e9ecef',
-      'max-height': '15rem',
+      'max-height': '240px',
       'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${this.commerce.image}")`,
     };
     this.order.commerce = this.commerce.id;
@@ -117,9 +117,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
     ]);
   }
 
+  @HostListener('document:scroll', ['$event'])
   onScroll(): void {
-    const average = document.getElementById('listProducts').scrollHeight * 0.05;
-    if (document.getElementById('listProducts').scrollTop > average) {
+    if (document.documentElement.scrollTop > 1) {
       this.hideHeaderImage();
     } else {
       this.showHeaderImage();
@@ -162,9 +162,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
     this.showSections = false;
     this.headerStyle = {
       opacity: 1,
-      height: '15rem',
+      height: '240px',
       color: '#e9ecef',
-      'max-height': '15rem',
+      'max-height': '240px',
       'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${this.commerce.image}")`,
     };
     this.txtColor = '#e9ecef';
@@ -173,9 +173,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
     this.showSections = true;
     this.headerStyle = {
       opacity: 1,
-      height: '12.5rem',
+      height: '200px',
       color: '#6c757d',
-      'max-height': '12.5rem',
+      'max-height': '200px',
       'background-color': 'white',
     };
     this.txtColor = '#6c757d';

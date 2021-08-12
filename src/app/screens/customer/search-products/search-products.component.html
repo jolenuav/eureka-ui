@@ -27,7 +27,7 @@
       </div>
       <i
         class="mdi mdi-credit-card"
-        style="font-size: 1rem"
+        style="font-size: 16px"
         [ngStyle]="{ color: txtColor }"
       ></i>
       <div class="pl-2" [ngStyle]="{ color: txtColor }">
@@ -79,18 +79,9 @@
 <div
   *ngIf="commerce && products"
   id="listProducts"
-  (scroll)="onScroll()"
-  scrollSpy
-  [spiedTags]="['DIV']"
   (sectionChange)="sectionActived = $event"
-  class="w-100 d-flex flex-column position-fixed"
-  style="
-    z-index: 1;
-    overflow: auto;
-    padding-top: 15rem;
-    padding-bottom: 10rem;
-    height: 100%;
-  "
+  class="w-100 d-flex flex-column"
+  style="padding-top: 240px; padding-bottom: 160px"
 >
   <div *ngIf="products.length > 0; then cards; else notFound"></div>
   <ng-template #cards>
@@ -100,21 +91,23 @@
         let i = index
       "
     >
-      <div [id]="'link' + i" class="pl-3">
-        <h3>{{ productSect.key }}</h3>
-      </div>
-      <div class="w-100 d-flex flex-wrap">
-        <ng-container *ngFor="let product of productSect.value">
-          <div class="my-2 col-xl-6 col-12">
-            <eu-card-product
-              [description]="product.description"
-              [imageSrc]="product.image"
-              [price]="product.price"
-              [title]="product.name"
-              (clickEvent)="handlerClickCard(product)"
-            ></eu-card-product>
-          </div>
-        </ng-container>
+      <div>
+        <div [id]="'link' + i" class="pl-3">
+          <h3>{{ productSect.key }}</h3>
+        </div>
+        <div class="w-100 d-flex flex-wrap">
+          <ng-container *ngFor="let product of productSect.value">
+            <div class="my-2 col-xl-6 col-12">
+              <eu-card-product
+                [description]="product.description"
+                [imageSrc]="product.image"
+                [price]="product.price"
+                [title]="product.name"
+                (clickEvent)="handlerClickCard(product)"
+              ></eu-card-product>
+            </div>
+          </ng-container>
+        </div>
       </div>
     </ng-container>
   </ng-template>
@@ -131,7 +124,7 @@
     p-2
     d-flex
     flex-column
-    align-item-center
+    align-items-center
     justify-content-center
     position-fixed
   "
@@ -145,12 +138,12 @@
         d-flex
         flex-row
         justify-content-between
-        alignt-item-center
+        align-items-center
       "
       (click)="showOrder()"
     >
       <span class="d-flex flex-row">
-        <i class="mdi mdi-shopping" style="font-size: 1.1rem"></i>
+        <i class="mdi mdi-shopping" style="font-size: 17px"></i>
         <div class="counter-circle">{{ order.products.length }}</div>
       </span>
       Ver mi pedido
