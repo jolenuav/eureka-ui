@@ -24,17 +24,17 @@ import { ROUTES } from 'src/app/utils/routes';
 export class OrderConfirmComponent implements OnInit, OnDestroy {
   headerStyle = {
     opacity: 1,
-    height: '6rem',
-    'max-height': '6rem',
+    height: '96px',
+    'max-height': '96px',
     'background-color': 'white',
   };
   titleStyle = {
     opacity: 1,
-    top: '3rem',
-    left: '1.5rem',
+    top: '48px',
+    left: '24px',
     'font-size': '18px',
   };
-  topSize = '6rem';
+  topSize = '96px';
 
   commerce: Commerce = this.activedRoute.snapshot.data.commerce;
   deliveryMin = this.store.appState.deliveryFees.sort((a, b) =>
@@ -187,11 +187,11 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
     if (document.documentElement.scrollTop > 1) {
       this.titleStyle = {
         opacity: 1,
-        top: '0.8rem',
-        left: '3.5rem',
+        top: '13px',
+        left: '56px',
         'font-size': '14px',
       };
-      this.topSize = '3rem';
+      this.topSize = '48px';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,
@@ -201,11 +201,11 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
     } else {
       this.titleStyle = {
         opacity: 1,
-        top: '3rem',
-        left: '1.5rem',
+        top: '48px',
+        left: '24px',
         'font-size': '18px',
       };
-      this.topSize = '6rem';
+      this.topSize = '96px';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,

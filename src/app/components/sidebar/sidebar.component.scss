@@ -18,7 +18,7 @@
       padding-bottom: 60px;
     }
     .nav-item {
-      padding: 0 2.25rem;
+      padding: 0 36px;
       transition-duration: 0.25s;
       transition-property: background;
       -webkit-transition-property: background;
@@ -29,7 +29,7 @@
         display: flex;
         align-items: center;
         white-space: nowrap;
-        padding: 1.125rem 0 1.125rem 0;
+        padding: 18px 0 18px 0;
         color: $color-black;
         transition-duration: 0.45s;
         transition-property: color;
@@ -38,7 +38,7 @@
         i {
           &.menu-icon {
             color: $color-primary-disabled;
-            font-size: 1.125rem;
+            font-size: 18px;
             line-height: 1;
             margin-left: auto;
             .rtl & {
@@ -52,7 +52,7 @@
           &.menu-arrow {
             font: normal normal normal 24px/1 'Material Design Icons';
             line-height: 1;
-            font-size: 1.125rem;
+            font-size: 18px;
             margin-left: auto;
             .rtl & {
               margin-left: 0;
@@ -65,24 +65,24 @@
               color: inherit;
             }
             + .menu-icon {
-              margin-left: 0.25rem;
-              margin-bottom: 0.25rem;
+              margin-left: 4px;
+              margin-bottom: 4px;
               .rtl & {
                 margin-left: 0;
-                margin-right: 0.25rem;
+                margin-right: 4px;
               }
             }
           }
         }
         .menu-title {
           display: inline-block;
-          font-size: 0.875rem;
+          font-size: 14px;
           line-height: 1;
           vertical-align: middle;
         }
         .badge {
           margin-right: auto;
-          margin-left: 1rem;
+          margin-left: 16px;
         }
         &[aria-expanded='true'] {
           .menu-arrow {
@@ -110,7 +110,7 @@
         height: auto;
         line-height: 1;
         border-top: 0;
-        padding: 1.25rem 0;
+        padding: 20px 0;
         .nav-profile-image {
           position: relative;
           width: 44px;
@@ -140,10 +140,10 @@
           }
         }
         .nav-profile-text {
-          margin-left: 1rem;
+          margin-left: 16px;
         }
         .nav-profile-badge {
-          font-size: 1.125rem;
+          font-size: 18px;
           margin-left: auto;
         }
       }
@@ -159,9 +159,9 @@
       .nav-item {
         padding: 0;
         .nav-link {
-          padding: 0.75rem 2rem 0.75rem 2rem;
+          padding: 12px 32px 12px 32px;
           position: relative;
-          font-size: 0.8125rem;
+          font-size: 13px;
           line-height: 1;
           height: auto;
           border-top: 0;
@@ -177,7 +177,7 @@
             }
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.75rem;
+            font-size: 12px;
           }
           &.active {
             color: $color-primary;
@@ -205,12 +205,12 @@
         margin-left: 0;
         margin-right: 0;
         .nav-item {
-          padding: 0 1rem;
+          padding: 0 16px;
           position: relative;
           .nav-link {
             display: block;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding-left: 8px;
+            padding-right: 8px;
             text-align: center;
             position: static;
             .menu-title,
@@ -247,7 +247,7 @@
                 display: flex;
                 align-items: center;
                 background: $color-light;
-                padding: 0.5rem 1.4rem;
+                padding: 8px 22px;
                 left: 70px;
                 position: absolute;
                 text-align: left;
@@ -276,7 +276,7 @@
             }
           }
           &.nav-profile {
-            padding: 0 0.3rem;
+            padding: 0 5px;
             display: none;
             .nav-link {
               .nav-profile-text {
@@ -301,7 +301,7 @@
           }
         }
         &.sub-menu {
-          padding: 0 0 0 1.5rem;
+          padding: 0 0 0 24px;
           .nav-item {
             .nav-link {
               text-align: left;

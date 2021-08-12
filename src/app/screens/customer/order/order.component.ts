@@ -14,14 +14,14 @@ import { ROUTES } from 'src/app/utils/routes';
 export class OrderComponent implements OnInit {
   headerStyle = {
     opacity: 1,
-    height: '10rem',
-    'max-height': '10rem',
+    height: '160px',
+    'max-height': '160px',
     'background-color': 'white',
   };
   titleStyle = {
     opacity: 1,
-    top: '3rem',
-    left: '1.5rem',
+    top: '48px',
+    left: '24px',
     'font-size': '18px',
   };
 
@@ -32,7 +32,7 @@ export class OrderComponent implements OnInit {
   )[0].price;
   order = this.customerStore.order;
   selectedsByDelete: number[] = [];
-  topSize = '10rem';
+  topSize = '160px';
 
   constructor(
     private activedRoute: ActivatedRoute,
@@ -53,29 +53,29 @@ export class OrderComponent implements OnInit {
     if (document.documentElement.scrollTop > 1) {
       this.titleStyle = {
         opacity: 1,
-        top: '0.8rem',
-        left: '3.5rem',
+        top: '13px',
+        left: '56px',
         'font-size': '14px',
       };
-      this.topSize = '8rem';
+      this.topSize = '128px';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,
-        'max-height': '8rem',
+        'max-height': '128px',
         'background-color': 'white',
       };
     } else {
       this.titleStyle = {
         opacity: 1,
-        top: '3rem',
-        left: '1.5rem',
+        top: '48px',
+        left: '24px',
         'font-size': '18px',
       };
-      this.topSize = '10rem';
+      this.topSize = '160px';
       this.headerStyle = {
         opacity: 1,
         height: this.topSize,
-        'max-height': '10rem',
+        'max-height': '160px',
         'background-color': 'white',
       };
     }
