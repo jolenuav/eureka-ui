@@ -15,7 +15,7 @@ import { ROUTES } from 'src/app/utils/routes';
   styleUrls: ['./load-order.component.scss'],
 })
 export class LoadOrderComponent implements OnInit {
-  topSize = '15rem';
+  topSize = '240px';
   amount = 0;
   commerce: Commerce = this.activedRoute.snapshot.data.loadOrder.commerce;
   counter = 1;
@@ -39,8 +39,8 @@ export class LoadOrderComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.headerStyle = {
       opacity: 1,
-      height: '15rem',
-      'max-height': '15rem',
+      height: '240px',
+      'max-height': '240px',
       'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${
         this.product.image ? this.product.image : this.commerce.image
       }")`,
@@ -96,12 +96,12 @@ export class LoadOrderComponent implements OnInit {
   }
 
   showHeaderImage(): void {
-    this.topSize = '15rem';
+    this.topSize = '240px';
     this.headerStyle = {
       opacity: 1,
-      height: '15rem',
+      height: '240px',
       color: '#e9ecef',
-      'max-height': '15rem',
+      'max-height': '240px',
       'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${
         this.product.image ? this.product.image : this.commerce.image
       }")`,
@@ -112,17 +112,17 @@ export class LoadOrderComponent implements OnInit {
   }
 
   hideHeaderImage(): void {
-    this.topSize = '3rem';
+    this.topSize = '55px';
     this.headerStyle = {
       opacity: 1,
-      height: '3rem',
+      height: '55px',
       color: '#6c757d',
-      'max-height': '3rem',
+      'max-height': '55px',
       'background-color': 'white',
     };
     this.titleHeader = {
       color: '#6c757d',
-      'padding-left': '3rem',
+      'padding-left': '55px',
     };
   }
 }

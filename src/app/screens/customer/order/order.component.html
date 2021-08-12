@@ -34,7 +34,7 @@
       <img
         class="rounded"
         [src]="commerce.image"
-        style="width: 3rem; height: 3rem"
+        style="width: 48px; height: 48px"
       />
       <div class="pl-3 d-flex flex-column">
         <div class="font-weight-bold">{{ commerce.name }}</div>
@@ -53,11 +53,11 @@
 <div
   id="container"
   class="eu_p-md-10"
-  style="padding-bottom: 10rem"
+  style="padding-bottom: 160px"
   [ngStyle]="{ 'padding-top': topSize }"
 >
   <ng-container *ngFor="let item of order.products; let i = index">
-    <div class="my-2 mx-3 card d-flex flex-row align-item-center p-3">
+    <div class="my-2 mx-3 card d-flex flex-row align-items-center p-3">
       <div *ngIf="!editEnable" class="m-auto col-2">{{ item.qty }}x</div>
       <div
         *ngIf="editEnable"
