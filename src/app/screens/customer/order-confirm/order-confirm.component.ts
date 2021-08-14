@@ -101,6 +101,7 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
   }
 
   async confirmOrder(): Promise<void> {
+    const phoneDelivery = 584125937999;
     this.order.id = this.orderID;
     this.order.date = new Date();
     this.order.deliveryData.name = this.formGroup.controls.name.value;
@@ -110,7 +111,11 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
 
     await this.saveOrder();
     window.open(
-      `whatsapp://send?phone=584125937999&text=${this.getMessage()}`,
+      `whatsapp://send?phone=${
+        this.formGroup.controls.deliveryPrice.value === 'A'
+          ? this.commerce.phone
+          : phoneDelivery
+      }&text=${this.getMessage()}`,
       '_blank'
     );
     this.customerStore.loadPaymentMathodToOrder(new PayOrder());
@@ -170,7 +175,11 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
       }
     });
 
-    let text = `*${orderID}*%0AHola *Eureka!*, `;
+    let text = `*${orderID}*%0AHola *${
+      this.formGroup.controls.deliveryPrice.value === 'A'
+        ? this.commerce.name
+        : 'Eureka!'
+    }*, `;
     text += `Soy ${this.formGroup.controls.name.value} `;
     text += `y quiero hacer el siguiente pedido:%0A${products}`;
     text += `Total orden *$${this.order.totalAmount.toFixed(2)}*%0A%0A`;
