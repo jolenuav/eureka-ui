@@ -9,7 +9,7 @@
       "
     >
       <div *ngIf="showInputCommerce" class="col-12 p-0">
-        <div class="form-group col-sm-12 col-xl-4">
+        <div class="m-0 form-group col-sm-12 col-xl-4">
           <eu-autocomplete-commerce
             [setCommerce]="commerceLoged ? commerceLoged : null"
             (changeEvent)="commerce = $event"
@@ -18,33 +18,39 @@
         </div>
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="name">Nombre</label>
         <input
           class="form-control"
+          id="name"
           formControlName="name"
           placeholder="Nombre"
           (blur)="formGroup.controls.name.markAsTouched()"
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="section">Sección</label>
         <select
           class="form-control w-100"
+          id="section"
           formControlName="section"
           (blur)="formGroup.controls.section.markAsTouched()"
         >
           <option [value]="null" disabled selected>
             Seleccione una sección
           </option>
-          <option
+          <!-- <option
             [value]="section"
             *ngFor="let section of commerce ? commerce.sections : []"
           >
             {{ section }}
-          </option>
+          </option> -->
         </select>
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="price">Precio</label>
         <input
           class="form-control input-number"
+          id="price"
           formControlName="price"
           placeholder="Precio"
           type="number"
@@ -122,12 +128,15 @@
         />
       </div>
       <div class="form-group col-12">
+        <label class="m-0" for="description">Descripción</label>
         <textarea
           class="form-control"
+          id="description"
           formControlName="description"
           placeholder="Descripción..."
         ></textarea>
       </div>
+      <label class="form-group col-12">Adicionales</label>
       <div class="d-flex flex-row w-100 justifu-content-center px-3">
         <button
           type="submit"

@@ -17,6 +17,7 @@ import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
+import { CategoriesComponent } from './screens/vendor/categories/categories.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
 import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
 import { ProductFormComponent } from './screens/vendor/products/product-form/product-form.component';
@@ -100,6 +101,11 @@ const routes: Routes = [
       {
         path: ROUTES.partner.stock,
         component: StockComponent,
+        canActivate: [PartnerViewAuthGuard],
+      },
+      {
+        path: ROUTES.partner.categories,
+        component: CategoriesComponent,
         canActivate: [PartnerViewAuthGuard],
       },
     ],

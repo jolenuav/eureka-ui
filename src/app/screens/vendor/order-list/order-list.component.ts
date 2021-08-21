@@ -4,7 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import Order from 'src/app/models/db/order/order';
 import PaymentMethod from 'src/app/models/db/payment-method';
 import { OrderService } from 'src/app/services/firestore/order.service';
-import { StoreService } from 'src/app/services/store.service';
+import { StoreService } from 'src/app/services/store/store.service';
 import { CONSTANTS } from 'src/app/utils/constants';
 import { DetailModalComponent } from './detail-modal/detail-modal.component';
 

@@ -4,8 +4,8 @@ import Commerce from 'src/app/models/db/commerce';
 import DeliveryData from 'src/app/models/db/order/delivery-data';
 import PayOrder from 'src/app/models/db/order/pay-order';
 import PaymentMethod from 'src/app/models/db/payment-method';
-import { CustomerStoreService } from 'src/app/services/customer-store.service';
-import { StoreService } from 'src/app/services/store.service';
+import { CustomerStoreService } from 'src/app/services/store/customer-store.service';
+import { StoreService } from 'src/app/services/store/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 

@@ -5,8 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/models/app/app-state';
 import Commerce from 'src/app/models/db/commerce';
 import Order from 'src/app/models/db/order/order';
-import { CustomerStoreService } from 'src/app/services/customer-store.service';
-import { StoreService } from 'src/app/services/store.service';
+import { CustomerStoreService } from 'src/app/services/store/customer-store.service';
+import { StoreService } from 'src/app/services/store/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 
@@ -41,16 +41,16 @@ export class SearchCommerceComponent implements OnInit, OnDestroy {
           this.cd.detectChanges();
           return;
         }
-        this.commercesFiltred = this.commerces.filter(
-          (c) =>
-            c.name.toLowerCase().includes(search.trim().toLowerCase()) ||
-            c.categories?.some((cat: string) =>
-              cat.toLowerCase().includes(search.trim().toLowerCase())
-            ) ||
-            c.sections?.some((sec: string) =>
-              sec.toLowerCase().includes(search.trim().toLowerCase())
-            )
-        );
+        // this.commercesFiltred = this.commerces.filter(
+        //   (c) =>
+        //     c.name.toLowerCase().includes(search.trim().toLowerCase()) ||
+        //     c.categories?.some((cat: string) =>
+        //       cat.toLowerCase().includes(search.trim().toLowerCase())
+        //     ) ||
+        //     c.sections?.some((sec: string) =>
+        //       sec.toLowerCase().includes(search.trim().toLowerCase())
+        //     )
+        // );
         this.cd.detectChanges();
       })
     );

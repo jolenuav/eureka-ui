@@ -35,6 +35,10 @@ export class IconTitleComponent implements OnInit {
         pageTitle.title = 'Lista de productos';
         pageTitle.icon = 'mdi-format-list-bulleted';
         return pageTitle;
+      case ROUTES.partner.categories:
+        pageTitle.title = 'Categorías de productos';
+        pageTitle.icon = 'mdi-view-grid-outline';
+        return pageTitle;
       case ROUTES.partner.adminProduct:
         pageTitle.title = 'Adm. Productos';
         pageTitle.icon = 'mdi-package-variant-closed';

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/authenticate.service';
-import { StoreService } from 'src/app/services/store.service';
-import { VendorStoreService } from 'src/app/services/vendor-store.service';
+import { StoreService } from 'src/app/services/store/store.service';
+import { VendorStoreService } from 'src/app/services/store/vendor-store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 

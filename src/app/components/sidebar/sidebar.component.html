@@ -72,7 +72,10 @@
       class="nav-item"
       [ngClass]="{
         active:
-          adminProducts.isActive || listProducts.isActive || stock.isActive
+          categories.isActive ||
+          adminProducts.isActive ||
+          listProducts.isActive ||
+          stock.isActive
       }"
     >
       <a
@@ -86,6 +89,16 @@
       </a>
       <div class="collapse" id="ui-basic" [ngbCollapse]="!productCollapsed">
         <ul class="nav flex-column sub-menu">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/partner/categories"
+              routerLinkActive="active"
+              #categories="routerLinkActive"
+            >
+              <span class="menu-title">Categorías</span>
+            </a>
+          </li>
           <li class="nav-item">
             <a
               class="nav-link"

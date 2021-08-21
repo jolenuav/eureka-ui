@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs';
 import Commerce from 'src/app/models/db/commerce';
 import Order from 'src/app/models/db/order/order';
 import Product from 'src/app/models/db/product';
-import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { StockService } from 'src/app/services/firestore/stock.service';
-import { StoreService } from 'src/app/services/store.service';
+import { CustomerStoreService } from 'src/app/services/store/customer-store.service';
+import { StoreService } from 'src/app/services/store/store.service';
 import { pathRoute, quitQuoteText } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 
@@ -45,9 +45,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.headerStyle = {
-      opacity: 1,
-      height: '240px',
-      color: '#e9ecef',
+      'opacity': 1,
+      'height': '240px',
+      'color': '#e9ecef',
       'max-height': '240px',
       'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${this.commerce.image}")`,
     };
@@ -161,9 +161,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
   showHeaderImage(): void {
     this.showSections = false;
     this.headerStyle = {
-      opacity: 1,
-      height: '240px',
-      color: '#e9ecef',
+      'opacity': 1,
+      'height': '240px',
+      'color': '#e9ecef',
       'max-height': '240px',
       'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${this.commerce.image}")`,
     };
@@ -172,9 +172,9 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
   hideHeaderImage(): void {
     this.showSections = true;
     this.headerStyle = {
-      opacity: 1,
-      height: '200px',
-      color: '#6c757d',
+      'opacity': 1,
+      'height': '200px',
+      'color': '#6c757d',
       'max-height': '200px',
       'background-color': 'white',
     };

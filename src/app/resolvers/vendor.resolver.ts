@@ -6,13 +6,11 @@ import {
 } from '@angular/router';
 import Commerce from '../models/db/commerce';
 import Product from '../models/db/product';
-import SessionToken from '../models/db/session-token';
-import User from '../models/db/user';
 import { CommerceService } from '../services/firestore/commerce.service';
 import { ProductService } from '../services/firestore/product.service';
 import { UserService } from '../services/firestore/user.service';
-import { StoreService } from '../services/store.service';
-import { VendorStoreService } from '../services/vendor-store.service';
+import { StoreService } from '../services/store/store.service';
+import { VendorStoreService } from '../services/store/vendor-store.service';
 
 @Injectable()
 export abstract class VendorResolver implements Resolve<any> {

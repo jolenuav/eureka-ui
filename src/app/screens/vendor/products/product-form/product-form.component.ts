@@ -12,8 +12,8 @@ import { MovementStock } from 'src/app/models/enums/movement-stock.enum';
 import { UserTypeEnum } from 'src/app/models/enums/user-type.enum';
 import { ProductService } from 'src/app/services/firestore/product.service';
 import { StockService } from 'src/app/services/firestore/stock.service';
-import { StoreService } from 'src/app/services/store.service';
-import { VendorStoreService } from 'src/app/services/vendor-store.service';
+import { StoreService } from 'src/app/services/store/store.service';
+import { VendorStoreService } from 'src/app/services/store/vendor-store.service';
 import { generateID } from 'src/app/utils/commons.function';
 import { CONSTANTS } from 'src/app/utils/constants';
 

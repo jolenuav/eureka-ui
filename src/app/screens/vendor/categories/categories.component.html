@@ -1,0 +1,85 @@
+<div class="container-scroll-x container-scroll-y p-4 text-small">
+  <div class="pb-3"><eu-icon-title></eu-icon-title></div>
+  <div class="card d-flex flex-column border-0">
+    <form
+      class="row p-3"
+      [formGroup]="formGroup"
+      (ngSubmit)="onSaveOrUpdate()"
+    >
+      <div *ngIf="showInputCommerce" class="col-12 p-0">
+        <div class="form-group col-sm-12 col-xl-4">
+          <eu-autocomplete-commerce
+            [setCommerce]="commerceLoged ? commerceLoged : null"
+            (changeEvent)="commerce = $event"
+          >
+          </eu-autocomplete-commerce>
+        </div>
+      </div>
+
+      <div class="form-group col-12">
+        <mat-form-field class="w-100">
+          <mat-label>Categorías</mat-label>
+          <mat-chip-list #chipCategories>
+            <mat-chip
+              *ngFor="let category of categories"
+              selectable
+              [removable]="removable"
+              (removed)="removeCategory(category)"
+            >
+              {{ category }}
+              <i
+                matChipRemove
+                *ngIf="removable"
+                class="mdi mdi-close-circle"
+              ></i>
+            </mat-chip>
+            <input
+              placeholder="Etiquetas..."
+              [matChipInputFor]="chipCategories"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addCategory($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group col-12">
+        <mat-form-field class="w-100">
+          <mat-label>Categorías</mat-label>
+          <mat-chip-list #chipSubCategories>
+            <mat-chip
+              *ngFor="let subCategory of subCategories"
+              selectable
+              [removable]="removable"
+              (removed)="removeSubCategory(subCategory)"
+            >
+              {{ subCategory }}
+              <i
+                matChipRemove
+                *ngIf="removable"
+                class="mdi mdi-close-circle"
+              ></i>
+            </mat-chip>
+            <input
+              placeholder="Etiquetas..."
+              [matChipInputFor]="chipSubCategories"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addSubCategory($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+
+      <div class="d-flex flex-row w-100 justifu-content-center px-3">
+        <button
+          type="submit"
+          class="btn btn-primary btn-rounded m-auto col-sm-12 col-xl-4"
+        >
+          Agregar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

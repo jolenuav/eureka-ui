@@ -4,8 +4,8 @@ import Commerce from 'src/app/models/db/commerce';
 import ItemOrder from 'src/app/models/db/order/item-order';
 import Product from 'src/app/models/db/product';
 import Stock from 'src/app/models/db/stock/stock';
-import { CustomerStoreService } from 'src/app/services/customer-store.service';
 import { StockService } from 'src/app/services/firestore/stock.service';
+import { CustomerStoreService } from 'src/app/services/store/customer-store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import SessionToken from '../models/db/session-token';
 import { AuthService } from './authenticate.service';
-import { StoreService } from './store.service';
-import { VendorStoreService } from './vendor-store.service';
+import { StoreService } from './store/store.service';
+import { VendorStoreService } from './store/vendor-store.service';
 
 @Injectable()
 export class AppInitializerService {
@@ -26,6 +26,7 @@ export class AppInitializerService {
     if (tokenDate.diff(currentDate, 'minutes') > 0) {
       this.vendorStore.user = await this.authService.getUsserLogged();
     } else {
+      this.vendorStore.user = null;
       sessionStorage.clear();
     }
   }

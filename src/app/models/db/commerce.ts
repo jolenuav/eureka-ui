@@ -3,7 +3,6 @@ import GeoPoint from './geopointer';
 export default class Commerce {
   _id: string;
   _geolacation: GeoPoint;
-  _categories: string[];
   _duration: string;
   _documentNo: string;
   _enabled: boolean;
@@ -12,7 +11,7 @@ export default class Commerce {
   _mail: string;
   _phone: number;
   _rate: number;
-  _sections: string[];
+  _keywords: string[];
   _url: string;
 
   static parse(obj: any): Commerce {
@@ -21,7 +20,6 @@ export default class Commerce {
     commerce.geolacation = obj.geolacation
       ? GeoPoint.parse(obj.geolacation)
       : null;
-    commerce.categories = obj.categories;
     commerce.duration = obj.duration;
     commerce.documentNo = obj.documentNo;
     commerce.enabled = obj.enabled;
@@ -30,7 +28,7 @@ export default class Commerce {
     commerce.mail = obj.mail;
     commerce.phone = obj.phone;
     commerce.rate = obj.rate;
-    commerce.sections = obj.sections;
+    commerce.keywords = obj.keywords;
     commerce.url = obj.url;
     return commerce;
   }
@@ -39,7 +37,6 @@ export default class Commerce {
     const commerce = new Commerce();
     commerce.id = this.id;
     commerce.geolacation = this.geolacation ? this.geolacation.clone() : null;
-    commerce.categories = this.categories;
     commerce.duration = this.duration;
     commerce.documentNo = this.documentNo;
     commerce.enabled = this.enabled;
@@ -48,7 +45,7 @@ export default class Commerce {
     commerce.mail = this.mail;
     commerce.phone = this.phone;
     commerce.rate = this.rate;
-    commerce.sections = this.sections;
+    commerce.keywords = this.keywords;
     commerce.url = this.url;
     return commerce;
   }
@@ -59,9 +56,6 @@ export default class Commerce {
     this.geolacation
       ? (obj.geolacation = this.geolacation.getSimpleObject())
       : delete obj.geolacation;
-    this.categories
-      ? (obj.categories = this.categories)
-      : delete obj.categories;
     this.duration ? (obj.duration = this.duration) : delete obj.duration;
     this.documentNo
       ? (obj.documentNo = this.documentNo)
@@ -72,7 +66,9 @@ export default class Commerce {
     this.mail ? (obj.mail = this.mail) : delete obj.mail;
     this.phone ? (obj.phone = this.phone) : delete obj.phone;
     this.rate ? (obj.rate = this.rate) : delete obj.rate;
-    this.sections && this.sections !== [] ? (obj.sections = this.sections) : delete obj.sections;
+    this.keywords && this.keywords !== []
+      ? (obj.keywords = this.keywords)
+      : delete obj.keywords;
     this.url ? (obj.url = this.url) : delete obj.url;
     return obj;
   }
@@ -91,13 +87,6 @@ export default class Commerce {
   }
   set geolacation(geolacation: GeoPoint) {
     this._geolacation = geolacation;
-  }
-
-  get categories(): string[] {
-    return this._categories;
-  }
-  set categories(categories: string[]) {
-    this._categories = categories;
   }
 
   get duration(): string {
@@ -135,11 +124,11 @@ export default class Commerce {
     this._rate = rate;
   }
 
-  get sections(): string[] {
-    return this._sections;
+  get keywords(): string[] {
+    return this._keywords;
   }
-  set sections(sections: string[]) {
-    this._sections = sections;
+  set keywords(keywords: string[]) {
+    this._keywords = keywords;
   }
 
   get url(): string {

@@ -6,8 +6,8 @@ import Stock from 'src/app/models/db/stock/stock';
 import StockMovement from 'src/app/models/db/stock/stock-movement';
 import { MovementStock } from 'src/app/models/enums/movement-stock.enum';
 import { StockService } from 'src/app/services/firestore/stock.service';
-import { StoreService } from 'src/app/services/store.service';
-import { VendorStoreService } from 'src/app/services/vendor-store.service';
+import { StoreService } from 'src/app/services/store/store.service';
+import { VendorStoreService } from 'src/app/services/store/vendor-store.service';
 
 @Component({
   selector: 'eu-stock-form',
@@ -26,7 +26,6 @@ export class StockFormComponent implements OnInit, OnDestroy {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private changeDetetorRef: ChangeDetectorRef,
     private stockService: StockService,
     private store: StoreService,
     private vendorStore: VendorStoreService

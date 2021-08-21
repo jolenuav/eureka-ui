@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import Commerce from 'src/app/models/db/commerce';
@@ -6,7 +6,7 @@ import Stock from 'src/app/models/db/stock/stock';
 import StockMovement from 'src/app/models/db/stock/stock-movement';
 import { UserTypeEnum } from 'src/app/models/enums/user-type.enum';
 import { StockService } from 'src/app/services/firestore/stock.service';
-import { VendorStoreService } from 'src/app/services/vendor-store.service';
+import { VendorStoreService } from 'src/app/services/store/vendor-store.service';
 import { CONSTANTS } from 'src/app/utils/constants';
 import { StockFormComponent } from './modals/stock-form/stock-form.component';
 import { StockMovementsComponent } from './modals/stock-moviments/stock-movements.component';

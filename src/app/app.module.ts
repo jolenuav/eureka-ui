@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -50,8 +51,10 @@ import { StockMovementsComponent } from './screens/vendor/stock/modals/stock-mov
 import { StockComponent } from './screens/vendor/stock/stock.component';
 import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
-import { StoreService } from './services/store.service';
+import { StoreService } from './services/store/store.service';
 import { PipeModule } from './utils/pipe.module';
+import { CategoriesComponent } from './screens/vendor/categories/categories.component';
+import { AdditionalsComponent } from './screens/vendor/additionals/additionals.component';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -86,6 +89,8 @@ export function initApp(provider: AppInitializerService): any {
     StockComponent,
     StockMovementsComponent,
     StockFormComponent,
+    CategoriesComponent,
+    AdditionalsComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +109,7 @@ export function initApp(provider: AppInitializerService): any {
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
     MatStepperModule,
   ],
   providers: [

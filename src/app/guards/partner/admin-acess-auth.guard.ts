@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Router,
-  RouterStateSnapshot,
+  RouterStateSnapshot
 } from '@angular/router';
 import { AuthService } from 'src/app/services/authenticate.service';
-import { VendorStoreService } from 'src/app/services/vendor-store.service';
+import { VendorStoreService } from 'src/app/services/store/vendor-store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 import { AuthGuard } from '../auth.guard';

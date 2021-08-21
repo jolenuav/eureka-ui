@@ -5,7 +5,7 @@ import User from '../models/db/user';
 import { generateID } from '../utils/commons.function';
 import { SessionTokenService } from './firestore/sessionToken.service';
 import { UserService } from './firestore/user.service';
-import { VendorStoreService } from './vendor-store.service';
+import { VendorStoreService } from './store/vendor-store.service';
 
 @Injectable()
 export class AuthService {
@@ -59,6 +59,7 @@ export class AuthService {
     if (tokenDate.diff(currentDate, 'minutes') > 0) {
       return true;
     }
+    this.vendorStore.user = null;
     return false;
   }
 

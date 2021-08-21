@@ -13,6 +13,7 @@ export const ROUTES = {
     login: 'login',
     listCommerce: 'list_commerces',
     adminCommerce: 'admin_commerce',
+    categories: 'categories',
     listProduct: 'list_products',
     adminProduct: 'admin_product',
     stock: 'stock',

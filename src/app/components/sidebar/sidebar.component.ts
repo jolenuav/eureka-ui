@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VendorStoreService } from 'src/app/services/vendor-store.service';
+import { VendorStoreService } from 'src/app/services/store/vendor-store.service';
 
 @Component({
   selector: 'eu-sidebar',

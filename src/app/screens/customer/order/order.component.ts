@@ -1,8 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Commerce from 'src/app/models/db/commerce';
-import { CustomerStoreService } from 'src/app/services/customer-store.service';
-import { StoreService } from 'src/app/services/store.service';
+import { CustomerStoreService } from 'src/app/services/store/customer-store.service';
+import { StoreService } from 'src/app/services/store/store.service';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 

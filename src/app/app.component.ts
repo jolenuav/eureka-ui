@@ -6,8 +6,8 @@ import {
   OnInit
 } from '@angular/core';
 import { version } from 'package.json';
-import { StoreService } from './services/store.service';
-import { VendorStoreService } from './services/vendor-store.service';
+import { StoreService } from './services/store/store.service';
+import { VendorStoreService } from './services/store/vendor-store.service';
 
 @Component({
   selector: 'eu-root',

@@ -2,11 +2,11 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
-  RouterStateSnapshot,
+  RouterStateSnapshot
 } from '@angular/router';
 import { UserTypeEnum } from '../models/enums/user-type.enum';
 import { AuthService } from '../services/authenticate.service';
-import { VendorStoreService } from '../services/vendor-store.service';
+import { VendorStoreService } from '../services/store/vendor-store.service';
 import { CONSTANTS } from '../utils/constants';
 
 export abstract class AuthGuard implements CanActivate {

@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
-  RouterStateSnapshot,
+  RouterStateSnapshot
 } from '@angular/router';
 import Commerce from '../models/db/commerce';
 import PaymentMethod from '../models/db/payment-method';
 import Product from '../models/db/product';
-import { CustomerStoreService } from '../services/customer-store.service';
 import { CommerceService } from '../services/firestore/commerce.service';
 import { PaymentMethodsService } from '../services/firestore/paymenth-methods.service';
 import { ProductService } from '../services/firestore/product.service';
 import { StockService } from '../services/firestore/stock.service';
-import { StoreService } from '../services/store.service';
+import { CustomerStoreService } from '../services/store/customer-store.service';
+import { StoreService } from '../services/store/store.service';
 
 @Injectable()
 export abstract class CustomerResolver implements Resolve<any> {

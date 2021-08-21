@@ -10,16 +10,20 @@
     >
       <label class="form-group col-12">Información básica</label>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="name">Nombre</label>
         <input
           class="form-control"
+          id="name"
           formControlName="name"
           placeholder="Nombre"
           (blur)="formGroup.controls.name.markAsTouched()"
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="documentNo">Nro. documento</label>
         <input
           class="form-control"
+          id="documentNo"
           formControlName="documentNo"
           placeholder="Nro. Documento"
           type="text"
@@ -27,8 +31,10 @@
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="mail">Correo</label>
         <input
           class="form-control"
+          id="mail"
           formControlName="mail"
           placeholder="Correo"
           type="email"
@@ -36,8 +42,10 @@
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="phone">Teléfono</label>
         <input
           class="form-control input-number"
+          id="phone"
           formControlName="phone"
           placeholder="Teléfono"
           type="number"
@@ -45,8 +53,10 @@
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="url1">Url</label>
         <input
           class="form-control"
+          id="url1"
           formControlName="url"
           placeholder="Url"
           type="text"
@@ -71,8 +81,10 @@
         <label class="custom-control-label" for="enabled">Habilitado</label>
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="duration">Duración</label>
         <input
           class="form-control"
+          id="duration"
           formControlName="duration"
           placeholder="Duración"
           type="text"
@@ -80,17 +92,19 @@
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="rate">Valoración</label>
         <input
           class="form-control"
+          id="rate"
           formControlName="rate"
           placeholder="Valoración"
           type="text"
           (blur)="formGroup.controls.rate.markAsTouched()"
         />
       </div>
-      <div class="form-group col-sm-12 col-xl-6">
+      <div class="form-group col-12">
         <mat-form-field class="w-100">
-          <mat-label>Categorías/Palabras clave</mat-label>
+          <mat-label>Etiqueta de búsqueda</mat-label>
           <mat-chip-list #chipWords>
             <mat-chip
               *ngFor="let word of words"
@@ -115,36 +129,14 @@
           </mat-chip-list>
         </mat-form-field>
       </div>
-      <div class="form-group col-sm-12 col-xl-6">
-        <mat-form-field class="w-100">
-          <mat-label>Secciones productos</mat-label>
-          <mat-chip-list #chipSections>
-            <mat-chip
-              *ngFor="let section of sections"
-              selectable
-              [removable]="removable"
-              (removed)="removeSection(section)"
-            >
-              {{ section }}
-              <i
-                matChipRemove
-                *ngIf="removable"
-                class="mdi mdi-close-circle"
-              ></i>
-            </mat-chip>
-            <input
-              placeholder="Nueva sección..."
-              [matChipInputFor]="chipSections"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="true"
-              (matChipInputTokenEnd)="addSection($event)"
-            />
-          </mat-chip-list>
-        </mat-form-field>
-      </div>
       <label class="form-group col-12">Métodos de pago</label>
       <div class="form-group col-sm-12 col-xl-3">
-        <select #paymentMethodType class="form-control w-100">
+        <label class="m-0" for="paymentMethod">Método de pago</label>
+        <select
+          #paymentMethodType
+          class="form-control w-100"
+          id="paymentMethod"
+        >
           <option value="null" disabled selected>
             Seleccione un método de pago
           </option>
@@ -153,31 +145,38 @@
         </select>
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="bankName">Nombre del banco</label>
         <input
           #accountName
           class="form-control"
+          id="bankName"
           placeholder="Nombre del banco"
           type="text"
         />
       </div>
       <div class="form-group col-sm-12 col-xl-6">
+        <label class="m-0" for="accountNumber">Nro. cuenta</label>
         <input
           #accountNumber
           class="form-control input-number"
+          id="accountNumber"
           placeholder="Nro. cuenta"
           type="number"
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="ownerName">Titular</label>
         <input
           #ownerName
           class="form-control"
+          id="ownerName"
           placeholder="Titular"
           type="text"
         />
       </div>
       <div class="form-group col-sm-12 col-xl-3">
-        <select #docType class="form-control w-100">
+        <label class="m-0" for="documentType">Tipo documento</label>
+        <select #docType class="form-control w-100" id="documentType">
           <option [value]="null" disabled selected>
             Seleccione tipo de document
           </option>
@@ -187,9 +186,11 @@
         </select>
       </div>
       <div class="form-group col-sm-12 col-xl-3">
+        <label class="m-0" for="documentNoPM">Nro. documento</label>
         <input
           #ownerDocument
           class="form-control input-number"
+          id="documentNoPM"
           placeholder="Nro documento"
           type="number"
         />
@@ -279,7 +280,11 @@
       </div>
       <label class="form-group col-12">Ubicación</label>
       <div class="form-group col-12">
-        <eu-map #map [positionLoaded]="geoposition" (positionEvent)="geoposition = $event"></eu-map>
+        <eu-map
+          #map
+          [positionLoaded]="geoposition"
+          (positionEvent)="geoposition = $event"
+        ></eu-map>
       </div>
       <div class="d-flex flex-row w-100 justifu-content-center px-3">
         <button

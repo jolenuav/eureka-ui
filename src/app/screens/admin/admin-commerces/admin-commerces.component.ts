@@ -3,13 +3,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
-import * as mapboxgl from 'mapbox-gl';
 import { MapComponent } from 'src/app/components/map/map.component';
 import Commerce from 'src/app/models/db/commerce';
 import PaymentMethod from 'src/app/models/db/payment-method';
 import { CommerceService } from 'src/app/services/firestore/commerce.service';
 import { PaymentMethodsService } from 'src/app/services/firestore/paymenth-methods.service';
-import { StoreService } from 'src/app/services/store.service';
+import { StoreService } from 'src/app/services/store/store.service';
 import { generateCommerceId } from 'src/app/utils/commons.function';
 import { PATTERN } from 'src/app/utils/pattern';
 
@@ -40,7 +39,6 @@ export class AdminCommercesComponent implements OnInit {
   commerce: Commerce = this.activeRouter.snapshot.data.selectPayment.commerce;
   geoposition;
   removable = true;
-  sections: string[] = [];
   words: string[] = [];
   paymentMethods: PaymentMethod[] =
     this.activeRouter.snapshot.data.selectPayment.paymentMethods;
@@ -69,8 +67,7 @@ export class AdminCommercesComponent implements OnInit {
     this.formGroup.controls.enabled.setValue(this.commerce.enabled);
     this.formGroup.controls.duration.setValue(this.commerce.duration);
     this.formGroup.controls.rate.setValue(this.commerce.rate);
-    this.sections = this.commerce.sections;
-    this.words = this.commerce.categories;
+    this.words = this.commerce.keywords;
     this.geoposition = this.commerce.geolacation;
   }
 
@@ -86,21 +83,6 @@ export class AdminCommercesComponent implements OnInit {
     const index = this.words.indexOf(word);
     if (index >= 0) {
       this.words.splice(index, 1);
-    }
-  }
-
-  addSection(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-    if (value) {
-      this.sections.push(value);
-    }
-    event.input.value = null;
-  }
-
-  removeSection(word: string): void {
-    const index = this.sections.indexOf(word);
-    if (index >= 0) {
-      this.sections.splice(index, 1);
     }
   }
 
@@ -157,8 +139,7 @@ export class AdminCommercesComponent implements OnInit {
     commerce.phone = this.formGroup.controls.phone.value;
     commerce.rate = this.formGroup.controls.rate.value;
     commerce.url = this.formGroup.controls.url.value;
-    commerce.categories = this.words;
-    commerce.sections = this.sections;
+    commerce.keywords = this.words;
     if (this.commerce) {
       await this.commerceService.update(commerce);
       await this.paymentMethodservice.deleteByCommerce(this.commerce.id);
