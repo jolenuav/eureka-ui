@@ -13,9 +13,27 @@ export class CommerceService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  async findAll(): Promise<Commerce[]> {
+  async findEnables(): Promise<Commerce[]> {
     return this.firestore
       .collection(this.collection, (ref) => ref.where('enabled', '==', true))
+      .get()
+      .pipe(
+        map((data) => {
+          const commerces: Commerce[] = [];
+          data.docs.forEach((doc) => {
+            const commerce = Commerce.parse(doc.data());
+            commerce.id = doc.id;
+            commerces.push(commerce);
+          });
+          return commerces;
+        })
+      )
+      .toPromise();
+  }
+
+  async findAlls(): Promise<Commerce[]> {
+    return this.firestore
+      .collection(this.collection)
       .get()
       .pipe(
         map((data) => {

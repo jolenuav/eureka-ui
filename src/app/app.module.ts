@@ -28,6 +28,7 @@ import { LoginAuthGuard } from './guards/partner/login-auth.guard';
 import { PartnerViewAuthGuard } from './guards/partner/partner-view-auth.guard';
 import { CommerceSelectedResolver } from './resolvers/commerce-selected.resolver';
 import { FormProductsResolver } from './resolvers/form-products.resolver';
+import { ListCommercesAdminResolver } from './resolvers/list-commerce-admin.resolver';
 import { LoadOrderResolver } from './resolvers/load-order.resolver';
 import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
@@ -120,6 +121,7 @@ export function initApp(provider: AppInitializerService): any {
     // RESOLVERS
     CommerceSelectedResolver,
     FormProductsResolver,
+    ListCommercesAdminResolver,
     LoadOrderResolver,
     SearchProductsResolver,
     SelectPaymentResolver,

@@ -50,7 +50,7 @@ export class StoreService {
   }
 
   async loadCommerces(): Promise<void> {
-    const commerces: any = await this._commerceService.findAll();
+    const commerces: any = await this._commerceService.findEnables();
     this._appState.next({
       ...this.appState,
       commerces,
