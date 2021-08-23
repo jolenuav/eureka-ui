@@ -50,6 +50,12 @@ $eureka-web-theme: mat-light-theme(
   src: url('./assets//fonts/Poppins/Poppins-Italic.ttf') format('truetype');
 }
 
+$custom-typography: mat-typography-config(
+  $font-family: 'Poppins',
+);
+
+@include angular-material-typography($custom-typography);
+
 html {
   font-family: 'Poppins' !important;
   color: $color-black;

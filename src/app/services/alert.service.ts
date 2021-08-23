@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AlertService {
   constructor(private snackBar: MatSnackBar) {}
 
-  errorAlert(msg: string): void {
+  error(msg: string): void {
     this.snackBar.open(msg, null, {
       duration: 3000,
       horizontalPosition: 'center',
@@ -16,7 +16,7 @@ export class AlertService {
     });
   }
 
-  successAlert(msg: string): void {
+  success(msg: string): void {
     this.snackBar.open(msg, null, {
       duration: 3000,
       horizontalPosition: 'center',

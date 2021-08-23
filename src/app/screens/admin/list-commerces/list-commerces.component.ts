@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { StoreService } from 'src/app/services/store/store.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { pathRoute } from 'src/app/utils/commons.function';
 import { ROUTES } from 'src/app/utils/routes';
 
@@ -10,9 +9,12 @@ import { ROUTES } from 'src/app/utils/routes';
   styleUrls: ['./list-commerces.component.scss'],
 })
 export class ListCommercesComponent implements OnInit {
-  commerces = this.store.appState.commerces;
+  commerces = this.activatedRouter.snapshot.data.commerces;
 
-  constructor(private store: StoreService, private router: Router) {}
+  constructor(
+    private activatedRouter: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,6 +30,7 @@ import { LoginAuthGuard } from './guards/partner/login-auth.guard';
 import { PartnerViewAuthGuard } from './guards/partner/partner-view-auth.guard';
 import { CommerceSelectedResolver } from './resolvers/commerce-selected.resolver';
 import { FormProductsResolver } from './resolvers/form-products.resolver';
+import { ListCommercesAdminResolver } from './resolvers/list-commerce-admin.resolver';
 import { LoadOrderResolver } from './resolvers/load-order.resolver';
 import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
@@ -42,6 +44,8 @@ import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
+import { AdditionalsComponent } from './screens/vendor/additionals/additionals.component';
+import { CategoriesComponent } from './screens/vendor/categories/categories.component';
 import { DetailModalComponent } from './screens/vendor/order-list/detail-modal/detail-modal.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
 import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
@@ -53,8 +57,6 @@ import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store/store.service';
 import { PipeModule } from './utils/pipe.module';
-import { CategoriesComponent } from './screens/vendor/categories/categories.component';
-import { AdditionalsComponent } from './screens/vendor/additionals/additionals.component';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -107,6 +109,7 @@ export function initApp(provider: AppInitializerService): any {
     MatAutocompleteModule,
     MatButtonModule,
     MatChipsModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
@@ -126,6 +129,7 @@ export function initApp(provider: AppInitializerService): any {
     // RESOLVERS
     CommerceSelectedResolver,
     FormProductsResolver,
+    ListCommercesAdminResolver,
     LoadOrderResolver,
     SearchProductsResolver,
     SelectPaymentResolver,
