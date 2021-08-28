@@ -23,7 +23,7 @@ export default class Categories {
   getSimpleObject(): any {
     const obj: any = {};
     this.id ? (obj.id = this.id) : delete obj.id;
-    this.categories && this.categories !== []
+    this.categories && this.categories.length > 0
       ? (obj.categories = this.categories.map((category) =>
           category.getSimpleObject()
         ))

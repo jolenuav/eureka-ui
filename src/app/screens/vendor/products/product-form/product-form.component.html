@@ -9,134 +9,217 @@
       "
     >
       <div *ngIf="showInputCommerce" class="col-12 p-0">
-        <div class="m-0 form-group col-sm-12 col-xl-4">
+        <div class="m-0 col-sm-12 col-xl-4">
           <eu-autocomplete-commerce
             [setCommerce]="commerceLoged ? commerceLoged : null"
-            (changeEvent)="commerce = $event"
+            (changeEvent)="selectedCommerce($event)"
           >
           </eu-autocomplete-commerce>
         </div>
       </div>
-      <div class="form-group col-sm-12 col-xl-3">
-        <label class="m-0" for="name">Nombre</label>
+      <mat-form-field class="col-sm-12 col-xl-3">
+        <mat-label>Nombre</mat-label>
         <input
-          class="form-control"
-          id="name"
+          matInput
           formControlName="name"
           placeholder="Nombre"
           (blur)="formGroup.controls.name.markAsTouched()"
         />
-      </div>
-      <div class="form-group col-sm-12 col-xl-3">
-        <label class="m-0" for="section">Sección</label>
-        <select
-          class="form-control w-100"
-          id="section"
-          formControlName="section"
-          (blur)="formGroup.controls.section.markAsTouched()"
+      </mat-form-field>
+      <mat-form-field class="col-sm-12 col-xl-3">
+        <mat-label>Categoría</mat-label>
+        <mat-select
+          formControlName="category"
+          (blur)="formGroup.controls.category.markAsTouched()"
         >
-          <option [value]="null" disabled selected>
-            Seleccione una sección
-          </option>
-          <!-- <option
-            [value]="section"
-            *ngFor="let section of commerce ? commerce.sections : []"
+          <mat-option [value]="null" selected>
+            -- Seleccione una Categoría --
+          </mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-sm-12 col-xl-3">
+        <mat-label>Subcategoría</mat-label>
+        <mat-select
+          formControlName="subCategory"
+          (blur)="formGroup.controls.subCategory.markAsTouched()"
+        >
+          <mat-option [value]="null" disabled selected>
+            Seleccione una subcategoría
+          </mat-option>
+          <mat-option
+            *ngFor="let subCategory of subCategories"
+            [value]="subCategory"
           >
-            {{ section }}
-          </option> -->
-        </select>
-      </div>
-      <div class="form-group col-sm-12 col-xl-3">
-        <label class="m-0" for="price">Precio</label>
+            {{ subCategory.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-sm-12 col-xl-3">
+        <mat-label>Precio</mat-label>
         <input
-          class="form-control input-number"
-          id="price"
+          matInput
+          class="input-number"
           formControlName="price"
           placeholder="Precio"
           type="number"
           (blur)="formGroup.controls.price.markAsTouched()"
         />
+      </mat-form-field>
+      <div class="col-sm-12 col-xl-3 d-flex align-items-center">
+        <mat-checkbox formControlName="enabled" [color]="'primary'">
+          Habilitado
+        </mat-checkbox>
       </div>
-      <div
-        class="
-          form-group
-          custom-control custom-checkbox
-          col-sm-12 col-xl-3
-          d-flex
-          align-items-center
-        "
-      >
+      <div class="col-sm-12 col-xl-3 d-flex align-items-center">
+        <mat-checkbox formControlName="isAdditional" [color]="'primary'">
+          Adicional
+        </mat-checkbox>
+      </div>
+      <div class="col-sm-12 col-xl-3 d-flex align-items-center">
+        <mat-checkbox formControlName="inStock" [color]="'primary'">
+          Stock
+        </mat-checkbox>
+      </div>
+      <mat-form-field *ngIf="!product" class="col-sm-12 col-xl-3">
+        <mat-label>Cantidad en stock</mat-label>
         <input
-          id="enabled"
-          formControlName="enabled"
-          type="checkbox"
-          class="custom-control-input"
-        />
-        <label class="custom-control-label" for="enabled">Habiliatdo</label>
-      </div>
-      <div class="form-group col-sm-12 col-xl-6">
-        <mat-form-field class="w-100">
-          <mat-label>Etiquetas</mat-label>
-          <mat-chip-list #chipTags>
-            <mat-chip
-              *ngFor="let tag of tags"
-              selectable
-              [removable]="removable"
-              (removed)="removeTag(tag)"
-            >
-              {{ tag }}
-              <i
-                matChipRemove
-                *ngIf="removable"
-                class="mdi mdi-close-circle"
-              ></i>
-            </mat-chip>
-            <input
-              placeholder="Etiquetas..."
-              [matChipInputFor]="chipTags"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="true"
-              (matChipInputTokenEnd)="addTag($event)"
-            />
-          </mat-chip-list>
-        </mat-form-field>
-      </div>
-      <div
-        class="
-          form-group
-          custom-control custom-checkbox
-          col-sm-12 col-xl-3
-          d-flex
-          align-items-center
-        "
-      >
-        <input
-          id="inStock"
-          formControlName="inStock"
-          type="checkbox"
-          class="custom-control-input"
-        />
-        <label class="custom-control-label" for="inStock">En stock</label>
-      </div>
-      <div *ngIf="!product" class="form-group col-sm-12 col-xl-3">
-        <input
-          class="form-control input-number"
+          matInput
+          class="input-number"
           formControlName="stock"
           placeholder="Stock"
           type="number"
           (blur)="formGroup.controls.stock.markAsTouched()"
         />
+      </mat-form-field>
+      <div class="col-sm-12 col-xl-6">
+        <eu-simple-chip
+          [label]="'Etiquetas'"
+          [placeholder]="'Etiquetas...'"
+          formControlName="tags"
+        ></eu-simple-chip>
       </div>
-      <div class="form-group col-12">
-        <label class="m-0" for="description">Descripción</label>
+      <div class="col-sm-12 col-xl-6">
+        <eu-simple-chip
+          [label]="'Ingredientes'"
+          [placeholder]="'Ingredientes...'"
+          formControlName="ingredients"
+        ></eu-simple-chip>
+      </div>
+      <mat-form-field class="col-12">
+        <mat-label>Decripción</mat-label>
         <textarea
-          class="form-control"
-          id="description"
+          matInput
           formControlName="description"
           placeholder="Descripción..."
         ></textarea>
+      </mat-form-field>
+      <div class="col-12 mb-3">
+        <eu-input-file formControlName="image"></eu-input-file>
       </div>
-      <label class="form-group col-12">Adicionales</label>
+
+      <mat-divider class="col-12"></mat-divider>
+
+      <label class="col-12 mt-3 font-weight-bold">Adicionales</label>
+
+      <div class="row m-0 p-0" [formGroup]="additionalForm">
+        <mat-form-field class="col-sm-12 col-xl-3">
+          <mat-label>Orden</mat-label>
+          <input
+            matInput
+            class="input-number"
+            id="order"
+            formControlName="order"
+            placeholder="Orden"
+            type="number"
+          />
+        </mat-form-field>
+        <mat-form-field class="col-sm-12 col-xl-3">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" placeholder="Category" />
+        </mat-form-field>
+        <mat-form-field class="col-sm-12 col-xl-3">
+          <mat-label>Precio</mat-label>
+          <input
+            matInput
+            class="input-number"
+            formControlName="price"
+            placeholder="Precio del adicional"
+            type="number"
+          />
+        </mat-form-field>
+        <mat-form-field class="col-sm-12 col-xl-3">
+          <mat-label>Sección</mat-label>
+          <mat-select formControlName="parent">
+            <mat-option [value]="null" disabled selected>
+              Selecione una sección
+            </mat-option>
+            <mat-option [value]="section" *ngFor="let section of additionals">
+              {{ section.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="col-sm-12 col-xl-6 mb-3">
+          <button
+            class="btn btn-primary btn-rounded w-100"
+            type="button"
+            [disabled]="additionalForm.invalid"
+            (click)="addAdditionalSection()"
+          >
+            <i class="mdi mdi-plus-box-outline"></i> Sección
+          </button>
+        </div>
+        <div class="col-sm-12 col-xl-6 mb-3">
+          <button
+            class="btn btn-primary btn-rounded w-100"
+            type="button"
+            [disabled]="additionalForm.invalid"
+            (click)="addAdditional()"
+          >
+            <i class="mdi mdi-plus-box-multiple-outline"></i> Adicional
+          </button>
+        </div>
+
+        <div class="col-12 mb-3">
+          <mat-accordion>
+            <mat-expansion-panel hideToggle *ngFor="let section of additionals">
+              <mat-expansion-panel-header>
+                <mat-panel-title
+                  class="d-flex justify-content-between align-items-center"
+                >
+                  #{{ section.order }} {{ section.description }}
+                  <div class="d-flex align-items-center">
+                    <span class="badge badge-primary badge-pill">
+                      {{ section.additionals.length }}
+                    </span>
+                    <i
+                      class="mdi mdi-delete pl-3"
+                      (click)="deleteSection(section)"
+                    ></i>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list class="d-flex flex-column">
+                <mat-list-item
+                  class="d-flex justify-content-between align-items-center px-3"
+                  *ngFor="let additional of section.additionals"
+                >
+                  #{{ additional.order }} {{ additional.description }} (${{
+                    additional.price
+                  }})
+                  <i
+                    class="mdi mdi-delete pl-3"
+                    (click)="deleteAdditional(section, additional)"
+                  ></i>
+                </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
       <div class="d-flex flex-row w-100 justifu-content-center px-3">
         <button
           type="submit"

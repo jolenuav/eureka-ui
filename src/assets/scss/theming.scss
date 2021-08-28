@@ -1,4 +1,143 @@
 @import 'variables.scss';
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+// Paleta de colores para Angular Material
+$my-primary-color: (
+  50: #e0f2f1,
+  100: #b3dfdc,
+  200: #80cac4,
+  300: #4db4ac,
+  400: #26a49b,
+  500: #009489,
+  600: #008c81,
+  700: #008176,
+  800: #00776c,
+  900: #006559,
+  A100: #95fff0,
+  A200: #62ffe9,
+  A400: #2fffe2,
+  A700: #15ffde,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$my-secondary-color: (
+  50: #fff9e4,
+  100: #fff0ba,
+  200: #ffe78d,
+  300: #ffdd5f,
+  400: #ffd53c,
+  500: #ffce1a,
+  600: #ffc917,
+  700: #ffc213,
+  800: #ffbc0f,
+  900: #ffb008,
+  A100: #ffffff,
+  A200: #fffbf4,
+  A400: #ffe9c1,
+  A700: #ffe0a7,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$my-warn-color: (
+  50: #fdeaea,
+  100: #facbcb,
+  200: #f7a9a8,
+  300: #f48785,
+  400: #f16d6a,
+  500: #ef5350,
+  600: #ed4c49,
+  700: #eb4240,
+  800: #e83937,
+  900: #e42927,
+  A100: #ffffff,
+  A200: #ffeded,
+  A400: #ffbbba,
+  A700: #ffa2a1,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+// Definir paleta de colores
+$my-palette-primary: mat-palette($my-primary-color);
+$my-palette-secondary: mat-palette($my-secondary-color);
+$my-warn-secondary: mat-palette($my-warn-color);
+
+// Creamo un tema para mangular material
+$eureka-web-theme: mat-light-theme(
+  (
+    color: (
+      primary: $my-palette-primary,
+      accent: $my-palette-secondary,
+      warn: $my-warn-secondary,
+    ),
+  )
+);
+// Iplicamos tema.
+@include angular-material-theme($eureka-web-theme);
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: italic;
+  src: url('../fonts/Poppins/Poppins-Italic.ttf') format('truetype');
+}
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Poppins',
+);
+
+@include angular-material-typography($custom-typography);
 
 /* width */
 @media (min-width: 1024px) {
@@ -343,15 +482,6 @@ input.input-number::-webkit-inner-spin-button {
 
 .text-success {
   color: #1bcfb4 !important;
-}
-
-.mat-form-field.mat-focused {
-  .mat-form-field-ripple {
-    background-color: $color-primary !important;
-  }
-  .mat-form-field-label {
-    color: $color-primary !important;
-  }
 }
 
 .mdi-menu {

@@ -79,7 +79,7 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
                 .toUpperCase()
                 .includes(quitQuoteText(search).toUpperCase()) ||
               (prod.tags &&
-                prod.tags !== [] &&
+                prod.tags.length > 0 &&
                 prod.tags.some((tag) =>
                   quitQuoteText(tag)
                     .toUpperCase()
@@ -95,7 +95,7 @@ export class SearchProductsComponent implements OnInit, OnDestroy {
                 .toUpperCase()
                 .includes(quitQuoteText(search).toUpperCase()) ||
               (prod.tags &&
-                prod.tags !== [] &&
+                prod.tags.length > 0 &&
                 prod.tags.some((tag) =>
                   quitQuoteText(tag)
                     .toUpperCase()

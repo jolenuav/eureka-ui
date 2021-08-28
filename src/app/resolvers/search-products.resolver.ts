@@ -27,12 +27,12 @@ export class SearchProductsResolver extends CustomerResolver {
   ): Promise<Map<string, Product[]>> {
     const map = new Map<string, Product[]>();
     for await (const prod of products) {
-      if (map.has(prod.section)) {
-        const p = map.get(prod.section);
+      if (map.has(prod.category.description)) {
+        const p = map.get(prod.category.description);
         p.push(prod);
-        map.set(prod.section, p);
+        map.set(prod.category.description, p);
       } else {
-        map.set(prod.section, [prod]);
+        map.set(prod.category.description, [prod]);
       }
     }
     return map;

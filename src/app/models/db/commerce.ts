@@ -66,7 +66,7 @@ export default class Commerce {
     this.mail ? (obj.mail = this.mail) : delete obj.mail;
     this.phone ? (obj.phone = this.phone) : delete obj.phone;
     this.rate ? (obj.rate = this.rate) : delete obj.rate;
-    this.keywords && this.keywords !== []
+    this.keywords && this.keywords.length > 0
       ? (obj.keywords = this.keywords)
       : delete obj.keywords;
     this.url ? (obj.url = this.url) : delete obj.url;

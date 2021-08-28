@@ -1,0 +1,25 @@
+<mat-form-field class="w-100">
+  <mat-label>{{ label }}</mat-label>
+  <mat-chip-list #chipElement [disabled]="disabled">
+    <mat-chip
+      *ngFor="let item of selecteds"
+      selectable
+      [removable]="removable"
+      (removed)="remove(item)"
+    >
+      {{ item }}
+      <i
+        matChipRemove
+        *ngIf="removable && !disabled"
+        class="mdi mdi-close-circle"
+      ></i>
+    </mat-chip>
+    <input
+      [placeholder]="placeholder"
+      [matChipInputFor]="chipElement"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="true"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-chip-list>
+</mat-form-field>

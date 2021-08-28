@@ -2,11 +2,12 @@ import StockMovement from './stock-movement';
 
 export default class Stock {
   _id: string;
+  _category: string;
   _commerce: string;
   _movements: StockMovement[];
   _product: string;
   _productName: string;
-  _productSection: string;
+  _subCategory: string;
   _total: number;
 
   static parse(obj: any): Stock {
@@ -16,7 +17,6 @@ export default class Stock {
     stock.movements = obj.movements.map((m) => StockMovement.parse(m));
     stock.product = obj.product;
     stock.productName = obj.productName;
-    stock.productSection = obj.productSection;
     stock.total = obj.total;
     return stock;
   }
@@ -28,7 +28,6 @@ export default class Stock {
     stock.movements = this.movements;
     stock.product = this.product;
     stock.productName = this.productName;
-    stock.productSection = this.productSection;
     stock.total = this.total;
     return stock;
   }
@@ -44,9 +43,6 @@ export default class Stock {
     this.productName
       ? (obj.productName = this.productName)
       : delete obj.productName;
-    this.productSection
-      ? (obj.productSection = this.productSection)
-      : delete obj.productSection;
     this.total ? (obj.total = this.total) : delete obj.total;
     return obj;
   }
@@ -56,6 +52,13 @@ export default class Stock {
   }
   set id(id: string) {
     this._id = id;
+  }
+
+  get category(): string {
+    return this._category;
+  }
+  set category(category: string) {
+    this._category = category;
   }
 
   get commerce(): string {
@@ -86,11 +89,11 @@ export default class Stock {
     this._productName = productName;
   }
 
-  get productSection(): string {
-    return this._productSection;
+  get subCategory(): string {
+    return this._subCategory;
   }
-  set productSection(productSection: string) {
-    this._productSection = productSection;
+  set subCategory(subCategory: string) {
+    this._subCategory = subCategory;
   }
 
   get total(): number {

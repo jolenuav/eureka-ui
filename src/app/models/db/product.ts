@@ -1,25 +1,36 @@
+import Additional from './additional';
+import Category from './categories/category';
+
 export default class Product {
   _id: string;
+  _additionals: Additional[];
+  _category: Category;
   _commerce: string;
   _description: string;
   _enabled: boolean;
+  _ingredients: string[];
   _image: string;
+  _isAdditional: boolean;
   _name: string;
   _price: number;
-  _section: string;
   _stock: boolean;
+  _subCategory: Category;
   _tags: string[];
 
   static parse(obj: any): Product {
     const product = new Product();
     product.id = obj.id;
+    product.additionals = obj.additionals;
+    product.category = obj.category;
     product.commerce = obj.commerce;
     product.description = obj.description;
     product.enabled = obj.enabled;
+    product.ingredients = obj.ingredients;
     product.image = obj.image;
+    product.isAdditional = obj.isAdditional;
     product.name = obj.name;
     product.price = obj.price;
-    product.section = obj.section;
+    product.subCategory = obj.subCategory;
     product.stock = obj.stock;
     product.tags = obj.tags;
     return product;
@@ -28,13 +39,17 @@ export default class Product {
   clone(): Product {
     const product = new Product();
     product.id = this.id;
+    product.additionals = this.additionals;
+    product.category = this.category;
     product.commerce = this.commerce;
     product.description = this.description;
     product.enabled = this.enabled;
+    product.ingredients = this.ingredients;
     product.image = this.image;
+    product.isAdditional = this.isAdditional;
     product.name = this.name;
     product.price = this.price;
-    product.section = this.section;
+    product.subCategory = this.subCategory;
     product.stock = this.stock;
     product.tags = this.tags;
     return product;
@@ -43,17 +58,33 @@ export default class Product {
   getSimpleObject(): any {
     const obj: any = {};
     this.id ? (obj.id = this.id) : delete obj.id;
+    this.additionals.length > 0
+      ? (obj.additionals = this.additionals.map((additional) =>
+          additional.getSimpleObject()
+        ))
+      : delete obj.additionals;
     this.commerce ? (obj.commerce = this.commerce) : delete obj.commerce;
+    this.category
+      ? (obj.category = this.category.getSimpleObject())
+      : delete obj.category;
     this.description
       ? (obj.description = this.description)
       : delete obj.description;
+    this.ingredients.length > 0
+      ? (obj.ingredients = this.ingredients)
+      : delete obj.ingredients;
     this.image ? (obj.image = this.image) : delete obj.image;
-    obj.enabled = this.enabled ? this.enabled : false;
+    obj.isAdditional = this.isAdditional;
+    obj.enabled = this.enabled;
     this.name ? (obj.name = this.name) : delete obj.name;
     this.price ? (obj.price = this.price) : delete obj.price;
-    this.section ? (obj.section = this.section) : delete obj.section;
-    this.stock ? (obj.stock = this.stock) : delete obj.stock;
-    this.tags && this.tags !== [] ? (obj.tags = this.tags) : delete obj.tags;
+    this.subCategory
+      ? (obj.subCategory = this.subCategory.getSimpleObject())
+      : delete obj.subCategory;
+    obj.stock = this.stock;
+    this.tags && this.tags.length > 0
+      ? (obj.tags = this.tags)
+      : delete obj.tags;
     return obj;
   }
 
@@ -64,6 +95,20 @@ export default class Product {
   }
   set id(id: string) {
     this._id = id;
+  }
+
+  get additionals(): Additional[] {
+    return this._additionals;
+  }
+  set additionals(additionals: Additional[]) {
+    this._additionals = additionals;
+  }
+
+  get category(): Category {
+    return this._category;
+  }
+  set category(category: Category) {
+    this._category = category;
   }
 
   get commerce(): string {
@@ -87,11 +132,25 @@ export default class Product {
     this._enabled = enabled;
   }
 
+  get ingredients(): string[] {
+    return this._ingredients;
+  }
+  set ingredients(ingredients: string[]) {
+    this._ingredients = ingredients;
+  }
+
   get image(): string {
     return this._image;
   }
   set image(image: string) {
     this._image = image;
+  }
+
+  get isAdditional(): boolean {
+    return this._isAdditional;
+  }
+  set isAdditional(isAdditional: boolean) {
+    this._isAdditional = isAdditional;
   }
 
   get name(): string {
@@ -108,11 +167,11 @@ export default class Product {
     this._price = price;
   }
 
-  get section(): string {
-    return this._section;
+  get subCategory(): Category {
+    return this._subCategory;
   }
-  set section(section: string) {
-    this._section = section;
+  set subCategory(subCategory: Category) {
+    this._subCategory = subCategory;
   }
 
   get stock(): boolean {

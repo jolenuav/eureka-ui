@@ -27,7 +27,7 @@ export default class Category {
     this.description
       ? (obj.description = this.description)
       : delete obj.description;
-    this.subCategories && this.subCategories !== []
+    this.subCategories && this.subCategories.length > 0
       ? (obj.subCategories = this.subCategories.map((subCategory) =>
           subCategory.getSimpleObject()
         ))

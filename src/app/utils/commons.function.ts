@@ -33,6 +33,10 @@ export function generateID(): string {
   return uuid.v4();
 }
 
+export function generateMomentID(): string {
+  return moment().format('DDMMYYHHmmssSSS');
+}
+
 export function generateCommerceId(name: string, document: number): string {
   const split = name.trim().split(' ');
   let initials = '';

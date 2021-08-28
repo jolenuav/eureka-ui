@@ -21,7 +21,11 @@ import { ROUTES } from 'src/app/utils/routes';
 export class CategoriesComponent implements OnInit {
   categories: Categories = new Categories();
   commerce: Commerce;
-  formGroup: FormGroup;
+  formGroup = new FormGroup({
+    order: new FormControl(null, [Validators.required]),
+    category: new FormControl(null, [Validators.required]),
+    parentCategory: new FormControl({ value: null, disabled: true }),
+  });
   showInputCommerce = false;
   update = false;
   user = this.vendorStore.user;
@@ -34,7 +38,6 @@ export class CategoriesComponent implements OnInit {
     private vendorStore: VendorStoreService
   ) {
     this.categories.categories = [];
-    this.initForm();
   }
 
   ngOnInit(): void {
@@ -44,14 +47,6 @@ export class CategoriesComponent implements OnInit {
     ) {
       this.showInputCommerce = true;
     }
-  }
-
-  initForm(): void {
-    this.formGroup = new FormGroup({
-      order: new FormControl(null, [Validators.required]),
-      category: new FormControl(null, [Validators.required]),
-      parentCategory: new FormControl({ value: null, disabled: true }),
-    });
   }
 
   resetForm(): void {
@@ -128,7 +123,6 @@ export class CategoriesComponent implements OnInit {
     category.description = this.formGroup.controls.category.value;
     category.subCategories = [];
 
-
     if (
       this.categories.categories.some((categ) => categ.order === category.order)
     ) {
@@ -169,6 +163,10 @@ export class CategoriesComponent implements OnInit {
         categ.description === categoryCompare.description
       ) {
         categ.subCategories.push(category);
+        categ.subCategories.sort(
+          (subCategoryA, subCategoryB) =>
+            subCategoryA.order - subCategoryB.order
+        );
       }
     });
     this.resetForm();

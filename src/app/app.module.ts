@@ -4,12 +4,17 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,11 +24,13 @@ import { AppComponent } from './app.component';
 import { BtnFooterComponent } from './components/btn-footer/btn-footer.component';
 import { CardProductComponent } from './components/card/card-product.component';
 import { IconTitleComponent } from './components/icon-title/icon-title.component';
+import { InputFileComponent } from './components/input-file/input-file.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MapComponent } from './components/map/map.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AutocompleteCommerceComponent } from './components/search-commerce/autocomplete-commerce.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SimpleChipComponent } from './components/simple-chip/simple-chip.component';
 import { ScrollSpyDirective } from './directives/scroll-spy.directive';
 import { AdminAccessAuthGuard } from './guards/partner/admin-acess-auth.guard';
 import { LoginAuthGuard } from './guards/partner/login-auth.guard';
@@ -44,7 +51,6 @@ import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
-import { AdditionalsComponent } from './screens/vendor/additionals/additionals.component';
 import { CategoriesComponent } from './screens/vendor/categories/categories.component';
 import { DetailModalComponent } from './screens/vendor/order-list/detail-modal/detail-modal.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
@@ -92,7 +98,8 @@ export function initApp(provider: AppInitializerService): any {
     StockMovementsComponent,
     StockFormComponent,
     CategoriesComponent,
-    AdditionalsComponent,
+    SimpleChipComponent,
+    InputFileComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,12 +115,17 @@ export function initApp(provider: AppInitializerService): any {
     // ANGULAR MATERILA
     MatAutocompleteModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatChipsModule,
+    MatDividerModule,
     MatExpansionModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatSelectModule,
     MatSnackBarModule,
     MatStepperModule,
+    MatToolbarModule,
   ],
   providers: [
     // SERVICES
