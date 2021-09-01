@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import Category from 'src/app/models/db/categories/category';
+import Category from 'src/app/models/db/category';
 import Commerce from 'src/app/models/db/commerce';
 import ItemOrder from 'src/app/models/db/order/item-order';
 import Order from 'src/app/models/db/order/order';
@@ -71,5 +71,6 @@ export class CustomerStoreService {
     this.commerceSelected = null;
     this.order = new Order();
     this.products = [];
+    this.categories = [];
   }
 }

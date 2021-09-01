@@ -69,6 +69,7 @@ import { AppInitializerService } from './services/app-initializer.service';
 import { AuthService } from './services/authenticate.service';
 import { StoreService } from './services/store/store.service';
 import { PipeModule } from './utils/pipe.module';
+import { InMaintenanceComponent } from './screens/in-maintenance/in-maintenance.component';
 
 export function initApp(provider: AppInitializerService): any {
   return () => provider.load();
@@ -109,6 +110,7 @@ export function initApp(provider: AppInitializerService): any {
     CatalogComponent,
     CategoryCatalogComponent,
     ProductCatalogComponent,
+    InMaintenanceComponent,
   ],
   imports: [
     BrowserModule,

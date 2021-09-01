@@ -1,5 +1,5 @@
 import Additional from './additional';
-import Category from './categories/category';
+import Category from './category';
 
 export default class Product {
   _id: string;
@@ -60,12 +60,12 @@ export default class Product {
     this.id ? (obj.id = this.id) : delete obj.id;
     this.additionals.length > 0
       ? (obj.additionals = this.additionals.map((additional) =>
-          additional.getSimpleObject()
+          Additional.getSimpleObject(additional)
         ))
       : delete obj.additionals;
     this.commerce ? (obj.commerce = this.commerce) : delete obj.commerce;
     this.category
-      ? (obj.category = this.category.getSimpleObject())
+      ? (obj.category = Category.getSimpleObject(this.category))
       : delete obj.category;
     this.description
       ? (obj.description = this.description)
@@ -79,7 +79,7 @@ export default class Product {
     this.name ? (obj.name = this.name) : delete obj.name;
     this.price ? (obj.price = this.price) : delete obj.price;
     this.subCategory
-      ? (obj.subCategory = this.subCategory.getSimpleObject())
+      ? (obj.subCategory = Category.getSimpleObject(this.subCategory))
       : delete obj.subCategory;
     obj.stock = this.stock;
     this.tags && this.tags.length > 0

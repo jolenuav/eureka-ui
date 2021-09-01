@@ -41,7 +41,7 @@ export default class ItemOrder {
     const obj: any = {};
     this.additionals && this.additionals.length > 0
       ? (obj.additionals = this.additionals.map((additional) =>
-          additional.getSimpleObject()
+          Additional.getSimpleObject(additional)
         ))
       : delete obj.additionals;
     this.observation

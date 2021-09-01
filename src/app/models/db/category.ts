@@ -21,6 +21,21 @@ export default class Category {
     return category;
   }
 
+  static getSimpleObject(obj: Category): any {
+    const category: any = {};
+    category.id = obj.id;
+    category.commerceId = obj.commerceId;
+    category.order = obj.order;
+    category.description = obj.description;
+    obj.image ? (category.image = obj.image) : delete category.image;
+    obj.subCategories && obj.subCategories.length > 0
+      ? (category.subCategories = obj.subCategories.map((val) =>
+          Category.getSimpleObject(val)
+        ))
+      : delete category.subCategories;
+    return category;
+  }
+
   clone(): Category {
     const category = new Category();
     category.id = this.id;
@@ -30,23 +45,6 @@ export default class Category {
     category.image = this.image;
     category.subCategories = this.subCategories;
     return category;
-  }
-
-  getSimpleObject(): any {
-    const obj: any = {};
-    this.id ? (obj.id = this.id) : delete obj.id;
-    this.commerceId
-      ? (obj.commerceId = this.commerceId)
-      : delete obj.commerceId;
-    obj.order = this.order;
-    obj.description = this.description;
-    this.image ? (obj.image = this.image) : delete obj.image;
-    this.subCategories && this.subCategories.length > 0
-      ? (obj.subCategories = this.subCategories.map((subCategory) =>
-          subCategory.getSimpleObject()
-        ))
-      : delete obj.subCategories;
-    return obj;
   }
 
   get commerceId(): string {

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
-import Categories from 'src/app/models/db/categories/categories';
-import Category from 'src/app/models/db/categories/category';
+import Category from 'src/app/models/db/category';
 
 @Injectable({
   providedIn: 'root',
@@ -34,14 +33,14 @@ export class CategoryService {
 
   async save(category: Category): Promise<void> {
     const id = category.id;
-    const categoryDB = category.getSimpleObject();
+    const categoryDB = Category.getSimpleObject(category);
     delete categoryDB.id;
     return this.firestore.collection(this.collection).doc(id).set(categoryDB);
   }
 
   async update(category: Category): Promise<void> {
     const id = category.id;
-    const categoryDB = category.getSimpleObject();
+    const categoryDB = Category.getSimpleObject(category);
     delete categoryDB.id;
     return this.firestore
       .collection(this.collection)

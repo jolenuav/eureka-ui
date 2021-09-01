@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InputFileComponent } from 'src/app/components/input-file/input-file.component';
 import Additional from 'src/app/models/db/additional';
-import Category from 'src/app/models/db/categories/category';
+import Category from 'src/app/models/db/category';
 import Commerce from 'src/app/models/db/commerce';
 import Product from 'src/app/models/db/product';
 import Stock from 'src/app/models/db/stock/stock';
@@ -110,18 +110,22 @@ export class ProductFormComponent implements OnInit {
 
     this.commerce = this.commerceLoged ? this.commerceLoged.clone() : null;
     if (this.product) {
-      this.additionals = this.product.additionals;
+      this.additionals = this.product.additionals.map((add) =>
+        Additional.parse(add)
+      );
       await this.loadCategories();
       const category = this.categories.find(
         (cat) =>
           cat.order === this.product.category.order &&
           cat.description === this.product.category.description
       );
-      const subCategory = category.subCategories.find(
-        (cat) =>
-          cat.order === this.product.subCategory.order &&
-          cat.description === this.product.subCategory.description
-      );
+      const subCategory = category.subCategories
+        ? category.subCategories.find(
+            (cat) =>
+              cat.order === this.product.subCategory.order &&
+              cat.description === this.product.subCategory.description
+          )
+        : null;
       this.formGroup.controls.name.setValue(this.product.name);
       this.formGroup.controls.price.setValue(this.product.price);
       this.formGroup.controls.category.setValue(category);
@@ -131,7 +135,7 @@ export class ProductFormComponent implements OnInit {
       this.formGroup.controls.isAdditional.setValue(this.product.isAdditional);
       this.formGroup.controls.inStock.setValue(this.product.stock);
       this.formGroup.controls.tags.setValue(this.product.tags);
-      this.formGroup.controls.ingredients.setValue(this.product.tags);
+      this.formGroup.controls.ingredients.setValue(this.product.ingredients);
       this.formGroup.controls.imagePreview.setValue(this.product.image);
     }
   }
@@ -189,10 +193,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   isValidForSaved(): boolean {
-    if (!this.product && !this.formGroup.controls.image.value) {
-      this.alertService.error('Debe seleccionar una imagen');
-      return false;
-    }
     if (
       this.additionals.length > 0 &&
       this.additionals.some((section) => section.additionals.length === 0)
@@ -232,23 +232,17 @@ export class ProductFormComponent implements OnInit {
     product.image = this.product ? this.product.image : null;
     const image = this.formGroup.controls.image.value as File;
 
-    if (this.product) {
-      if (image) {
-        product.image = await this.imageService.upload(
-          image,
-          `commerces/${this.commerce.id}/products/${product.id}.${
-            image.type.split('/')[1]
-          }`
-        );
-      }
-      await this.productService.update(product);
-    } else {
+    if (image) {
       product.image = await this.imageService.upload(
         image,
         `commerces/${this.commerce.id}/products/${product.id}.${
           image.type.split('/')[1]
         }`
       );
+    }
+    if (this.product) {
+      await this.productService.update(product);
+    } else {
       await this.productService.save(product);
       if (product.stock) {
         await this.saveInitialStock(product);

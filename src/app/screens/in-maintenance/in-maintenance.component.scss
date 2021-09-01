@@ -1,0 +1,19 @@
+@import '/src/assets/scss/variables.scss';
+
+h1 {
+  font-size: 50px;
+}
+article {
+  display: block;
+  text-align: left;
+  width: 650px;
+  margin: 0 auto;
+}
+a {
+  color: $color-secondary;
+  text-decoration: none;
+}
+a:hover {
+  color: $color-gray;
+  text-decoration: none;
+}

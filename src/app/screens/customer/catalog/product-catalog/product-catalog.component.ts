@@ -7,9 +7,10 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import Category from 'src/app/models/db/categories/category';
+import Category from 'src/app/models/db/category';
 import Product from 'src/app/models/db/product';
 import { CustomerStoreService } from 'src/app/services/store/customer-store.service';
+import { quitQuoteText } from 'src/app/utils/commons.function';
 
 export class CategoryProductsModel {
   category: Category;
@@ -26,39 +27,48 @@ export class ProductCatalogComponent implements OnInit, OnChanges {
 
   @Input() categoryParent: Category;
   @Input() categories: Category[];
-  @Input() isSubCategories = false;
+  @Input() hasSubCategories = false;
   @Output() clickEvent = new EventEmitter();
 
   categoryActived: string;
+  listClean: CategoryProductsModel[] = [];
   list: CategoryProductsModel[] = [];
   constructor(private customerStore: CustomerStoreService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.categoryParent) {
+      this.loadProductsCategories();
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.categoryParent) {
+    if (changes.categoryParent && this.categoryParent) {
       this.list = [];
       if (this.categories && this.categories.length > 0) {
-        this.loadProductsWithSubCategory();
+        this.loadProductsCategories();
       } else {
         this.loadProductsWithoutSubCategory();
       }
     }
   }
 
-  loadProductsWithSubCategory(): void {
+  loadProductsCategories(): void {
     this.categories.forEach((category) => {
       if (
-        !this.isSubCategories &&
+        !this.hasSubCategories &&
         this.products.some((prod) => prod.category?.id === category.id)
       ) {
         this.list.push({
           category,
           products: this.getProductByCategory(category),
         });
+        this.listClean.push({
+          category,
+          products: this.getProductByCategory(category),
+        });
       }
       if (
-        this.isSubCategories &&
+        this.hasSubCategories &&
         this.products.some(
           (prod) =>
             prod.category?.id === this.categoryParent.id &&
@@ -69,9 +79,15 @@ export class ProductCatalogComponent implements OnInit, OnChanges {
           category,
           products: this.getProductByCategory(category),
         });
+        this.listClean.push({
+          category,
+          products: this.getProductByCategory(category),
+        });
       }
     });
-    this.loadProductsWithoutSubCategory();
+    if (this.categoryParent) {
+      this.loadProductsWithoutSubCategory();
+    }
   }
 
   loadProductsWithoutSubCategory(): void {
@@ -79,12 +95,14 @@ export class ProductCatalogComponent implements OnInit, OnChanges {
       category: this.categoryParent.clone(),
       products: this.products.filter(
         (product) =>
+          product.enabled &&
           product.category?.id === this.categoryParent.id &&
           !product.subCategory
       ),
     };
     if (obj.products.length > 0) {
       this.list.push(obj);
+      this.listClean.push(obj);
     }
   }
 
@@ -93,19 +111,100 @@ export class ProductCatalogComponent implements OnInit, OnChanges {
       const prods = this.products.filter((product) => {
         if (
           product.enabled &&
-          !this.isSubCategories &&
+          !this.hasSubCategories &&
           product.category?.id === category.id
         ) {
           return product;
         } else if (
           product.enabled &&
-          this.categoryParent.id === product.category?.id &&
-          product.subCategory.order === category.order
+          this.categoryParent?.id === product.category?.id &&
+          product.subCategory?.id === category.id
         ) {
           return product;
         }
       });
       return prods;
     }
+  }
+
+  filter(value: string): void {
+    this.list = [];
+    if (!value || value.trim() === '') {
+      this.list = [...this.listClean];
+      return;
+    }
+
+    value = quitQuoteText(value.trim()).toUpperCase();
+
+    this.listClean.forEach((item) => {
+      if (
+        item.products.some(
+          (prod) =>
+            quitQuoteText(prod.name).toUpperCase().includes(value) ||
+            prod.tags?.some((tag) =>
+              quitQuoteText(tag).toUpperCase().includes(value)
+            ) ||
+            (this.hasSubCategories &&
+              quitQuoteText(prod.subCategory.description)
+                .toUpperCase()
+                .includes(value)) ||
+            (!this.hasSubCategories &&
+              quitQuoteText(prod.category.description)
+                .toUpperCase()
+                .includes(value))
+        )
+      ) {
+        this.list.push({ ...item });
+      }
+    });
+    this.list.forEach((item) => {
+      item.products = item.products.filter(
+        (prod) =>
+          quitQuoteText(prod.name).toUpperCase().includes(value) ||
+          prod.tags?.some((tag) =>
+            quitQuoteText(tag).toUpperCase().includes(value)
+          ) ||
+          (this.hasSubCategories &&
+            quitQuoteText(prod.subCategory.description)
+              .toUpperCase()
+              .includes(value)) ||
+          (!this.hasSubCategories &&
+            quitQuoteText(prod.category.description)
+              .toUpperCase()
+              .includes(value))
+      );
+    });
+  }
+
+  orderByAlphabetAsc(): void {
+    this.list.forEach((item) => {
+      item.products = item.products.sort((prodA, pordB) =>
+        prodA.name > pordB.name ? 1 : -1
+      );
+    });
+  }
+
+  orderByAlphabetDesc(): void {
+    this.list.forEach((item) => {
+      item.products = item.products.sort((prodA, pordB) =>
+        prodA.name < pordB.name ? 1 : -1
+      );
+    });
+  }
+
+  orderByPriceAsc(): void {
+    this.list.forEach((item) => {
+      item.products = item.products.sort((prodA, pordB) =>
+        prodA.price > pordB.price ? 1 : -1
+      );
+    });
+  }
+
+  orderByPriceDesc(): void {
+    this.list.forEach((item) => {
+      item.products = item.products.sort((prodA, pordB) =>
+        prodA.price < pordB.price ? 1 : -1
+      );
+    });
   }
 }

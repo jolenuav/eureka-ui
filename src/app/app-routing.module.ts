@@ -18,6 +18,7 @@ import { OrderConfirmComponent } from './screens/customer/order-confirm/order-co
 import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
+import { InMaintenanceComponent } from './screens/in-maintenance/in-maintenance.component';
 import { CategoriesComponent } from './screens/vendor/categories/categories.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
 import { ListProductsComponent } from './screens/vendor/products/list-products/list-products.component';
@@ -115,6 +116,9 @@ const routes: Routes = [
   },
   { path: '', redirectTo: ROUTES.commerces, pathMatch: 'full' },
   { path: '**', redirectTo: ROUTES.commerces, pathMatch: 'full' },
+  // para mantenimiento
+  // { path: '', component: InMaintenanceComponent },
+  // { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

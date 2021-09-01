@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { InputFileComponent } from 'src/app/components/input-file/input-file.component';
-import Category from 'src/app/models/db/categories/category';
+import Category from 'src/app/models/db/category';
 import Commerce from 'src/app/models/db/commerce';
 import { UserTypeEnum } from 'src/app/models/enums/user-type.enum';
 import { AlertService } from 'src/app/services/alert.service';
@@ -77,6 +77,11 @@ export class CategoriesComponent implements OnInit {
       commerce.id
     );
     this.categories = [...this.categoriesDB];
+    this.categories.forEach((cat) => {
+      if (!cat.subCategories) {
+        cat.subCategories = [];
+      }
+    });
     this.resetForm();
     this.store.endLoader();
   }

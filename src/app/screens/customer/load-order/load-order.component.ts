@@ -1,6 +1,6 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import Additional from 'src/app/models/db/additional';
 import Commerce from 'src/app/models/db/commerce';
 import ItemOrder from 'src/app/models/db/order/item-order';
@@ -87,5 +87,14 @@ export class LoadOrderComponent implements OnInit {
     });
     const productAmount = this.counter * this.product.price;
     this.amount += productAmount;
+  }
+
+  cancelAdditionals(): void {
+    this.selectedAdditionals = [];
+    this.calculateAmount();
+  }
+
+  cancelIngredients(): void {
+    this.selectedIngredients = [];
   }
 }

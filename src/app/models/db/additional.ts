@@ -5,14 +5,27 @@ export default class Additional {
   _additionals: Additional[];
 
   static parse(obj: any): Additional {
-    const objAdditional = new Additional();
-    objAdditional.order = obj.order;
-    objAdditional.description = obj.description;
-    objAdditional.price = obj.price;
-    objAdditional.additionals = obj.additionals
+    const additonal = new Additional();
+    additonal.order = obj.order;
+    additonal.description = obj.description;
+    additonal.price = obj.price;
+    additonal.additionals = obj.additionals
       ? obj.additionals.map((additional: any) => Additional.parse(additional))
       : null;
-    return objAdditional;
+    return additonal;
+  }
+
+  static getSimpleObject(obj: Additional): any {
+    const additional: any = {};
+    additional.order = obj.order;
+    additional.description = obj.description;
+    obj.price ? (additional.price = obj.price) : delete additional.price;
+    obj.additionals && obj.additionals.length > 0
+      ? (additional.additionals = obj.additionals.map((val) =>
+          Additional.getSimpleObject(val)
+        ))
+      : delete additional.additionals;
+    return additional;
   }
 
   clone(): Additional {
@@ -22,21 +35,6 @@ export default class Additional {
     additional.price = this.price;
     additional.additionals = this.additionals;
     return additional;
-  }
-
-  getSimpleObject(): any {
-    const obj: any = {};
-    obj.order = this.order;
-    this.description
-      ? (obj.description = this.description)
-      : delete obj.description;
-    this.price ? (obj.price = this.price) : delete obj.price;
-    this.additionals && this.additionals.length > 0
-      ? (obj.additionals = this.additionals.map((additional) =>
-          additional.getSimpleObject()
-        ))
-      : delete obj.additionals;
-    return obj;
   }
 
   get order(): number {

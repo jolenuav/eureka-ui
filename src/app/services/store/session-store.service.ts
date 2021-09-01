@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import Category from 'src/app/models/db/categories/category';
+import Category from 'src/app/models/db/category';
 
 @Injectable({
   providedIn: 'root',

@@ -26,8 +26,6 @@
             class="form-control input-search"
             style="height: 38px"
             [formControl]="searchProduct"
-            (focus)="focus()"
-            (blur)="blur()"
           />
         </div>
       </form>
@@ -68,6 +66,35 @@
         </ng-container>
       </div>
     </div>
+    <div
+      *ngIf="
+        !selectedCategory &&
+        categories &&
+        categories.length > 0 &&
+        titleCommerce.opacity === 0
+      "
+      style="overflow-x: auto; overflow-y: hidden"
+    >
+      <div style="white-space: nowrap">
+        <ng-container *ngFor="let category of categories; let i = index">
+          <div
+            *ngIf="showSubCategory(i)"
+            class="p-1"
+            style="display: inline-block"
+          >
+            <button
+              mat-flat-button
+              color="accent"
+              (click)="scrollTo('link' + i)"
+              [ngClass]="{ category: category === 'link' + i }"
+              style="border-radius: 15px"
+            >
+              {{ category.description }}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -76,7 +103,7 @@
     w-100
     d-flex
     flex-column
-    position-absolute
+    position-relative
     px-2
     pt-3
     category-container
@@ -89,7 +116,7 @@
     [ngStyle]="titleCommerce"
     style="transition: all 0.4s ease-in-out"
   >
-    <div class="px-1 d-flex flex-row justify-content-between">
+    <div class="px-1 d-flex flex-column justify-content-between">
       <div class="d-flex flex-column">
         <div class="d-flex flex-row">
           <h3 class="font-weight-bold m-0">{{ commerce.name }}</h3>
@@ -105,20 +132,41 @@
           <div>{{ commerce.duration }} min</div>
         </div>
       </div>
-      <mat-form-field *ngIf="!showCategory" class="col-sm-12 col-xl-3">
-        <mat-label>Categoría</mat-label>
-        <mat-select
-          [(ngModel)]="selectedCategory"
-          (ngModelChange)="onClickCategory()"
-        >
-          <mat-option *ngFor="let category of categories" [value]="category">
-            {{ category.description }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div class="d-flex flex-row justify-content-between align-items-center">
+        <mat-form-field *ngIf="selectedCategory" class="col-6 p-0 pr-3">
+          <mat-label>Categoría</mat-label>
+          <mat-select
+            [(ngModel)]="selectedCategory"
+            (ngModelChange)="onClickCategory()"
+          >
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{ category.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedCategory" class="col-6 p-0">
+          <mat-label>Ordenar</mat-label>
+          <mat-select
+            [(ngModel)]="selectedOrder"
+            (ngModelChange)="orderProducts()"
+          >
+            <mat-option [value]="1"> Alfabéticamente: A-Z </mat-option>
+            <mat-option [value]="2"> Alfabéticamente: Z-A </mat-option>
+            <mat-option [value]="3"> Menor precio </mat-option>
+            <mat-option [value]="4"> Mayor precio </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
-    <div *ngIf="!showCategory" style="overflow-x: auto; overflow-y: hidden">
+    <div
+      *ngIf="
+        selectedCategory &&
+        selectedCategory.subCategories &&
+        selectedCategory.subCategories.length > 0
+      "
+      style="overflow-x: auto; overflow-y: hidden"
+    >
       <div style="white-space: nowrap">
         <ng-container
           *ngFor="
@@ -144,16 +192,45 @@
         </ng-container>
       </div>
     </div>
+
+    <div
+      *ngIf="!selectedCategory && categories && categories.length > 0"
+      style="overflow-x: auto; overflow-y: hidden"
+    >
+      <div style="white-space: nowrap">
+        <ng-container *ngFor="let category of categories; let i = index">
+          <div
+            *ngIf="showSubCategory(i)"
+            class="p-1"
+            style="display: inline-block"
+          >
+            <button
+              mat-flat-button
+              color="accent"
+              (click)="scrollTo('link' + i)"
+              [ngClass]="{ category: category === 'link' + i }"
+              style="border-radius: 15px"
+            >
+              {{ category.description }}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
   <eu-category-catalog
-    *ngIf="showCategory; else listProducts"
+    #categoryCatalog
+    *ngIf="showCategory; else listProductCateg"
     (clickEvent)="onClickCategory($event)"
   ></eu-category-catalog>
-  <ng-template #listProducts>
+  <ng-template #listProductCateg>
     <eu-product-catalog
+      #productCatalog
       [categoryParent]="selectedCategory"
-      [categories]="selectedCategory.subCategories"
-      [isSubCategories]="isSubCategory"
+      [categories]="
+        selectedCategory ? selectedCategory.subCategories : categories
+      "
+      [hasSubCategories]="selectedCategory ? true : false"
       (clickEvent)="onClickProduct($event)"
     ></eu-product-catalog>
   </ng-template>

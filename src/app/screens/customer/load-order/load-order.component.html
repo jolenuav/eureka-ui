@@ -250,6 +250,17 @@
       </ng-container>
     </mat-selection-list>
   </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      mat-flat-button
+      color="accent"
+      mat-dialog-close
+      (click)="cancelAdditionals()"
+    >
+      Cancelar
+    </button>
+    <button mat-flat-button color="primary" mat-dialog-close>Aceptar</button>
+  </mat-dialog-actions>
 </ng-template>
 
 <ng-template #ingredientsModal let-modal>
@@ -266,4 +277,15 @@
       </mat-list-option>
     </mat-selection-list>
   </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      mat-flat-button
+      color="accent"
+      mat-dialog-close
+      (click)="cancelIngredients()"
+    >
+      Cancelar
+    </button>
+    <button mat-flat-button color="primary" mat-dialog-close>Aceptar</button>
+  </mat-dialog-actions>
 </ng-template>

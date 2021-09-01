@@ -193,6 +193,7 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
         });
       }
       if (item.observation !== '') {
+        products += `%09*Nota del producto*%0A`;
         products += `%09%09_${item.observation}_%0A`;
       }
     });
