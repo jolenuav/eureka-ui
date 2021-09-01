@@ -16,11 +16,11 @@ export class SelectPaymentResolver extends CustomerResolver {
       paymentMethods: [],
     };
     if (route.params.commerceUrl) {
-      const commerce = await this.getCommerSelected(commerceParam); // Heredado
+      await this.getCommerSelected(commerceParam); // Heredado
       resp = {
-        commerce,
+        commerce: this.customerStore.commerceSelected,
         paymentMethods: await this.getPaymentMethodByCommerceSelected(
-          commerce.id
+          this.customerStore.commerceSelected.id
         ), // Heredado
       };
     }

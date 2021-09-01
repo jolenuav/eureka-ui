@@ -1,0 +1,16 @@
+@import '/src/assets/scss/variables.scss';
+
+.card-category {
+  height: 140px;
+  border: none;
+  white-space: normal;
+  line-height: 16px;
+}
+
+.img-category {
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}

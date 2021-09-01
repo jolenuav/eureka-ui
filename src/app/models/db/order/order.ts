@@ -129,15 +129,15 @@ export default class Order {
   get products(): ItemOrder[] {
     return this._products;
   }
-  set products(prods: ItemOrder[]) {
-    this._products = prods;
+  set products(products: ItemOrder[]) {
+    this._products = products;
   }
 
   get status(): string {
     return this._status;
   }
-  set status(prods: string) {
-    this._status = prods;
+  set status(status: string) {
+    this._status = status;
   }
 
   get totalAmount(): number {

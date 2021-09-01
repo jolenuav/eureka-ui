@@ -5,7 +5,7 @@ import { ROUTES } from '../utils/routes';
 import { CustomerResolver } from './customer.resolver';
 
 @Injectable()
-export class SearchProductsResolver extends CustomerResolver {
+export class CatalogResolver extends CustomerResolver {
   async resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -14,6 +14,11 @@ export class SearchProductsResolver extends CustomerResolver {
     const commerceUrl = route.params.commerceUrl;
     // Se cargan los datos en el servico de CustomerStore
     await this.getCommerSelected(commerceUrl);
+    if (!this.customerStore.commerceSelected) {
+      this.router.navigate([pathRoute([ROUTES.commerces])]);
+      this.store.endLoader();
+      return;
+    }
     await this.getCatalogByCommerceId(this.customerStore.commerceSelected.id);
     await this.getProductByCommerceId(this.customerStore.commerceSelected.id);
     this.store.endLoader();

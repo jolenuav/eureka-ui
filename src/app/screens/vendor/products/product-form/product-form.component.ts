@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { InputFileComponent } from 'src/app/components/input-file/input-file.component';
 import Additional from 'src/app/models/db/additional';
 import Category from 'src/app/models/db/categories/category';
 import Commerce from 'src/app/models/db/commerce';
@@ -49,12 +50,15 @@ export class ProductFormComponent implements OnInit {
     tags: new FormControl([]),
     ingredients: new FormControl([]),
     image: new FormControl(null),
+    imagePreview: new FormControl(null),
   });
   product: Product = this.activateRoute.snapshot.data.adminProduct.product;
   showInputCommerce = false;
   subCategories: Category[];
   subscriptions: Subscription[];
   user = this.vendorStore.user;
+
+  @ViewChild('inputImage') inputImage: InputFileComponent;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -67,6 +71,34 @@ export class ProductFormComponent implements OnInit {
     private vendorStore: VendorStoreService
   ) {}
 
+  resetAll(): void {
+    this.formGroup.controls.name.setValue(null);
+    this.formGroup.controls.price.setValue(null);
+    this.formGroup.controls.category.setValue(null);
+    this.formGroup.controls.subCategory.setValue(null);
+    this.formGroup.controls.subCategory.disable();
+    this.formGroup.controls.description.setValue(null);
+    this.formGroup.controls.enabled.setValue(true);
+    this.formGroup.controls.isAdditional.setValue(false);
+    this.formGroup.controls.inStock.setValue(false);
+    this.formGroup.controls.stock.setValue(null);
+    this.formGroup.controls.stock.disable();
+    this.formGroup.controls.tags.setValue([]);
+    this.formGroup.controls.ingredients.setValue([]);
+    this.formGroup.controls.image.setValue(null);
+    this.formGroup.markAsUntouched();
+
+    this.additionalForm.controls.order.setValue(null);
+    this.additionalForm.controls.name.setValue(null);
+    this.additionalForm.controls.price.setValue(null);
+    this.additionalForm.controls.parent.setValue(null);
+    this.additionalForm.controls.parent.disable();
+    this.additionalForm.markAsUntouched();
+    this.additionals = [];
+
+    this.inputImage.captureImage(null);
+  }
+
   async ngOnInit(): Promise<void> {
     this._subscription();
     if (
@@ -78,6 +110,7 @@ export class ProductFormComponent implements OnInit {
 
     this.commerce = this.commerceLoged ? this.commerceLoged.clone() : null;
     if (this.product) {
+      this.additionals = this.product.additionals;
       await this.loadCategories();
       const category = this.categories.find(
         (cat) =>
@@ -91,13 +124,15 @@ export class ProductFormComponent implements OnInit {
       );
       this.formGroup.controls.name.setValue(this.product.name);
       this.formGroup.controls.price.setValue(this.product.price);
-      this.formGroup.controls.description.setValue(this.product.description);
       this.formGroup.controls.category.setValue(category);
       this.formGroup.controls.subCategory.setValue(subCategory);
+      this.formGroup.controls.description.setValue(this.product.description);
       this.formGroup.controls.enabled.setValue(this.product.enabled);
+      this.formGroup.controls.isAdditional.setValue(this.product.isAdditional);
       this.formGroup.controls.inStock.setValue(this.product.stock);
       this.formGroup.controls.tags.setValue(this.product.tags);
       this.formGroup.controls.ingredients.setValue(this.product.tags);
+      this.formGroup.controls.imagePreview.setValue(this.product.image);
     }
   }
 
@@ -110,8 +145,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   async loadCategories(): Promise<void> {
-    const resp = await this.categoryService.findByCommerceId(this.commerce.id);
-    this.categories = resp ? resp.categories : [];
+    this.categories = await this.categoryService.findByCommerceId(
+      this.commerce.id
+    );
   }
 
   resetAdditionalForm(): void {
@@ -188,12 +224,12 @@ export class ProductFormComponent implements OnInit {
     product.additionals = this.additionals;
     product.isAdditional = this.formGroup.controls.isAdditional.value;
     product.stock = this.formGroup.controls.inStock.value;
-    // Se elimina las subCategprias en este punto para guardar los datos limpios
+    // Se elimina las subCategorias en este punto para guardar los datos limpios
     const category = Category.parse(this.formGroup.controls.category.value);
     category.subCategories = null;
     product.category = category;
     product.subCategory = this.formGroup.controls.subCategory.value;
-    product.image = this.product.image;
+    product.image = this.product ? this.product.image : null;
     const image = this.formGroup.controls.image.value as File;
 
     if (this.product) {
@@ -218,6 +254,8 @@ export class ProductFormComponent implements OnInit {
         await this.saveInitialStock(product);
       }
     }
+    this.alertService.success('Producto guardado satisfactoriamente');
+    this.resetAll();
     this.store.endLoader();
   }
 
@@ -253,14 +291,15 @@ export class ProductFormComponent implements OnInit {
       this.alertService.error('No hay comercio seleccionado');
       return false;
     }
-    if (
-      validOrder &&
-      this.additionals.some(
-        (sec) => sec.order === this.additionalForm.controls.order.value
-      )
-    ) {
-      this.alertService.error('Ya existe una sección en ese orden');
-      return false;
+    if (validOrder) {
+      if (
+        this.additionals.some(
+          (sec) => sec.order === this.additionalForm.controls.order.value
+        )
+      ) {
+        this.alertService.error('Ya existe una sección en ese orden');
+        return false;
+      }
     }
     return true;
   }
@@ -269,23 +308,25 @@ export class ProductFormComponent implements OnInit {
     if (!this.isValidForSection()) {
       return false;
     }
-    if (
-      this.additionals.some((sec) =>
-        sec.additionals.some(
-          (additional) =>
-            additional.order === this.additionalForm.controls.order.value
-        )
-      )
-    ) {
-      this.alertService.error('Ya existe una sección en ese orden');
-      return false;
-    }
     if (!this.additionalForm.controls.parent.value) {
       this.alertService.error('Debe seleccionar una sección');
       return false;
     }
     if (!this.additionalForm.controls.price.value) {
       this.alertService.error('Debe especificar un precio');
+      return false;
+    }
+    if (
+      this.additionals.some(
+        (sec) =>
+          sec.order === this.additionalForm.controls.parent.value.order &&
+          sec.additionals.some(
+            (additional) =>
+              additional.order === this.additionalForm.controls.order.value
+          )
+      )
+    ) {
+      this.alertService.error('Ya existe una sección en ese orden');
       return false;
     }
     return true;

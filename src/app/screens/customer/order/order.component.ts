@@ -13,19 +13,19 @@ import { ROUTES } from 'src/app/utils/routes';
 })
 export class OrderComponent implements OnInit {
   headerStyle = {
-    opacity: 1,
-    height: '160px',
+    'opacity': 1,
+    'height': '160px',
     'max-height': '160px',
     'background-color': 'white',
   };
   titleStyle = {
-    opacity: 1,
-    top: '48px',
-    left: '24px',
+    'opacity': 1,
+    'top': '48px',
+    'left': '24px',
     'font-size': '18px',
   };
 
-  commerce: Commerce = this.activedRoute.snapshot.data.commerce;
+  commerce: Commerce = this.customerStore.commerceSelected;
   editEnable = false;
   deliveryMin = this.store.appState.deliveryFees.sort((a, b) =>
     a.price > b.price ? 1 : b.price > a.price ? -1 : 0
@@ -52,29 +52,29 @@ export class OrderComponent implements OnInit {
   onScroll(): void {
     if (document.documentElement.scrollTop > 1) {
       this.titleStyle = {
-        opacity: 1,
-        top: '13px',
-        left: '56px',
+        'opacity': 1,
+        'top': '13px',
+        'left': '56px',
         'font-size': '14px',
       };
       this.topSize = '128px';
       this.headerStyle = {
-        opacity: 1,
-        height: this.topSize,
+        'opacity': 1,
+        'height': this.topSize,
         'max-height': '128px',
         'background-color': 'white',
       };
     } else {
       this.titleStyle = {
-        opacity: 1,
-        top: '48px',
-        left: '24px',
+        'opacity': 1,
+        'top': '48px',
+        'left': '24px',
         'font-size': '18px',
       };
       this.topSize = '160px';
       this.headerStyle = {
-        opacity: 1,
-        height: this.topSize,
+        'opacity': 1,
+        'height': this.topSize,
         'max-height': '160px',
         'background-color': 'white',
       };

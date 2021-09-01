@@ -3,20 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminAccessAuthGuard } from './guards/partner/admin-acess-auth.guard';
 import { LoginAuthGuard } from './guards/partner/login-auth.guard';
 import { PartnerViewAuthGuard } from './guards/partner/partner-view-auth.guard';
+import { CatalogResolver } from './resolvers/catalog.resolver';
 import { CommerceSelectedResolver } from './resolvers/commerce-selected.resolver';
 import { FormProductsResolver } from './resolvers/form-products.resolver';
 import { ListCommercesAdminResolver } from './resolvers/list-commerce-admin.resolver';
 import { LoadOrderResolver } from './resolvers/load-order.resolver';
-import { SearchProductsResolver } from './resolvers/search-products.resolver';
 import { SelectPaymentResolver } from './resolvers/select-payment.resolver';
 import { AdminCommercesComponent } from './screens/admin/admin-commerces/admin-commerces.component';
 import { ListCommercesComponent } from './screens/admin/list-commerces/list-commerces.component';
 import { LoginComponent } from './screens/autheticate/login/login.component';
+import { CatalogComponent } from './screens/customer/catalog/catalog.component';
 import { LoadOrderComponent } from './screens/customer/load-order/load-order.component';
 import { OrderConfirmComponent } from './screens/customer/order-confirm/order-confirm.component';
 import { OrderComponent } from './screens/customer/order/order.component';
 import { SearchCommerceComponent } from './screens/customer/search-commerce/search-commerce.component';
-import { SearchProductsComponent } from './screens/customer/search-products/search-products.component';
 import { SelectPaymentComponent } from './screens/customer/select-payment/select-payment.component';
 import { CategoriesComponent } from './screens/vendor/categories/categories.component';
 import { OrderListComponent } from './screens/vendor/order-list/order-list.component';
@@ -35,8 +35,9 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: SearchProductsComponent,
-        resolve: { searchProduct: SearchProductsResolver },
+        // component: SearchProductsComponent,
+        component: CatalogComponent,
+        resolve: { catalog: CatalogResolver },
       },
       {
         path: ROUTES.customer.order,

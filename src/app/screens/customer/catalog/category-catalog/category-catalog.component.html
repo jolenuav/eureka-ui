@@ -1,0 +1,31 @@
+<div class="d-flex flex-wrap">
+  <ng-container *ngFor="let category of categories; let i = index">
+    <div
+      *ngIf="showCard(category)"
+      class="pb-3 px-1"
+      [class.col-12]="categories.length < 6"
+      [class.col-4]="categories.length >= 6"
+    >
+      <button
+        mat-flat-button
+        class="w-100 card rounded card-category"
+        (click)="clickEvent.emit(category)"
+      >
+        <div class="text-center font-weight-bold w-100 pt-1">
+          {{ category.description }}
+        </div>
+        <div class="d-flex justify-content-center w-100">
+          <div
+            *ngIf="category.image; else withoutImg"
+            class="rounded img-category"
+            [src]="category.image"
+            [ngStyle]="{ 'background-image': 'url(' + category.image + ')' }"
+          ></div>
+          <ng-template #withoutImg>
+            <div class="img-category"></div>
+          </ng-template>
+        </div>
+      </button>
+    </div>
+  </ng-container>
+</div>

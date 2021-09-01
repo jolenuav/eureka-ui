@@ -1,5 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import Additional from 'src/app/models/db/additional';
 import Commerce from 'src/app/models/db/commerce';
 import ItemOrder from 'src/app/models/db/order/item-order';
 import Product from 'src/app/models/db/product';
@@ -15,36 +17,25 @@ import { ROUTES } from 'src/app/utils/routes';
   styleUrls: ['./load-order.component.scss'],
 })
 export class LoadOrderComponent implements OnInit {
-  topSize = '240px';
   amount = 0;
-  commerce: Commerce = this.activedRoute.snapshot.data.loadOrder.commerce;
+  commerce: Commerce = this.customerStore.commerceSelected;
   counter = 1;
-  headerStyle;
   maxOrder = 20;
   minOrder = 1;
   observation = '';
-  product: Product = this.activedRoute.snapshot.data.loadOrder.product;
+  product: Product = this.customerStore.productToOrder;
+  selectedAdditionals: Additional[] = [];
+  selectedIngredients: string[] = [];
   stock: Stock;
-  titleHeader: any = {
-    color: '#e9ecef',
-  };
 
   constructor(
-    private activedRoute: ActivatedRoute,
     private customerStore: CustomerStoreService,
+    public matDialog: MatDialog,
     private router: Router,
     private stockService: StockService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.headerStyle = {
-      opacity: 1,
-      height: '240px',
-      'max-height': '240px',
-      'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${
-        this.product.image ? this.product.image : this.commerce.image
-      }")`,
-    };
     this.amount = this.product.price * this.counter;
 
     this.stock = await this.stockService.findByProductId(this.product.id);
@@ -73,56 +64,28 @@ export class LoadOrderComponent implements OnInit {
     if (!add && this.counter > this.minOrder) {
       this.counter--;
     }
-    this.amount = this.product.price * this.counter;
+    this.calculateAmount();
   }
 
   addOrder(): void {
     const item: ItemOrder = new ItemOrder();
+    item.productId = this.product.id;
     item.product = this.product;
-    item.qty = this.counter;
+    item.unit = this.counter;
+    item.amountTotal = this.amount;
     item.observation = this.observation;
+    item.skipIngredients = this.selectedIngredients;
+    item.additionals = this.selectedAdditionals;
     this.customerStore.loadProductOrder(item);
     this.goBack();
   }
 
-  @HostListener('focusin')
-  setInputFocus(): void {
-    this.hideHeaderImage();
-  }
-
-  @HostListener('focusout')
-  setInputFocusOut(): void {
-    this.showHeaderImage();
-  }
-
-  showHeaderImage(): void {
-    this.topSize = '240px';
-    this.headerStyle = {
-      opacity: 1,
-      height: '240px',
-      color: '#e9ecef',
-      'max-height': '240px',
-      'background-image': `linear-gradient(rgba(62, 62, 62, 0), rgba(62, 62, 62, 1) 95%), url("${
-        this.product.image ? this.product.image : this.commerce.image
-      }")`,
-    };
-    this.titleHeader = {
-      color: '#e9ecef',
-    };
-  }
-
-  hideHeaderImage(): void {
-    this.topSize = '55px';
-    this.headerStyle = {
-      opacity: 1,
-      height: '55px',
-      color: '#6c757d',
-      'max-height': '55px',
-      'background-color': 'white',
-    };
-    this.titleHeader = {
-      color: '#6c757d',
-      'padding-left': '55px',
-    };
+  calculateAmount(): void {
+    this.amount = 0;
+    this.selectedAdditionals.forEach((additional) => {
+      this.amount += additional.price;
+    });
+    const productAmount = this.counter * this.product.price;
+    this.amount += productAmount;
   }
 }

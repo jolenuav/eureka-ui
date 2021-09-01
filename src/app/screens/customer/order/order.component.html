@@ -42,7 +42,8 @@
           <small>
             {{ commerce.duration }} min - Envío min ${{
               deliveryMin.toFixed(2)
-            }} (opcional)
+            }}
+            (opcional)
           </small>
         </div>
       </div>
@@ -57,8 +58,10 @@
   [ngStyle]="{ 'padding-top': topSize }"
 >
   <ng-container *ngFor="let item of order.products; let i = index">
-    <div class="my-2 mx-3 card d-flex flex-row align-items-center p-3">
-      <div *ngIf="!editEnable" class="m-auto col-2">{{ item.qty }}x</div>
+    <div
+      class="my-2 mx-3 card d-flex flex-row align-items-center p-3 border-none"
+    >
+      <div *ngIf="!editEnable" class="m-auto col-2">{{ item.unit }}x</div>
       <div
         *ngIf="editEnable"
         class="m-auto col-2 custom-control custom-checkbox p-1 pl-md-4"
@@ -75,14 +78,15 @@
       <div class="m-auto col-7">
         <div class="d-flex flex-column">
           <span class="font-weight-bold">{{ item.product.name }}</span>
-          <span *ngIf="item.product.description">
-            {{ item.product.description | truncate: 27 }}
+          <span
+            class="text-small text-truncate"
+            *ngIf="item.product.description"
+          >
+            {{ item.product.description }}
           </span>
         </div>
       </div>
-      <div class="m-auto col-3">
-        ${{ (item.qty * item.product.price).toFixed(2) }}
-      </div>
+      <div class="m-auto col-3">${{ item.amountTotal.toFixed(2) }}</div>
     </div>
   </ng-container>
   <hr />

@@ -1,3 +1,4 @@
+@import '../../../../assets/scss/variables.scss';
 .example-tree-invisible {
   display: none;
 }
@@ -23,4 +24,10 @@
    */
 .example-tree div[role='group'] > .mat-tree-node {
   padding-left: 40px;
+}
+
+.withoutImg {
+  width: 30px;
+  height: 30px;
+  background-color: $color-gray-dark;
 }

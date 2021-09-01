@@ -1,97 +1,212 @@
 <!-- INIT HEADER IMAGE -->
 <div
   class="w-100 position-fixed header-shadow"
-  *ngIf="commerce && product"
-  style="z-index: 2"
+  style="z-index: 2; background-color: white"
 >
-  <div
-    class="p-3 pt-5 img-header d-flex flex-column justify-content-end"
-    [ngStyle]="headerStyle"
-  >
-    <i class="mdi mdi-arrow-left arrow-back text-black" (click)="goBack()"></i>
-    <div
-      class="font-weight-bold d-flex flex-row align-items-center"
-      [ngStyle]="titleHeader"
-    >
-      <h2 class="pr-2 m-0" [ngStyle]="{ color: titleHeader.color }">
-        {{ commerce.name }}
-      </h2>
-      <div class="pr-2" [ngStyle]="{ color: titleHeader.color }">
-        {{ commerce.rate }}
+  <div class="p-2 img-header d-flex flex-row justify-content-between">
+    <div class="d-flex align-items-center justify-content-center">
+      <button
+        mat-fab
+        class="d-flex align-items-center justify-content-center btn-back"
+        (click)="goBack()"
+      >
+        <mat-icon
+          class="
+            mdi mdi-arrow-left
+            d-flex
+            align-items-center
+            justify-content-center
+          "
+        ></mat-icon>
+      </button>
+    </div>
+    <div class="d-flex flex-row px-2 w-100">
+      <img
+        *ngIf="product.image"
+        class="rounded"
+        [src]="product.image"
+        style="width: 48px; height: 48px"
+      />
+      <div class="pl-3 d-flex align-items-center w-100">
+        <div class="font-weight-bold">{{ product.name }}</div>
       </div>
-      <i class="mdi mdi-star text-secondary" [ngStyle]="{ color: titleHeader.color }"></i>
     </div>
   </div>
 </div>
-<!-- END HEADER IMAGE -->
-<!-- INIT CONTAINER -->
+
 <div
-  *ngIf="commerce && product"
   class="w-100 d-flex flex-column"
-  style="padding-bottom: 160px"
-  [ngStyle]="{ 'padding-top': topSize }"
+  style="padding-top: 75px; padding-bottom: 160px"
 >
-  <div class="mx-3 mt-3 mb-1 card">
-    <div class="card-body">
-      <h4 class="font-weight-bold">
-        {{ product.name }}
-      </h4>
-      <div>
-        {{ product.description }}
+  <div *ngIf="product.description" class="mx-2 my-1 card border-none p-2">
+    <div class="font-weight-bold">Descripción</div>
+    <div class="text-small">
+      {{ product.description }}
+    </div>
+  </div>
+  <div
+    class="
+      mx-2
+      my-1
+      card
+      border-none
+      p-2
+      d-flex
+      flex-row
+      justify-content-between
+    "
+  >
+    <div class="font-weight-bold d-flex align-items-center">Unidades</div>
+    <div class="d-flex justify-content-center">
+      <div
+        class="
+          d-flex
+          flex-row
+          justify-content-between
+          align-items-center
+          counter-container
+        "
+      >
+        <button
+          class="btn p-2 d-flex align-items-center font-weight-bold"
+          [disabled]="counter === 1"
+          (click)="counterHandler(false)"
+        >
+          <i class="mdi mdi-minus counter-icon"></i>
+        </button>
+        <div
+          class="d-flex align-items-center justify-content-center input-counter"
+        >
+          {{ counter }}
+        </div>
+        <button
+          class="btn p-2 d-flex align-items-center font-weight-bold"
+          (click)="counterHandler(true)"
+        >
+          <i class="mdi mdi-plus counter-icon"></i>
+        </button>
       </div>
     </div>
   </div>
-  <div class="mx-3 my-1 card">
-    <div class="card-body">
-      <h4 class="font-weight-bold">Unidades</h4>
-      <div class="d-flex justify-content-center">
-        <div
-          class="
-            d-flex
-            flex-row
-            justify-content-between
-            align-items-center
-            counter-container
-          "
-        >
-          <button
-            class="btn p-2 d-flex align-items-center font-weight-bold"
-            (click)="counterHandler(false)"
+  <div
+    *ngIf="
+      (product.additionals && product.additionals.length > 0) ||
+      (product.ingredients && product.ingredients.length > 0)
+    "
+    class="
+      mx-2
+      my-1
+      card
+      border-none
+      p-2
+      d-flex
+      flex-column
+      justify-content-between
+    "
+  >
+    <div
+      *ngIf="product.additionals && product.additionals.length > 0"
+      class="d-flex flex-row justify-content-between"
+    >
+      <div class="d-flex flex-column col-6 p-0">
+        <div class="font-weight-bold">Adicinales</div>
+        <div class="d-flex flex-row">
+          <div
+            *ngIf="selectedAdditionals.length === 0; else listAdditionals"
+            class="text-small"
           >
-            <i class="mdi mdi-minus counter-icon"></i>
-          </button>
-          <input
-            class="d-flex align-items-center p-0 text-center form-control"
-            readonly
-            [(ngModel)]="counter"
-          />
-          <button
-            class="btn p-2 d-flex align-items-center font-weight-bold"
-            (click)="counterHandler(true)"
-          >
-            <i class="mdi mdi-plus counter-icon"></i>
-          </button>
+            Opcional
+          </div>
+          <ng-template #listAdditionals>
+            <div class="text-small text-truncate">
+              <ng-container
+                *ngFor="let item of selectedAdditionals; let i = index"
+              >
+                <span *ngIf="i > 0">, </span>
+                {{ item.description }}
+              </ng-container>
+            </div>
+          </ng-template>
         </div>
       </div>
+      <div class="col-6 p-0 d-flex justify-content-end align-items-center">
+        <button
+          mat-button
+          class="btn-pill"
+          (click)="matDialog.open(additionalsModal)"
+        >
+          Seleccionar
+        </button>
+      </div>
+    </div>
+    <mat-divider
+      *ngIf="
+        (product.additionals && product.additionals.length > 0) ||
+        (product.ingredients && product.ingredients.length > 0)
+      "
+      class="col-12 my-3"
+    ></mat-divider>
+    <div
+      *ngIf="product.ingredients && product.ingredients.length > 0"
+      class="d-flex flex-row justify-content-between"
+    >
+      <div class="d-flex flex-column col-6 p-0">
+        <div class="font-weight-bold">Sin</div>
+        <div class="d-flex flex-row">
+          <div
+            *ngIf="selectedIngredients.length === 0; else listIngredients"
+            class="text-small"
+          >
+            Opcional
+          </div>
+          <ng-template #listIngredients>
+            <div class="text-small text-truncate">
+              <ng-container
+                *ngFor="let item of selectedIngredients; let i = index"
+              >
+                <span *ngIf="i > 0">, </span>
+                {{ item }}
+              </ng-container>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="col-6 p-0 d-flex justify-content-end align-items-center">
+        <button
+          mat-button
+          class="btn-pill"
+          (click)="matDialog.open(ingredientsModal)"
+        >
+          Seleccionar
+        </button>
+      </div>
     </div>
   </div>
-  <div class="mx-3 my-1 card">
-    <div class="card-body">
-      <h4 class="font-weight-bold">¿Quiere aclarar algo?</h4>
-      <div class="form-floating">
-        <textarea
-          class="form-control"
-          rows="5"
-          [(ngModel)]="observation"
-        ></textarea>
-      </div>
+  <div
+    class="
+      mx-2
+      my-1
+      card
+      border-none
+      p-2
+      d-flex
+      flex-column
+      justify-content-between
+    "
+  >
+    <div class="font-weight-bold">¿Quiere aclarar algo?</div>
+    <div>
+      <textarea
+        class="form-control"
+        rows="5"
+        [(ngModel)]="observation"
+      ></textarea>
     </div>
   </div>
 </div>
 <!-- END CONTAINER -->
 <!-- INIT ADD ORDER -->
 <div
-  *ngIf="commerce && product"
   class="
     container-footer-btn
     w-100
@@ -105,8 +220,50 @@
   <div class="col-xl-4 col-12 m-auto">
     <button class="btn btn-primary btn-rounded w-100" (click)="addOrder()">
       Agregar a mi pedidio
-      <span *ngIf="amount > 0">({{ amount.toFixed(2) }})</span>
+      <span *ngIf="amount > 0" style="font-weight: normal"
+        >({{ amount.toFixed(2) }})</span
+      >
     </button>
   </div>
 </div>
 <!-- END ADD ORDER -->
+
+<ng-template #additionalsModal let-modal>
+  <mat-dialog-content>
+    <mat-selection-list
+      multiple
+      [(ngModel)]="selectedAdditionals"
+      (ngModelChange)="calculateAmount()"
+    >
+      <ng-container *ngFor="let section of product.additionals; let i = index">
+        <mat-divider *ngIf="i > 0" class="my-2"></mat-divider>
+        <div class="font-weight-bold">{{ section.description }}</div>
+        <mat-list-option
+          *ngFor="let additional of section.additionals"
+          [value]="additional"
+        >
+          <div class="text-small">
+            {{ additional.description }}
+            <span class="font-weight-bold">${{ additional.price }}</span>
+          </div>
+        </mat-list-option>
+      </ng-container>
+    </mat-selection-list>
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #ingredientsModal let-modal>
+  <mat-dialog-content>
+    <mat-selection-list multiple [(ngModel)]="selectedIngredients">
+      <div class="font-weight-bold">Ingredientes</div>
+      <mat-list-option
+        *ngFor="let ingredient of product.ingredients; let i = index"
+        [value]="ingredient"
+      >
+        <div class="text-small">
+          {{ ingredient }}
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-dialog-content>
+</ng-template>

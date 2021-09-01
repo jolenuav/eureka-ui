@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import Categories from 'src/app/models/db/categories/categories';
+import Category from 'src/app/models/db/categories/category';
 
 @Injectable({
   providedIn: 'root',
@@ -11,37 +12,40 @@ export class CategoryService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  async findByCommerceId(commerceId: string): Promise<Categories> {
+  async findByCommerceId(commerceId: string): Promise<Category[]> {
     return await this.firestore
-      .collection(this.collection)
-      .doc(commerceId)
+      .collection(this.collection, (r) =>
+        r.where('commerceId', '==', commerceId)
+      )
       .get()
       .pipe(
         map((e) => {
-          if (!e.data()) {
-            return null;
-          }
-          const categories = Categories.parse(e.data());
+          const categories: Category[] = [];
+          e.docs.forEach((doc) => {
+            const category = Category.parse(doc.data());
+            category.id = doc.id;
+            categories.push(category);
+          });
           return categories;
         })
       )
       .toPromise();
   }
 
-  async save(categories: Categories): Promise<void> {
-    const id = categories.id;
-    const categoriesDB = categories.getSimpleObject();
-    delete categoriesDB.id;
-    return this.firestore.collection(this.collection).doc(id).set(categoriesDB);
+  async save(category: Category): Promise<void> {
+    const id = category.id;
+    const categoryDB = category.getSimpleObject();
+    delete categoryDB.id;
+    return this.firestore.collection(this.collection).doc(id).set(categoryDB);
   }
 
-  async update(categories: Categories): Promise<void> {
-    const id = categories.id;
-    const categoriesDB = categories.getSimpleObject();
-    delete categoriesDB.id;
+  async update(category: Category): Promise<void> {
+    const id = category.id;
+    const categoryDB = category.getSimpleObject();
+    delete categoryDB.id;
     return this.firestore
       .collection(this.collection)
       .doc(id)
-      .update(categoriesDB);
+      .update(categoryDB);
   }
 }

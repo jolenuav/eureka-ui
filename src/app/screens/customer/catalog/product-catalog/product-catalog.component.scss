@@ -1,0 +1,28 @@
+@import '/src/assets/scss/variables.scss';
+.card-product {
+  height: 200px;
+  border: none;
+  white-space: normal;
+  line-height: 16px;
+}
+
+.img-product {
+  height: 120px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.btn-plus {
+  width: 30px;
+  height: 30px;
+  background-color: $color-primary-light;
+  box-shadow: none;
+  right: 10px;
+  top: 15px;
+  position: absolute;
+  mat-icon {
+    font-size: 15px;
+    color: $color-primary;
+  }
+}

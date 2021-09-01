@@ -1,4 +1,4 @@
-<div class="container-scroll-x container-scroll-y p-4 text-small">
+<div class="container-scroll-x container-scroll-y p-4">
   <div class="pb-3"><eu-icon-title></eu-icon-title></div>
   <div class="card d-flex flex-column border-0">
     <form class="row p-3" [formGroup]="formGroup" (ngSubmit)="onSaveOrUpdate()">
@@ -12,46 +12,48 @@
         </div>
       </div>
 
-      <div class="form-group col-sm-12 col-xl-4">
-        <label class="m-0" for="order">Orden</label>
+      <div class="col-sm-12 col-xl-3 mb-3">
+        <eu-input-file
+          #inputImage
+          formControlName="image"
+          (changeDataImage)="formGroup.controls.imageData.setValue($event)"
+        ></eu-input-file>
+      </div>
+      <mat-form-field class="col-sm-12 col-xl-3">
+        <mat-label>Orden</mat-label>
         <input
-          class="form-control input-number"
-          id="order"
+          class="input-number"
+          matInput
           formControlName="order"
           placeholder="Orden"
+          (blur)="formGroup.controls.order.markAsTouched()"
           type="number"
         />
-      </div>
-
-      <div class="form-group col-sm-12 col-xl-4">
-        <label class="m-0" for="category">Categoría</label>
+      </mat-form-field>
+      <mat-form-field class="col-sm-12 col-xl-3">
+        <mat-label>Categoría</mat-label>
         <input
-          class="form-control"
-          id="category"
-          formControlName="category"
-          placeholder="Category"
-          type="text"
+          class="input-number"
+          matInput
+          formControlName="description"
+          placeholder="Categoría"
+          (blur)="formGroup.controls.description.markAsTouched()"
         />
-      </div>
-
-      <div class="form-group col-sm-12 col-xl-4">
-        <label class="m-0" for="parentCategory">Categoría padre</label>
-        <select
-          class="form-control w-100"
-          id="parentCategory"
+      </mat-form-field>
+      <mat-form-field class="col-sm-12 col-xl-3">
+        <mat-label>Categoría padre</mat-label>
+        <mat-select
           formControlName="parentCategory"
+          (blur)="formGroup.controls.parentCategory.markAsTouched()"
         >
-          <option [ngValue]="null" disabled selected>
-            Selecione una categoría
-          </option>
-          <option
-            [ngValue]="category"
-            *ngFor="let category of categories.categories"
-          >
+          <mat-option [value]="null" selected>
+            -- Seleccione una Categoría --
+          </mat-option>
+          <mat-option [value]="category" *ngFor="let category of categories">
             {{ category.description }}
-          </option>
-        </select>
-      </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <div class="form-group col-sm-12 col-xl-6">
         <button
@@ -79,33 +81,61 @@
         <mat-accordion>
           <mat-expansion-panel
             hideToggle
-            *ngFor="let category of categories.categories"
+            *ngFor="let category of categories; let i = index"
           >
             <mat-expansion-panel-header>
               <mat-panel-title
                 class="d-flex justify-content-between align-items-center"
               >
-                #{{ category.order }} {{ category.description }}
+                <div class="d-flex flex-row align-items-center">
+                  <div class="pr-2">
+                    <img
+                      *ngIf="
+                        category.image || category._imagePreview;
+                        else withoutImg
+                      "
+                      class="rounded-circle"
+                      [src]="
+                        category.image ? category.image : category._imagePreview
+                      "
+                      style="width: 30px"
+                    />
+                    <ng-template #withoutImg>
+                      <div class="rounded-circle withoutImg"></div>
+                    </ng-template>
+                  </div>
+                  #{{ category.order }} {{ category.description }}
+                </div>
                 <div class="d-flex align-items-center">
-                  <span class="badge badge-primary badge-pill">
+                  <span class="badge badge-secondary badge-pill">
                     {{ category.subCategories.length }}
                   </span>
-                  <i
-                    class="mdi mdi-delete pl-3"
-                    (click)="deleteCategory(category)"
-                  ></i>
+                  <mat-icon
+                    class="mdi mdi-delete pl-3 d-flex align-items-center"
+                    color="primary"
+                    (click)="deleteCategory(i)"
+                  ></mat-icon>
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list class="d-flex flex-column">
               <mat-list-item
-                class="d-flex justify-content-between align-items-center px-3"
-                *ngFor="let subCategory of category.subCategories"
+                class="
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                  px-3
+                  ml-5
+                "
+                *ngFor="
+                  let subCategory of category.subCategories;
+                  let j = index
+                "
               >
                 #{{ subCategory.order }} {{ subCategory.description }}
                 <i
                   class="mdi mdi-delete pl-3"
-                  (click)="deleteSubCategory(category, subCategory)"
+                  (click)="deleteSubCategory(i, j)"
                 ></i>
               </mat-list-item>
             </mat-list>

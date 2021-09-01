@@ -1,0 +1,33 @@
+@import '/src/assets/scss/variables.scss';
+
+.img-header {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  top: 0;
+  transition: 0.8s;
+  width: 100%;
+}
+
+.category-container {
+  background-color: $color-light;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.btn-back {
+  width: 38px;
+  height: 38px;
+  background-color: $color-light2;
+  box-shadow: none;
+}
+
+.badge-counter-items {
+  background-color: #f8f9fa;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  left: -8px;
+  border: 1px solid;
+  border-color: #00a49b;
+}

@@ -2,6 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import Additional from 'src/app/models/db/additional';
 import Commerce from 'src/app/models/db/commerce';
 import Order from 'src/app/models/db/order/order';
 import PayOrder from 'src/app/models/db/order/pay-order';
@@ -23,20 +24,20 @@ import { ROUTES } from 'src/app/utils/routes';
 })
 export class OrderConfirmComponent implements OnInit, OnDestroy {
   headerStyle = {
-    opacity: 1,
-    height: '96px',
+    'opacity': 1,
+    'height': '96px',
     'max-height': '96px',
     'background-color': 'white',
   };
   titleStyle = {
-    opacity: 1,
-    top: '48px',
-    left: '24px',
+    'opacity': 1,
+    'top': '48px',
+    'left': '24px',
     'font-size': '18px',
   };
   topSize = '96px';
 
-  commerce: Commerce = this.activedRoute.snapshot.data.commerce;
+  commerce: Commerce = this.customerStore.commerceSelected;
   deliveryMin = this.store.appState.deliveryFees.sort((a, b) =>
     a.price > b.price ? 1 : b.price > a.price ? -1 : 0
   )[0].price;
@@ -108,6 +109,15 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
     this.order.deliveryData.phone = this.formGroup.controls.phone.value;
     this.order.deliveryData.email = this.formGroup.controls.mail.value;
     this.order.deliveryData.address = this.formGroup.controls.address.value;
+    let additionals: Additional[] = [];
+    this.order.products.forEach((prod) => {
+      prod.additionals?.forEach((add) => {
+        const additional = Additional.parse(add);
+        additionals.push(additional);
+      });
+      prod.additionals = [...additionals];
+      additionals = [];
+    });
 
     await this.saveOrder();
     window.open(
@@ -128,13 +138,13 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
     for await (const item of this.order.products) {
       if (item.product.stock) {
         const stock = await this.stockService.findByProductId(item.product.id);
-        if (stock.total >= item.qty) {
+        if (stock.total >= item.unit) {
           const movement = new StockMovement();
           movement.date = new Date();
-          movement.quantity = item.qty;
+          movement.quantity = item.unit;
           movement.type = MovementStock.REDUCE;
           movement.user = 'Eureka!';
-          stock.total -= item.qty;
+          stock.total -= item.unit;
           stock.movements.push(movement);
           this.stockService.update(stock);
         }
@@ -167,9 +177,21 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
     }
 
     this.order.products.forEach((item) => {
-      products += `- ${item.qty} ${
+      products += `- ${item.unit} ${
         item.product.name
-      } ($${item.product.price.toFixed(2)})%0A`;
+      } *$${item.product.price.toFixed(2)}*%0A`;
+      if (item.additionals && item.additionals.length > 0) {
+        products += `%09*Adicionales*%0A`;
+        item.additionals.forEach((additional) => {
+          products += `%09%09_${additional.description} *$${additional.price}*_%0A`;
+        });
+      }
+      if (item.skipIngredients && item.skipIngredients.length > 0) {
+        products += `%09*Sin ingredientes*%0A`;
+        item.skipIngredients.forEach((ingredient) => {
+          products += `%09%09_${ingredient}_%0A`;
+        });
+      }
       if (item.observation !== '') {
         products += `%09%09_${item.observation}_%0A`;
       }
@@ -187,7 +209,8 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
     text += `*Forma de pago:* _${paymentType.description}_%0A`;
     text += `${paymentMethod}%0A`;
     text += `*Forma de envío:* _${this.deliveryOption}_%0A`;
-    text = text.replace(',', '%2C').replace(' ', '%20');
+    text = text.replace(/,/g, '%2C');
+    text = text.replace(/ /g, '%20');
     return text;
   }
 
@@ -195,29 +218,29 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
   onScroll(): void {
     if (document.documentElement.scrollTop > 1) {
       this.titleStyle = {
-        opacity: 1,
-        top: '13px',
-        left: '56px',
+        'opacity': 1,
+        'top': '13px',
+        'left': '56px',
         'font-size': '14px',
       };
       this.topSize = '48px';
       this.headerStyle = {
-        opacity: 1,
-        height: this.topSize,
+        'opacity': 1,
+        'height': this.topSize,
         'max-height': this.topSize,
         'background-color': 'white',
       };
     } else {
       this.titleStyle = {
-        opacity: 1,
-        top: '48px',
-        left: '24px',
+        'opacity': 1,
+        'top': '48px',
+        'left': '24px',
         'font-size': '18px',
       };
       this.topSize = '96px';
       this.headerStyle = {
-        opacity: 1,
-        height: this.topSize,
+        'opacity': 1,
+        'height': this.topSize,
         'max-height': this.topSize,
         'background-color': 'white',
       };

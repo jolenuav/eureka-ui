@@ -17,6 +17,30 @@
           </eu-autocomplete-commerce>
         </div>
       </div>
+      <div class="col-sm-12 col-xl-3 mb-3 d-flex align-items-center justify-content-center">
+        <img
+          *ngIf="
+            (product && product.image) || formGroup.controls.imagePreview.value;
+            else withoutImg
+          "
+          class="rounded w-100"
+          [src]="
+            product && product.image
+              ? product.image
+              : formGroup.controls.imagePreview.value
+          "
+        />
+        <ng-template #withoutImg>
+          <div class="rounded">Sin imagen</div>
+        </ng-template>
+      </div>
+      <div class="col-sm-12 col-xl-9 mb-3 d-flex align-items-center">
+        <eu-input-file
+          #inputImage
+          class="w-100"
+          formControlName="image"
+        ></eu-input-file>
+      </div>
       <mat-form-field class="col-sm-12 col-xl-3">
         <mat-label>Nombre</mat-label>
         <input
@@ -47,7 +71,7 @@
           (blur)="formGroup.controls.subCategory.markAsTouched()"
         >
           <mat-option [value]="null" disabled selected>
-            Seleccione una subcategoría
+            -- Seleccione una subcategoría --
           </mat-option>
           <mat-option
             *ngFor="let subCategory of subCategories"
@@ -116,9 +140,6 @@
           placeholder="Descripción..."
         ></textarea>
       </mat-form-field>
-      <div class="col-12 mb-3">
-        <eu-input-file formControlName="image"></eu-input-file>
-      </div>
 
       <mat-divider class="col-12"></mat-divider>
 

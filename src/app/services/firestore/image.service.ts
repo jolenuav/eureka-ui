@@ -22,4 +22,7 @@ export class ImageService {
     const downloadURL = await ref.getDownloadURL().toPromise();
     return downloadURL;
   }
+  async delete(downloadURL: string): Promise<void> {
+    this.fireStorage.storage.refFromURL(downloadURL).delete();
+  }
 }

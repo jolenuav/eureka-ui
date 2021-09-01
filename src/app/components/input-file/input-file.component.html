@@ -1,5 +1,5 @@
 <mat-toolbar class="d-flex justify-content-between">
-  <div>
+  <div class="col-11 text-truncate">
     {{ selectedFileNames.length ? selectedFileNames : 'Seleccionar imagen' }}
   </div>
   <input
@@ -11,5 +11,5 @@
     (change)="captureImage($event)"
   />
 
-  <mat-icon color="accent" class="mdi mdi-upload"></mat-icon>
+  <mat-icon color="accent" class="col-1 d-flex justify-content p-0 mdi mdi-upload"></mat-icon>
 </mat-toolbar>

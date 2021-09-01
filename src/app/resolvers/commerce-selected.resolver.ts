@@ -10,9 +10,10 @@ export class CommerceSelectedResolver extends CustomerResolver {
   ): Promise<any> {
     this.store.startLoader();
     let resp: Commerce;
+    // Según el parámetro de url se busca el comercio por url o id
     if (route.params.commerceUrl) {
       const commerceUrl = route.params.commerceUrl;
-      resp = await this.getCommerSelected(commerceUrl); // Heredado
+      await this.getCommerSelected(commerceUrl);
     }
     if (route.queryParams.commerce) {
       const commerceId = route.queryParams.commerce;
