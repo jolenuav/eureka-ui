@@ -2,7 +2,7 @@
   <ng-container *ngFor="let category of categories; let i = index">
     <button
       *ngIf="showCard(category)"
-      class="pb-3 px-1 card-category"
+      class="px-1 card-category mb-3"
       mat-flat-button
       [class.col-12]="categories.length < 6"
       [class.col-4]="categories.length >= 6"

@@ -198,12 +198,7 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
       }
     });
 
-    let text = `*${orderID}*%0AHola *${
-      this.formGroup.controls.deliveryPrice.value === 'A'
-        ? this.commerce.name
-        : 'Eureka!'
-    }*, `;
-    text += `Soy ${this.formGroup.controls.name.value} `;
+    let text = `Soy ${this.formGroup.controls.name.value} `;
     text += `y quiero hacer el siguiente pedido:%0A${products}`;
     text += `Total orden *$${this.order.totalAmount.toFixed(2)}*%0A%0A`;
     text += `*La direccion es:*%0A_${this.formGroup.controls.address.value}_%0A%0A`;
@@ -212,7 +207,17 @@ export class OrderConfirmComponent implements OnInit, OnDestroy {
     text += `*Forma de envío:* _${this.deliveryOption}_%0A`;
     text = text.replace(/,/g, '%2C');
     text = text.replace(/ /g, '%20');
-    return text;
+
+    let textFinal = '';
+    if (this.formGroup.controls.deliveryPrice.value === 'A') {
+      textFinal = `*${orderID}*%0AHola *${this.commerce.name}*, `;
+      textFinal += text;
+    } else {
+      textFinal = `*${orderID}*%0AHola *Eureka!*, `;
+      textFinal += text;
+      textFinal += `*Comercio:* _${this.commerce.name}_`;
+    }
+    return textFinal;
   }
 
   @HostListener('document:scroll', ['$event'])
