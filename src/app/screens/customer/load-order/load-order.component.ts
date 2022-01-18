@@ -20,7 +20,7 @@ export class LoadOrderComponent implements OnInit {
   amount = 0;
   commerce: Commerce = this.customerStore.commerceSelected;
   counter = 1;
-  maxOrder = 20;
+  maxOrder = 0;
   minOrder = 1;
   observation = '';
   product: Product = this.customerStore.productToOrder;
@@ -39,11 +39,7 @@ export class LoadOrderComponent implements OnInit {
     this.amount = this.product.price * this.counter;
 
     this.stock = await this.stockService.findByProductId(this.product.id);
-    if (
-      this.stock &&
-      this.stock.total > 0 &&
-      this.stock.total < this.maxOrder
-    ) {
+    if (this.stock && this.stock.total > 0) {
       this.maxOrder = this.stock.total;
     }
   }
@@ -58,7 +54,11 @@ export class LoadOrderComponent implements OnInit {
   }
 
   counterHandler(add: boolean): void {
-    if (add && this.counter < this.maxOrder) {
+    if (
+      add &&
+      (this.maxOrder === 0 ||
+        (add && this.maxOrder > 0 && this.counter < this.maxOrder))
+    ) {
       this.counter++;
     }
     if (!add && this.counter > this.minOrder) {
