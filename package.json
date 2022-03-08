@@ -1,6 +1,6 @@
 {
   "name": "eureka-web",
-  "version": "0.3.2-dev",
+  "version": "0.3.4",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

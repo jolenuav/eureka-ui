@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MapComponent } from 'src/app/components/map/map.component';
 import Commerce from 'src/app/models/db/commerce';
 import PaymentMethod from 'src/app/models/db/payment-method';
+import { AlertService } from 'src/app/services/alert.service';
 import { CommerceService } from 'src/app/services/firestore/commerce.service';
 import { PaymentMethodsService } from 'src/app/services/firestore/paymenth-methods.service';
 import { StoreService } from 'src/app/services/store/store.service';
@@ -47,6 +48,7 @@ export class AdminCommercesComponent implements OnInit {
 
   constructor(
     private activeRouter: ActivatedRoute,
+    private alertService: AlertService,
     private commerceService: CommerceService,
     private paymentMethodservice: PaymentMethodsService,
     private store: StoreService
@@ -113,7 +115,43 @@ export class AdminCommercesComponent implements OnInit {
     }
   }
 
+  showInputInvalid(): void {
+    if (this.formGroup.controls.name.invalid) {
+      this.alertService.error('Nombre inválido');
+      return;
+    }
+    if (this.formGroup.controls.documentNo.invalid) {
+      this.alertService.error('Documento inválido');
+      return;
+    }
+    if (this.formGroup.controls.mail.invalid) {
+      this.alertService.error('Mail inválido');
+      return;
+    }
+    if (this.formGroup.controls.phone.invalid) {
+      this.alertService.error('Teléfono inválido');
+      return;
+    }
+    if (this.formGroup.controls.url.invalid) {
+      this.alertService.error('URL inválido');
+      return;
+    }
+    if (this.formGroup.controls.duration.invalid) {
+      this.alertService.error('Duración inválido: formato 15-20');
+      return;
+    }
+    if (this.formGroup.controls.rate.invalid) {
+      this.alertService.error('Rate inválido');
+      return;
+    }
+  }
+
   async onSaveOrUpdate(): Promise<void> {
+    console.log(this.formGroup);
+    if (this.formGroup.invalid) {
+      this.showInputInvalid();
+      return;
+    }
     this.store.startLoader();
     const id = this.commerce
       ? this.commerce.id
